@@ -1,0 +1,23 @@
+{
+  "name": "jira-pull-tickets",
+  "version": "1.0.0",
+  "bin": { "lorem" : "./index.js" }, 
+  "description": "Pull tickets from jira",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wramirez09/node-terminal-app-test.git"
+  },
+  "keywords": [
+    "jira"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wramirez09/node-terminal-app-test/issues"
+  },
+  "homepage": "https://github.com/wramirez09/node-terminal-app-test#readme"
+}
