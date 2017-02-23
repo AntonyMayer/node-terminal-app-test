@@ -1,3 +1,7 @@
+/**
+ * Module exports object that contains
+ * external dependencies and local modules refs
+ */
 module.exports = {
     //external dependencies
     program: require('commander'),
