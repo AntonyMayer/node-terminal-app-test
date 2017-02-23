@@ -1,7 +1,7 @@
 /**
  * Module to handle request from Jira
- * @param {string} projectName project name
- * @param {string} options ticket's flag [optional]
+ * @param {object} jira configuration object
+ * @param {object} data user input data
  */
 module.exports = (jira, data) => {
     let response = {
