@@ -6,7 +6,8 @@ const program = require('commander'),
     exec = require('child_process').exec;
 
 /**
- * Main function, send request to Jira and triggers function to handle reresponse
+ * Main function, send request to Jira and triggers 
+ * functions chain => sendJiraRequest => handleJiraResponse => displayTicketsData
  * @param {string} projectName project name
  * @param {string} options ticket's flag [optional]
  */
@@ -14,15 +15,6 @@ let get = (projectName, options) => {
     //some logic to handle user input will be there soon
     exec(sendJiraRequest(projectName, options), execCallback);
 }
-
-/**
- * Callback function to log errors in terminal
- */
-let execCallback = (error, stdout, stderr) => {
-    if (error) console.log("exec error: " + error);
-    if (stdout) console.log("Result: " + stdout);
-    if (stderr) console.log("shell error: " + stderr);
-};
 
 /**
  * Function to create and send request to Jira
@@ -46,9 +38,22 @@ let handleJiraResponse = (projectName, options) => {
     exec(displayTicketsData(data), execCallback);
 } 
 
+/**
+ * Function to display data in CLI
+ * @param {object} data object that contains tickets' info
+ */
 let displayTicketsData = (data) => {
     console.log(data);
 }
+
+/**
+ * Callback function to log errors in terminal
+ */
+let execCallback = (error, stdout, stderr) => {
+    if (error) console.log("exec error: " + error);
+    if (stdout) console.log("Result: " + stdout);
+    if (stderr) console.log("shell error: " + stderr);
+};
 
 program
     .version('1.0.0')
