@@ -30,7 +30,7 @@ let execCallback = (error, stdout, stderr) => {
  * @param {string} options ticket's flag [optional]
  */
 let sendJiraRequest = (projectName, options) => {
-    console.log("\nSending request to pull tickets for: " + projectName);
+    console.log("\nSending request to pull tickets for " + projectName + " project");
     exec(handleJiraResponse(projectName, options), execCallback);
 }
 
@@ -40,8 +40,15 @@ let sendJiraRequest = (projectName, options) => {
  * @param {string} options ticket's flag [optional]
  */
 let handleJiraResponse = (projectName, options) => {
-    console.log("Tickets for " + projectName + ":");
+    let data = projectName + " data to be displayed here later";
+
+    console.log("Received data on " + projectName + " project");
+    exec(displayTicketsData(data), execCallback);
 } 
+
+let displayTicketsData = (data) => {
+    console.log(data);
+}
 
 program
     .version('1.0.0')
