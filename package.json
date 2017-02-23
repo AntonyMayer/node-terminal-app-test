@@ -1,7 +1,7 @@
 {
   "name": "jira-pull-tickets",
   "version": "1.0.0",
-  "bin": { "lorem" : "./index.js" }, 
+  "bin": { "jira" : "./index.js" }, 
   "description": "Pull tickets from jira",
   "main": "app.js",
   "scripts": {
