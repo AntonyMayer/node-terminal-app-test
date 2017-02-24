@@ -5,11 +5,11 @@
  */
 module.exports = (jira, data) => {
 
-    console.log("\nSending...");
+    console.log("\nReceiving data........");
+    jira.shell.exec('curl -b headers -X GET -H "Content-Type: application/json" https://track.designory.com:8443/rest/api/2/search?jql=assignee=william.ramirez > /dev/null');
 
     jira.got('http://polls.apiblueprint.org/')
         .then(response => {
-            console.log("\nReceiving........");
             data.response = JSON.parse(response.body);
             jira.exec(jira.response(jira, data), jira.err);
         })
