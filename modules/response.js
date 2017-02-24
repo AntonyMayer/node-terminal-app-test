@@ -4,11 +4,8 @@
  * @param {object} data user input data
  */
 module.exports = (jira, data) => {
-    let response = {
-        project: data.project,
-        options: data.options,
-        tickets: "some data from Jira"
-    };
-    console.log(response.project + " data received");
-    jira.exec(jira.display(response), jira.err);
+
+    console.log("\nResponse preoceeded............\n");
+    
+    jira.exec(jira.display(jira, data), jira.err);
 };
