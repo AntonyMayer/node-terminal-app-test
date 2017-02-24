@@ -2,7 +2,7 @@
 
 'use strict';
 
-const jira = require('./jira.js');
+const jira = Object.freeze(require('./jira.js'));
 
 /**
  * Main function, send request to Jira and triggers 
@@ -16,8 +16,15 @@ let get = (projectName, options) => {
         options: options
     };
     jira.exec(jira.send(jira, data), jira.err);
-}
+};
 
+let init = () => {
+
+};
+
+/**
+ * App configuration
+ */
 jira.program
     .version('1.0.0')
     .command('get [projectName]')
