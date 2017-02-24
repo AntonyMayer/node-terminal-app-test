@@ -9,6 +9,7 @@ module.exports = (jira, data) => {
 
     jira.got('http://polls.apiblueprint.org/')
         .then(response => {
+            console.log("\nReceiving........");
             data.response = JSON.parse(response.body);
             jira.exec(jira.response(jira, data), jira.err);
         })

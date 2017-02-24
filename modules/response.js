@@ -5,7 +5,7 @@
  */
 module.exports = (jira, data) => {
 
-    console.log("\nResponse preoceeded............\n");
+    console.log("\nProcessing response............\n");
     
     jira.exec(jira.display(jira, data), jira.err);
 };
