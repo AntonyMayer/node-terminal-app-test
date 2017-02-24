@@ -11,6 +11,10 @@ const jira = Object.freeze(require('./jira.js'));
  * @param {string} options ticket's flag [optional]
  */
 let get = (projectName, options) => {
+    
+    //check for init to be done
+    if (!jira.shell.test('-e', './.jira')) return init();
+
     let data = {
         project: projectName,
         options: options
@@ -18,9 +22,13 @@ let get = (projectName, options) => {
     jira.exec(jira.send(jira, data), jira.err);
 };
 
-let init = () => {
-
-};
+/**
+ * Init function
+ * user input => login => password => projectname (?) => localhost port (?)
+ */
+function init() {
+    console.log('\nInitializing...');
+}
 
 /**
  * App configuration
@@ -31,5 +39,5 @@ jira.program
     .description('Get project tickets')
     .option('-a, --all', 'List all tickets')
     .option('-o, --open', 'List open tickets')
-    .action(get);
+    .action(get)
 jira.program.parse(process.argv);
