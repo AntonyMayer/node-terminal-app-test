@@ -26,7 +26,11 @@ module.exports = (jira, data) => {
         jira.fs.writeFile('.jira_', JSON.stringify(tempData), function(err) {
             if (err) return console.log(err);
             //set header for cookies based authentification
-            jira.shell.exec('curl -D headers -u ' + results.username + ':' + results.password + ' -X GET -H "Content-Type: application/json" https://track.designory.com:8443/rest/api/2/search?jql=assignee=' + results.username, { silent: true });
+            jira.shell.exec('curl -D headers -u ' 
+            + results.username 
+            + ':' + results.password 
+            + ' -X GET -H "Content-Type: application/json" https://track.designory.com:8443/rest/api/2/search?jql=assignee=' 
+            + results.username, { silent: true });
         });
     });
 };
