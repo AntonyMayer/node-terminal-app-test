@@ -11,6 +11,7 @@ module.exports = {
     table: require('easy-table'),
     shell: require('shelljs'),
     prompt: require('prompt'),
+    fs: require('fs'),
 
     //local modules
     init: require('./modules/init.js'),

@@ -11,14 +11,16 @@ const jira = Object.freeze(require('./jira.js'));
  * @param {string} options ticket's flag [optional]
  */
 let get = (projectName, options) => {
-
-    //check for init to be done (.jira and headers exists)
-    if (!jira.shell.test('-e', './.jira') || !jira.shell.test('-e', './headers')) return jira.init(jira);
-
     let data = {
         project: projectName,
         options: options
     };
+    
+    //check for init to be done (.jira and headers exists)
+    if (!jira.shell.test('-e', './.jira') || !jira.shell.test('-e', './headers')) {
+        return jira.init(jira, data);
+    }
+
     jira.exec(jira.send(jira, data), jira.err);
 };
 
