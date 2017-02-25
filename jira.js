@@ -10,11 +10,12 @@ module.exports = {
     got: require('got'),
     table: require('easy-table'),
     shell: require('shelljs'),
+    prompt: require('prompt'),
 
     //local modules
     send: require('./modules/send.js'),
     response: require('./modules/response.js'),
     display: require('./modules/display.js'),
     err: require('./modules/err.js')
-    
+
 };

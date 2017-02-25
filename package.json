@@ -23,6 +23,7 @@
   "dependencies": {
     "commander": "",
     "child_process": "",
-    "easy-table": ""
+    "easy-table": "",
+    "prompt": ""
   }
 }
