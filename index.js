@@ -13,7 +13,7 @@ const jira = Object.freeze(require('./jira.js'));
 let get = (projectName, options) => {
 
     //check for init to be done (.jira and headers exists)
-    // if (!jira.shell.test('-e', './.jira') || !jira.shell.test('-e', './headers')) return init();
+    if (!jira.shell.test('-e', './.jira') || !jira.shell.test('-e', './headers')) return jira.init(jira);
 
     let data = {
         project: projectName,
@@ -21,26 +21,6 @@ let get = (projectName, options) => {
     };
     jira.exec(jira.send(jira, data), jira.err);
 };
-
-/**
- * Init function
- * user input => login => password => projectname (?) => localhost port (?)
- */
-function init() {
-    console.log('\nInitializing...\n');
-    jira.prompt.start();
-
-    jira.prompt.get(['username', 'email'], function(err, result) {
-        if (err) { return onErr(err); }
-        console.log('  Username: ' + result.username);
-        console.log('  Email: ' + result.email);
-    });
-
-    function onErr(err) {
-        console.log(err);
-        return 1;
-    }
-}
 
 /**
  * App options

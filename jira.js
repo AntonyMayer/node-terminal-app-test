@@ -13,6 +13,7 @@ module.exports = {
     prompt: require('prompt'),
 
     //local modules
+    init: require('./modules/init.js'),
     send: require('./modules/send.js'),
     response: require('./modules/response.js'),
     display: require('./modules/display.js'),
