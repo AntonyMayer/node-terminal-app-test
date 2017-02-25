@@ -15,9 +15,9 @@ let get = (projectName, options) => {
         project: projectName,
         options: options
     };
-    
+
     //check for init to be done (.jira and headers exists)
-    if (!jira.shell.test('-e', './.jira') || !jira.shell.test('-e', './headers')) {
+    if (!jira.shell.test('-e', './.jira_') || !jira.shell.test('-e', './headers')) {
         return jira.init(jira, data);
     }
 

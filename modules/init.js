@@ -2,7 +2,7 @@
  * Init function
  * user input => login => password => projectname (?) => localhost port (?)
  */
-module.exports = (jira) => {
+module.exports = (jira, data) => {
 
     console.log('\n >> Initializing\n');
 
