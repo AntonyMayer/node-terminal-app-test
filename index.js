@@ -12,8 +12,8 @@ const jira = Object.freeze(require('./jira.js'));
  */
 let get = (projectName, options) => {
 
-    //check for init to be done
-    if (!jira.shell.test('-e', './.jira')) return init();
+    //check for init to be done (.jira and headers exists)
+    // if (!jira.shell.test('-e', './.jira') || !jira.shell.test('-e', './headers')) return init();
 
     let data = {
         project: projectName,
@@ -27,12 +27,11 @@ let get = (projectName, options) => {
  * user input => login => password => projectname (?) => localhost port (?)
  */
 function init() {
-    console.log('\nInitializing...:');
+    console.log('\nInitializing...\n');
     jira.prompt.start();
 
     jira.prompt.get(['username', 'email'], function(err, result) {
         if (err) { return onErr(err); }
-        console.log('Command-line input received:');
         console.log('  Username: ' + result.username);
         console.log('  Email: ' + result.email);
     });

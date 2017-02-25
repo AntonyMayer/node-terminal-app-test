@@ -8,25 +8,22 @@ module.exports = (jira, data) => {
         output = new Table,
         tableData = [];
 
-    // let testData = [
-    //     { id: "CMCM-261", title: 'Something awesome', status: "open" },
-    //     { id: "CMCM-262", title: 'Very interesting ticket', status: "reopened" },
-    //     { id: "CMCM-263", title: 'Yet another ticket', status: "closed" }
-    // ];
-
     data.response.issues.forEach((issue) => {
-        tableData.push({ 
-            id: issue.id, 
-            title: issue.fields.issuetype.description, 
-            status: issue.fields.summary,
-            url: issue.self
+        tableData.push({
+            id: issue.key,
+            title: issue.fields.summary,
+            status: issue.fields.status.statusCategory.name,
+            priority: issue.fields.priority.name,
+            url: issue.fields.customfield_10004 != null ?
+                '/' + issue.fields.customfield_10004.split('/').slice(3).join('/') : null
         })
     });
 
     tableData.forEach(function(ticket) {
-        output.cell('Ticket #', ticket.id);
+        output.cell('Ticket', ticket.id);
         output.cell('Title', ticket.title);
         output.cell('Status', ticket.status);
+        output.cell('Priority', ticket.priority);
         output.cell('URL', ticket.url);
         output.newRow();
     });
