@@ -23,14 +23,16 @@ module.exports = (jira, data) => {
             user: results.username
         };
 
-        jira.fs.writeFile('.jira_', JSON.stringify(tempData), function(err) {
+        jira.fs.writeFile('.jira', JSON.stringify(tempData), function(err) {
             if (err) return console.log(err);
-            //set header for cookies based authentification
+            //set header for cookies authentification
             jira.shell.exec('curl -D headers -u ' 
             + results.username 
             + ':' + results.password 
             + ' -X GET -H "Content-Type: application/json" https://track.designory.com:8443/rest/api/2/search?jql=assignee=' 
-            + results.username, { silent: true });
+            + results.username, { silent: true }, () => {
+                jira.exec(jira.send(jira, data), jira.err);
+            });
         });
     });
 };
