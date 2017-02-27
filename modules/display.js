@@ -37,7 +37,7 @@ module.exports = (jira, data) => {
         output.newRow();
     });
 
-    console.log('\nQuery url: https://track.designory.com:8443/rest/api/2/search?jql=project=CMHM \n');
+    console.log('\nQuery url: ' + data.url + ' \n');
 
     console.log(output.toString());
 
