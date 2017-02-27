@@ -6,7 +6,8 @@
 module.exports = (jira, data) => {
 
     console.log("\nReceiving data........");
-    
+
+    // data.url = 'https://track.designory.com:8443/rest/api/2/search?jql=project=' + data.project + '%20AND%20assignee=' + data.user;
     data.url = 'https://track.designory.com:8443/rest/api/2/search?jql=project=' + data.project;
     data.query = 'curl -b headers -X GET -H "Content-Type: application/json" ' + data.url;
 

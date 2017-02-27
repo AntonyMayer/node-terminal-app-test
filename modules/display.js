@@ -12,6 +12,7 @@ module.exports = (jira, data) => {
     //validate data => ask for authenticaion if data validation failed
     if (!ticketsData) {
         return (() => {
+            console.log(data.response);
             console.log('\nAuthentication failed...\n');
             jira.init(jira, data);
         })(jira, data);
@@ -37,7 +38,8 @@ module.exports = (jira, data) => {
         output.newRow();
     });
 
-    console.log('\nQuery url: ' + data.url + ' \n');
+    console.log('\nProject: ' + data.project);
+    console.log('Assignee: ' + data.user + '\n');
 
     console.log(output.toString());
 
