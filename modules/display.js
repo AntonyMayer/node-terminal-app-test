@@ -8,7 +8,7 @@ module.exports = (jira, data) => {
         output = new Table,
         tableData = [],
         ticketsData = data.response.issues;
-    
+
     //validate data => ask for authenticaion if data validation failed
     if (!ticketsData) {
         return (() => {
@@ -24,6 +24,9 @@ module.exports = (jira, data) => {
 
     //iterate data from response
     ticketsData.forEach((issue) => {
+
+        if (issue.fields.status.statusCategory.name == "Complete" && !data.showAllTickets) return;
+
         tableData.push({
             id: issue.key,
             title: issue.fields.summary,

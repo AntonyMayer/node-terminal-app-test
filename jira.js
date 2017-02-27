@@ -31,6 +31,11 @@ module.exports = (() => {
                 data.currentUser = true;
             };
         },
+        displayAll: (data) => {
+            return () => {
+                data.showAllTickets = true;
+            };
+        },
         exec: require('child_process').exec,
         program: require('commander'),
         prompt: require('prompt'),

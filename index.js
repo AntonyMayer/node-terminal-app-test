@@ -31,6 +31,6 @@ jira.program
     .command('get [projectName] [option]')
     .description('Get project tickets')
     .option('-u, --user', 'List all tickets assigned to current user', jira.assignee(data))
-    .option('-o, --open', 'List open tickets')
+    .option('-a, --all', 'List all tickets', jira.displayAll(data))
     .action(get)
 jira.program.parse(process.argv);
