@@ -3,6 +3,7 @@
 'use strict';
 
 const jira = require('./jira.js');
+console.log(__dirname);
 
 /**
  * Main function, send request to Jira and triggers 
