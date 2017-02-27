@@ -2,13 +2,13 @@
 
 'use strict';
 
-const jira = Object.freeze(require('./jira.js'));
+const jira = require('./jira.js');
 
 /**
  * Main function, send request to Jira and triggers 
  * functions chain => send request to server => handle response => display data
- * @param {string} projectName project name
- * @param {string} options ticket's flag [optional]
+ * @param {string} [projectName] project name
+ * @param {string} [options] ticket's flag [optional]
  */
 let get = (projectName, options) => {
     let data = {
