@@ -17,6 +17,12 @@ module.exports = (jira, data) => {
         })(jira, data);
     }
 
+    //if number of tickets is 0
+    if (!ticketsData.length) {
+        return console.log('\nNo tickets found based on search paramaters...\n');
+    }
+
+    //iterate data from response
     ticketsData.forEach((issue) => {
         tableData.push({
             id: issue.key,
@@ -25,9 +31,10 @@ module.exports = (jira, data) => {
             priority: issue.fields.priority.name,
             url: issue.fields.customfield_10004 != null ?
                 '/' + issue.fields.customfield_10004.split('/').slice(3).join('/') : null
-        })
+        });
     });
 
+    //create table
     tableData.forEach(function(ticket) {
         output.cell('Ticket', ticket.id);
         output.cell('Title', ticket.title);
@@ -37,9 +44,10 @@ module.exports = (jira, data) => {
         output.newRow();
     });
 
+    //display project information
     console.log('\nProject: ' + data.project);
     if (data.currentUser) console.log('Assignee: ' + data.user + '\n');
 
+    //display table
     console.log(output.toString());
-
 };

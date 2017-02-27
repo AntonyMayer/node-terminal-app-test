@@ -13,6 +13,8 @@ module.exports = (jira, data) => {
     //if '-u' flag was used => show only tickets assigned to current user
     if (data.currentUser) data.url = data.url + '%20AND%20assignee=' + data.user;
 
+    console.log(data.url);
+
     //Creating a curl request based on data object and flags
     data.query = 'curl -b headers -X GET -H "Content-Type: application/json" ' + data.url;
 
