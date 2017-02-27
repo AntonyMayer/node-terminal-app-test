@@ -3,7 +3,6 @@
 'use strict';
 
 const jira = require('./jira.js');
-console.log(__dirname);
 
 /**
  * Main function, send request to Jira and triggers 
@@ -12,17 +11,18 @@ console.log(__dirname);
  * @param {string} [options] ticket's flag [optional]
  */
 let get = (projectName, options) => {
+
     let data = {
         project: projectName,
         options: options
     };
 
     //check for init to be done (.jira and headers exists)
-    if (!jira.shell.test('-e', './.jira') || !jira.shell.test('-e', './headers')) {
+    if (!jira.test('./.jira') || !jira.test('./headers')) {
         return jira.init(jira, data);
     }
-
-    jira.exec(jira.send(jira, data), jira.err);
+    
+    jira.exec(jira.data(jira, data), jira.err);
 };
 
 /**

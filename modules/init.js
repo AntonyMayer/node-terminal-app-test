@@ -1,6 +1,8 @@
 /**
  * Init function
  * user input => login => password => projectname (?) => localhost port (?)
+ * @param {object} jira configuration object
+ * @param {object} data project data
  */
 module.exports = (jira, data) => {
 
@@ -26,12 +28,12 @@ module.exports = (jira, data) => {
         jira.fs.writeFile('.jira', JSON.stringify(tempData), function(err) {
             if (err) return console.log(err);
             //set header for cookies authentification
-            jira.shell.exec('curl -D headers -u ' 
+            jira.curl('curl -D headers -u ' 
             + results.username 
             + ':' + results.password 
             + ' -X GET -H "Content-Type: application/json" https://track.designory.com:8443/rest/api/2/search?jql=assignee=' 
-            + results.username, { silent: true }, () => {
-                jira.exec(jira.send(jira, data), jira.err);
+            + results.username, () => {
+                jira.exec(jira.data(jira, data), jira.err);
             });
         });
     });

@@ -1,7 +1,7 @@
 /**
  * Module to display data in CLI
  * @param {object} jira configuration object
- * @param {object} response object that contains tickets' info
+ * @param {object} data project data
  */
 module.exports = (jira, data) => {
     let Table = jira.table,
@@ -12,7 +12,7 @@ module.exports = (jira, data) => {
     //validate data => ask for authenticaion if data validation failed
     if (!ticketsData) {
         return (() => {
-            console.log('Authentication required\n...');
+            console.log('\nAuthentication failed...\n');
             jira.init(jira, data);
         })(jira, data);
     }
@@ -37,7 +37,7 @@ module.exports = (jira, data) => {
         output.newRow();
     });
 
-    console.log('\nQuery url: https://track.designory.com:8443/rest/api/2/search?jql=assignee=william.ramirez \n');
+    console.log('\nQuery url: https://track.designory.com:8443/rest/api/2/search?jql=project=CMHM \n');
 
     console.log(output.toString());
 
