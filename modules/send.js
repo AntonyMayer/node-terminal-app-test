@@ -7,10 +7,12 @@ module.exports = (jira, data) => {
 
     console.log("\nReceiving data........");
 
-    let response = jira.shell.exec('curl -b headers -X GET -H "Content-Type: application/json" https://track.designory.com:8443/rest/api/2/search?jql=project=CMHM', {silent:true}).stdout;
+    let queryString = 'curl -b headers -X GET -H "Content-Type: application/json" https://track.designory.com:8443/rest/api/2/search?jql=project=CMHM';
+
+    let response = jira.shell.exec(queryString, { silent: true }).stdout;
 
     data.response = JSON.parse(response);
 
-    jira.exec(jira.response(jira, data), jira.err);
+    jira.exec(jira.display(jira, data), jira.err);
 
 };

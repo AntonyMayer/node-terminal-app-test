@@ -6,9 +6,18 @@
 module.exports = (jira, data) => {
     let Table = jira.table,
         output = new Table,
-        tableData = [];
+        tableData = [],
+        ticketsData = data.response.issues;
+    
+    //validate data => ask for authenticaion if data validation failed
+    if (!ticketsData) {
+        return (() => {
+            console.log('Authentication required\n...');
+            jira.init(jira, data);
+        })(jira, data);
+    }
 
-    data.response.issues.forEach((issue) => {
+    ticketsData.forEach((issue) => {
         tableData.push({
             id: issue.key,
             title: issue.fields.summary,
