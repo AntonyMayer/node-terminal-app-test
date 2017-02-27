@@ -26,6 +26,11 @@ module.exports = (() => {
                 return shelljs.exec(string, { silent: true }).stdout;
             }
         },
+        assignee: (data) => {
+            return () => {
+                data.currentUser = true;
+            };
+        },
         exec: require('child_process').exec,
         program: require('commander'),
         prompt: require('prompt'),

@@ -12,7 +12,6 @@ module.exports = (jira, data) => {
     //validate data => ask for authenticaion if data validation failed
     if (!ticketsData) {
         return (() => {
-            console.log(data.response);
             console.log('\nAuthentication failed...\n');
             jira.init(jira, data);
         })(jira, data);
@@ -39,7 +38,7 @@ module.exports = (jira, data) => {
     });
 
     console.log('\nProject: ' + data.project);
-    console.log('Assignee: ' + data.user + '\n');
+    if (data.currentUser) console.log('Assignee: ' + data.user + '\n');
 
     console.log(output.toString());
 

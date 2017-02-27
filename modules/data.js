@@ -13,6 +13,6 @@ module.exports = (jira, data) => {
         data.project = defaultData.project;
     }
 
-    jira.exec(jira.send(jira, data), jira.err);
+    jira.exec(jira.send(jira, data), jira.err); //call for send.js module
 
 };
