@@ -7,7 +7,7 @@ module.exports = (jira) => {
     console.log("\nReceiving data........");
 
     //target url with jql query targeting default or user specified project
-    jira.data.url = 'https://track.designory.com:8443/rest/api/2/search?jql=project=' + jira.data.project;
+    jira.data.url = jira.data.server + '/rest/api/2/search?jql=project=' + jira.data.project;
     
     //if '-u' flag was used => show only tickets assigned to current user
     if (jira.data.currentUser) jira.data.url = jira.data.url + '%20AND%20assignee=' + jira.data.user;
