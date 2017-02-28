@@ -16,7 +16,10 @@ class JIRA {
         this.prompt = require('prompt');
         this.table = require('easy-table');
         this.fs = require('fs');
-        this.data = {};
+        this.data = {
+            currentUser: false,
+            showAllTickets: false
+        };
     }
 
     //major methods
@@ -58,11 +61,15 @@ class JIRA {
 
     //flag methods
     assignee() {
-        this.data.currentUser = true;
+        return () => {
+            this.data.currentUser = true;
+        };
     }
 
     displayAll() {
-        this.data.showAllTickets = true;
+        return () => {
+            this.data.showAllTickets = true;
+        };
     }
 }
 
