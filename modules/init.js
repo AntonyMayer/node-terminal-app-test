@@ -1,10 +1,9 @@
 /**
  * Init function
- * user input => login => password => projectname (?) => localhost port (?)
- * @param {object} jira configuration object
- * @param {object} data project data
+ * user inputs => projectname => login => password
+ * @param {object} jira namespace object
  */
-module.exports = (jira, data) => {
+module.exports = (jira) => {
 
     console.log('\n >> Initializing\n');
 
@@ -29,13 +28,14 @@ module.exports = (jira, data) => {
             if (err) return console.log(err);
             //set header for cookies authentification
             jira.curl('curl -D headers -u ' 
-            + results.username 
-            + ':' + results.password 
-            + ' -X GET -H "Content-Type: application/json" https://track.designory.com:8443/rest/api/2/search?jql=assignee=' 
-            + results.username, () => {
-                jira.checkData()
-                    .sendData()
-                    .displayData();
+                + results.username 
+                + ':' + results.password 
+                + ' -X GET -H "Content-Type: application/json" https://track.designory.com:8443/rest/api/2/search?jql=assignee=' 
+                + results.username, () => {
+                    //trigger methods chain after initilization is complete
+                    jira.checkData()
+                        .sendData()
+                        .displayData();
             });
         });
     });
