@@ -6,19 +6,22 @@ module.exports = (jira) => {
     let Table = jira.table,
         output = new Table,
         tableData = [],
-        ticketsData = jira.data.response.issues;
+        ticketsData = jira.data.response.issues,
+        errors = jira.data.response.errorMessages;
 
     //validate data => ask for authenticaion if data validation failed
-    if (!ticketsData) {
-        return (() => {
-            console.log('\nAuthentication failed...\n');
-            jira.init(jira);
-        })(jira);
-    }
+    // if (!ticketsData && !errors) {
+    //     return (() => {
+    //         console.log('\nAuthentication failed...\n');
+    //         jira.init(jira);
+    //     })(jira);
+    // }
 
     //if number of tickets is 0
-    if (!ticketsData.length) {
+    if (ticketsData && !ticketsData.length) {
         return console.log('\nNo tickets found based on search paramaters...\n');
+    } else if (errors) {
+        return console.log('\n' + errors[0] + '\n');
     }
 
     //iterate data from response
