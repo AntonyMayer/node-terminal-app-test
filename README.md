@@ -9,7 +9,7 @@ Manual
 
 NPM
 
-1. 		    not yet
+1. 		    not yet...
 
 **Commands:**
 
