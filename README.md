@@ -19,9 +19,7 @@ NPM
     jira init                           run initialization
 
 **Initialization:**
-
-*User inputs*
-
+User inputs
         - server    - [specify], by default uses 'https://track.designory.com:8443', will be stored in '.jira'
         - project   - default project, will be stored in '.jira'
         - username  - usernamre for authentication, will be stored in '.jira'
