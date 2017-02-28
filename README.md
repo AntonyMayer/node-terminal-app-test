@@ -1,8 +1,12 @@
 # node-terminal-app-test
 Installation:
-    1. Clone repository
-    2. npm install
-    3. npm link
+    Manual
+        1. Clone repository
+        2. npm install
+        3. npm link
+
+    NPM 
+        --//--
 
 Commands:
     jira get [project name] [flag]      
