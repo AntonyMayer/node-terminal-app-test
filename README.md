@@ -2,11 +2,13 @@
 **Installation:**
 
 Manual
+
 1.         Clone repository
 1.         npm install
 1.         npm link
 
 NPM
+
 1. 		    not yet
 
 **Commands:**
@@ -23,7 +25,7 @@ NPM
 
 User inputs
 
-        - server    - [specify], by default uses 'https://track.designory.com:8443', will be stored in '.jira'
+        - server    - [optional], skip to use default 'https://track.designory.com:8443', will be stored in '.jira'
         - project   - default project, will be stored in '.jira'
         - username  - usernamre for authentication, will be stored in '.jira'
         - password  - password, will be used to write header for cookie authentication
