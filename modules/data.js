@@ -5,7 +5,7 @@
  */
 module.exports = (jira, data) => {
 
-    let defaultData = JSON.parse(jira.fs.readFileSync('./.jira', 'utf8'));
+    let defaultData = JSON.parse(jira.readFile('./.jira', 'utf8'));
 
     data.user = defaultData.user;
 

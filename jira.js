@@ -1,6 +1,6 @@
 /**
  * Module exports configuration object that contains
- * external dependencies and local modules refs
+ * external dependencies, local modules and methods
  */
 class JIRA {
     constructor() {
@@ -19,7 +19,11 @@ class JIRA {
 
     //methods
     test(filePath) {
-        return this.shelljs.test('-e', filePath)
+        return this.shelljs.test('-e', filePath);
+    }
+
+    readFile(filePath, encoding) {
+        return this.fs.readFileSync(filePath, encoding);
     }
 
     curl(string, callback) {
