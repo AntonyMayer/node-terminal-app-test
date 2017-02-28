@@ -22,7 +22,6 @@
   "homepage": "https://github.com/wramirez09/node-terminal-app-test#readme",
   "dependencies": {
     "commander": "",
-    "child_process": "",
     "easy-table": "",
     "prompt": ""
   }
