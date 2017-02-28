@@ -2,11 +2,12 @@
  * Module exports configuration object that contains
  * external dependencies, local modules and methods
  */
+
 class JIRA {
     constructor() {
         //local modules
-        this.init = require('./modules/init.js');
-        this.data = require('./modules/data.js');
+        this.initialization = require('./modules/init.js');
+        this.check = require('./modules/check.js');
         this.send = require('./modules/send.js');
         this.display = require('./modules/display.js');
         //external dependencies
@@ -15,9 +16,30 @@ class JIRA {
         this.prompt = require('prompt');
         this.table = require('easy-table');
         this.fs = require('fs');
+        this.data = {};
     }
 
-    //methods
+    //major methods
+    checkData() {
+        this.check(this);
+        return this;
+    }
+
+    init() {
+        this.initialization(this);
+        return this;
+    }
+
+    sendData() {
+        this.send(this);
+        return this;
+    }
+
+    displayData() {
+        this.display(this);
+    }
+
+    //util methods
     test(filePath) {
         return this.shelljs.test('-e', filePath);
     }
@@ -34,16 +56,14 @@ class JIRA {
         }
     }
 
-    assignee(data) {
-        return () => {
-            data.currentUser = true;
-        };
+    //flag methods
+    assignee() {
+        this.data.currentUser = true;
     }
 
-    displayAll(data) {
-        return () => {
-            data.showAllTickets = true;
-        };
+    displayAll() {
+        this.data.showAllTickets = true;
     }
 }
+
 module.exports = new JIRA();

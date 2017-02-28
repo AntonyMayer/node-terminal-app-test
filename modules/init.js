@@ -33,7 +33,9 @@ module.exports = (jira, data) => {
             + ':' + results.password 
             + ' -X GET -H "Content-Type: application/json" https://track.designory.com:8443/rest/api/2/search?jql=assignee=' 
             + results.username, () => {
-                jira.data(jira, data);
+                jira.checkData()
+                    .sendData()
+                    .displayData();
             });
         });
     });

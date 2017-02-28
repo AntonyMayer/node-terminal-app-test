@@ -2,8 +2,7 @@
 
 'use strict';
 
-const jira = require('./jira.js');
-let data = {}; //object with project data
+let jira = require('./jira.js');
 
 /**
  * Main function, send request to Jira and triggers 
@@ -13,14 +12,17 @@ let data = {}; //object with project data
  */
 let get = (projectName) => {
 
-    data.project = projectName; //if projectName passed use it instead of default
+    jira.data.project = projectName; //if projectName passed use it instead of default
 
-    //check for init to be done (.jira and headers exists)
+    // check for init to be done (.jira and headers exists)
     if (!jira.test('./.jira') || !jira.test('./headers')) {
-        return jira.init(jira, data);
+        return jira.init();
     }
 
-    jira.data(jira, data); //call for data.js module
+    //start methods chain
+    jira.checkData()
+        .sendData()
+        .displayData();
 };
 
 /**
@@ -30,7 +32,7 @@ jira.program
     .version('1.0.0')
     .command('get [projectName] [option]')
     .description('Get project tickets')
-    .option('-u, --user', 'List all tickets assigned to current user', jira.assignee(data))
-    .option('-a, --all', 'List all tickets', jira.displayAll(data))
+    .option('-u, --user', 'List all tickets assigned to current user', jira.assignee)
+    .option('-a, --all', 'List all tickets', jira.displayAll)
     .action(get)
 jira.program.parse(process.argv);

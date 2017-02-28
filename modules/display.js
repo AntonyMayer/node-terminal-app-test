@@ -1,20 +1,19 @@
 /**
  * Module to display data in CLI
- * @param {object} jira configuration object
- * @param {object} data project data
+ * @param {object} jira namespace object
  */
-module.exports = (jira, data) => {
+module.exports = (jira) => {
     let Table = jira.table,
         output = new Table,
         tableData = [],
-        ticketsData = data.response.issues;
+        ticketsData = jira.data.response.issues;
 
     //validate data => ask for authenticaion if data validation failed
     if (!ticketsData) {
         return (() => {
             console.log('\nAuthentication failed...\n');
-            jira.init(jira, data);
-        })(jira, data);
+            jira.init(jira);
+        })(jira);
     }
 
     //if number of tickets is 0
@@ -25,7 +24,7 @@ module.exports = (jira, data) => {
     //iterate data from response
     ticketsData.forEach((issue) => {
 
-        if (issue.fields.status.statusCategory.name == "Complete" && !data.showAllTickets) return;
+        if (issue.fields.status.statusCategory.name == "Complete" && !jira.data.showAllTickets) return;
 
         tableData.push({
             id: issue.key,
@@ -48,8 +47,8 @@ module.exports = (jira, data) => {
     });
 
     //display project information
-    console.log('\nProject: ' + data.project);
-    if (data.currentUser) console.log('Assignee: ' + data.user + '\n');
+    console.log('\nProject: ' + jira.data.project);
+    if (jira.data.currentUser) console.log('Assignee: ' + jira.data.user + '\n');
 
     //display table
     console.log(output.toString());
