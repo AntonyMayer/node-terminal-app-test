@@ -2,11 +2,14 @@
 
 'use strict';
 
+/**
+ * Object that contains all dependencies and methods
+ */
 let jira = require('./jira.js');
 
 /**
  * Main function, send request to Jira and triggers 
- * functions chain => send request to server => handle response => display data
+ * functions chain => check data => send data to Jira's server => display data
  * @param {string} [projectName] project name
  */
 let get = (projectName) => {
