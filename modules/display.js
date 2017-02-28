@@ -3,8 +3,7 @@
  * @param {object} jira namespace object
  */
 module.exports = (jira) => {
-    let Table = jira.table,
-        output = new Table,
+    let output = new jira.table,
         tableData = [],
         ticketsData = jira.data.response.issues,
         errors = jira.data.response.errorMessages;
@@ -17,11 +16,16 @@ module.exports = (jira) => {
         })();
     }
 
+    //handle possible errors
     //if number of tickets is 0
     if (ticketsData && !ticketsData.length) {
         return console.log('\nNo tickets found based on search paramaters...\n');
     } else if (errors) {
-        return console.log('\n' + errors[0] + '\n');
+        return (() => {
+            errors.forEach((err) => {
+                console.log('\n' + err + '\n');
+            });
+        })();
     }
 
     //iterate data from response
@@ -50,7 +54,7 @@ module.exports = (jira) => {
     });
 
     //display project information
-    console.log('\nProject: ' + jira.data.project);
+    console.log('\nProject: ' + jira.data.project + '\n');
     if (jira.data.currentUser) console.log('Assignee: ' + jira.data.user + '\n');
 
     //display table
