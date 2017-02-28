@@ -20,7 +20,7 @@ let get = (projectName) => {
         return jira.init(jira, data);
     }
 
-    jira.exec(jira.data(jira, data), jira.err); //call for data.js module
+    jira.data(jira, data); //call for data.js module
 };
 
 /**

@@ -13,7 +13,6 @@ module.exports = (() => {
         data: require('./modules/data.js'),
         send: require('./modules/send.js'),
         display: require('./modules/display.js'),
-        err: require('./modules/err.js'),
 
         //methods
         test: (filePath) => {
@@ -36,7 +35,6 @@ module.exports = (() => {
                 data.showAllTickets = true;
             };
         },
-        exec: require('child_process').exec,
         program: require('commander'),
         prompt: require('prompt'),
         table: require('easy-table'),

@@ -22,6 +22,6 @@ module.exports = (jira, data) => {
 
     data.response = JSON.parse(response);
 
-    jira.exec(jira.display(jira, data), jira.err);  //call for display.js module
+    jira.display(jira, data);  //call for display.js module
 
 };
