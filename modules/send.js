@@ -17,12 +17,9 @@ module.exports = (jira) => {
     //Creating a curl request based on data object and flags
     jira.data.query = 'curl -b headers -X GET -H "Content-Type: application/json" ' + jira.data.url;
 
-    let response = jira.curl(jira.data.query);
-
-    jira.data.response = JSON.parse(response);
+    //parse response from server
+    jira.data.response = JSON.parse(jira.curl(jira.data.query));
 
     return jira;
-
-    // jira.display(jira, data);  //call for display.js module
 
 };
