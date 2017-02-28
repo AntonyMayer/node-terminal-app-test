@@ -25,7 +25,7 @@ NPM
 
 User inputs
 
-        - server    - [optional], skip to use default 'https://track.designory.com:8443', will be stored in '.jira'
-        - project   - default project, will be stored in '.jira'
-        - username  - usernamre for authentication, will be stored in '.jira'
-        - password  - password, will be used to write header for cookie authentication
+    - server    - [optional], skip to use default 'https://track.designory.com:8443', will be stored in '.jira'
+    - project   - default project, will be stored in '.jira'
+    - username  - usernamre for authentication, will be stored in '.jira'
+    - password  - password, will be used to write header for cookie authentication
