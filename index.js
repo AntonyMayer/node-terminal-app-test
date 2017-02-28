@@ -24,6 +24,10 @@ let get = (projectName) => {
         .displayData();
 };
 
+let init = () => {
+    jira.init();
+};
+
 /**
  * App options
  */
@@ -34,4 +38,8 @@ jira.program
     .option('-u, --user', 'List all tickets assigned to current user', jira.assignee())
     .option('-a, --all', 'List all tickets', jira.displayAll())
     .action(get)
+jira.program
+    .command('init')
+    .description('Initialize project')
+    .action(init)
 jira.program.parse(process.argv);

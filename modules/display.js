@@ -10,12 +10,12 @@ module.exports = (jira) => {
         errors = jira.data.response.errorMessages;
 
     //validate data => ask for authenticaion if data validation failed
-    // if (!ticketsData && !errors) {
-    //     return (() => {
-    //         console.log('\nAuthentication failed...\n');
-    //         jira.init(jira);
-    //     })(jira);
-    // }
+    if (!ticketsData && !errors) {
+        return (() => {
+            console.log('\nAuthentication failed...\n');
+            jira.init();
+        })();
+    }
 
     //if number of tickets is 0
     if (ticketsData && !ticketsData.length) {
