@@ -1,12 +1,13 @@
 # node-terminal-app-test
 **Installation:**
+
 Manual
 1.         Clone repository
 1.         npm install
 1.         npm link
 
 NPM
-1. 						not yet
+1. 		    not yet
 
 **Commands:**
 
@@ -19,7 +20,9 @@ NPM
     jira init                           run initialization
 
 **Initialization:**
+
 User inputs
+
         - server    - [specify], by default uses 'https://track.designory.com:8443', will be stored in '.jira'
         - project   - default project, will be stored in '.jira'
         - username  - usernamre for authentication, will be stored in '.jira'
