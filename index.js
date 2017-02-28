@@ -49,6 +49,7 @@ jira.program.on('--help', function() {
     console.log('    get -u                         returns open tickets for default project assigned to current user;');
     console.log('    get -a                         returns all tickets for default project;');
     console.log('    get ABC                        returns open tickets for specified project (ABC);');
-    console.log('    get ABC -ua                    flags can be combined;\n');
+    console.log('    get ABC -ua                    flags can be combined;');
+    console.log('    init                           run initialization;\n');
 });
 jira.program.parse(process.argv);

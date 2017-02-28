@@ -12,3 +12,11 @@ Commands:
     jira get ABC                        returns open tickets for specified project (ABC);
     jira get ABC -ua                    flags can be combined;
 
+    jira init                           run initialization
+
+Initialization:
+    User inputs
+        - server    - [specify], by default uses 'https://track.designory.com:8443', will be stored in '.jira'
+        - project   - default project, will be stored in '.jira'
+        - username  - usernamre for authentication, will be stored in '.jira'
+        - password  - password, will be used to write header for cookie authentication
