@@ -44,7 +44,8 @@ jira.program
     .command('init')
     .action(init)
 jira.program.on('--help', function() {
-    console.log('\n    get [project name] [flag]      returns open tickets for default project;');
+    console.log('\n    get [project name] [flag]');
+    console.log('    get                            returns open tickets for default project;');
     console.log('    get -u                         returns open tickets for default project assigned to current user;');
     console.log('    get -a                         returns all tickets for default project;');
     console.log('    get ABC                        returns open tickets for specified project (ABC);');

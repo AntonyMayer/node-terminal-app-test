@@ -1,6 +1,7 @@
 /**
  * Module to create {object} data
  * @param {object} jira namespace object
+ * @returns {object} jira 
  */
 module.exports = (jira) => {
 

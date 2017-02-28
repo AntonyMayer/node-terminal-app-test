@@ -1,6 +1,7 @@
 /**
  * Module to create and send request to Jira
  * @param {object} jira naespace object
+ * @returns {object} jira 
  */
 module.exports = (jira) => {
 

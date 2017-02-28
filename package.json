@@ -23,6 +23,7 @@
   "dependencies": {
     "commander": "",
     "easy-table": "",
-    "prompt": ""
+    "prompt": "",
+    "shelljs": ""
   }
 }
