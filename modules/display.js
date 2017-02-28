@@ -21,11 +21,9 @@ module.exports = (jira) => {
     if (ticketsData && !ticketsData.length) {
         return console.log('\nNo tickets found based on search paramaters...\n');
     } else if (errors) {
-        return (() => {
-            errors.forEach((err) => {
+        return errors.forEach((err) => {
                 console.log('\n' + err + '\n');
             });
-        })();
     }
 
     //iterate data from response
