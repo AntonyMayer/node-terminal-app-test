@@ -6,9 +6,7 @@
   },
   "description": "Pull tickets from jira",
   "main": "app.js",
-  "scripts": {
-    "test": "test"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wramirez09/node-terminal-app-test.git"
