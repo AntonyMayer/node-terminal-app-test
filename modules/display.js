@@ -48,6 +48,7 @@ module.exports = (jira) => {
         output.cell('Status', ticket.status);
         output.cell('Priority', ticket.priority);
         output.cell('URL', ticket.url);
+        output.cell('Issue URL', jira.data.server + /browse/ + ticket.id);
         output.newRow();
     });
 
