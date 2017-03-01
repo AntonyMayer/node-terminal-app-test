@@ -2,7 +2,7 @@
   "name": "jira-pull-tickets",
   "version": "1.0.12",
   "bin": {
-    "jira": "./index.js"
+    "jira": "./node_modules/jira-pull-tickets/index.js"
   },
   "description": "Pull tickets from jira",
   "main": "app.js",
