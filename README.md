@@ -1,31 +1,41 @@
 # node-terminal-app-test
-**Installation:**
+**Description:**
 
-Manual
-
-1.         Clone repository
-1.         npm install
-1.         npm link
-
-NPM
-
-1. 		    not yet...
+Pull issues from jira using terminal.
 
 **Commands:**
 
     jira get [project name] [flag]    
-    jira get                            returns open tickets for default project;
-    jira get -u                         returns open tickets for default project assigned to current user;
-    jira get -a                         returns all tickets for default project;
-    jira get ABC                        returns open tickets for specified project (ABC);
-    jira get ABC -ua                    flags can be combined;
-    jira init                           run initialization
+
+Display open tickets for default project:
+
+    jira get 
+
+Dpen tickets for default project assigned to current user:
+
+    jira get -u                
+
+Display all tickets for default project: 
+    
+    jira get -a                         
+
+Display open tickets for specified project (ABC):
+
+    jira get ABC    
+
+Flags can be combined: 
+   
+    jira get ABC -ua    
+
+Run reinitialization in case smth is not working:              
+    
+    jira init                           
 
 **Initialization:**
 
 User inputs
 
-    - server    - [optional], skip to use default 'https://track.designory.com:8443', will be stored in '.jira'
-    - project   - default project, will be stored in '.jira'
-    - username  - usernamre for authentication, will be stored in '.jira'
-    - password  - password, will be used to write header for cookie authentication
+    - server    - [optional], default is 'https://track.designory.com:8443'
+    - project   - default project to display
+    - username  
+    - password 
