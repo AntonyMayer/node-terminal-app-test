@@ -11,7 +11,7 @@ Display open tickets for default project:
 
     jira get 
 
-Dpen tickets for default project assigned to current user:
+Open tickets for default project assigned to current user:
 
     jira get -u                
 
