@@ -1,0 +1,29 @@
+{
+  "name": "jira-pull-tickets",
+  "version": "1.0.6",
+  "bin": {
+    "jira": "./bin/jira/index.js"
+  },
+  "description": "Pull tickets from jira",
+  "main": "app.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AntonyMayer/node-terminal-app-test"
+  },
+  "keywords": [
+    "jira"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonyMayer/node-terminal-app-test/issues"
+  },
+  "homepage": "https://github.com/AntonyMayer/node-terminal-app-test#readme",
+  "dependencies": {
+    "commander": "",
+    "easy-table": "",
+    "prompt": "",
+    "shelljs": ""
+  }
+}
