@@ -1,6 +1,6 @@
 {
   "name": "jira-pull-tickets",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "bin": {
     "jira": "../../lib/node_modules/jira-pull-tickets/index.js"
   },
