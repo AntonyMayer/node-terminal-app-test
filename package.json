@@ -9,7 +9,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wramirez09/node-terminal-app-test.git"
+    "url": "https://github.com/AntonyMayer/node-terminal-app-test"
   },
   "keywords": [
     "jira"
@@ -17,9 +17,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wramirez09/node-terminal-app-test/issues"
+    "url": "https://github.com/AntonyMayer/node-terminal-app-test/issues"
   },
-  "homepage": "https://github.com/wramirez09/node-terminal-app-test#readme",
+  "homepage": "https://github.com/AntonyMayer/node-terminal-app-test#readme",
   "dependencies": {
     "commander": "",
     "easy-table": "",
