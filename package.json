@@ -7,8 +7,7 @@
   "description": "Pull tickets from jira",
   "main": "app.js",
   "scripts": {
-    "test": "jira -V",
-    "init": "./node_modules/jira-pull-tickets/npm link"
+    "test": "jira -V"
   },
   "repository": {
     "type": "git",
