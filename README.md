@@ -36,6 +36,6 @@ Run reinitialization in case smth is not working:
 User inputs
 
     - server    - [optional], default is 'https://track.designory.com:8443'
-    - project   - default project to display
+    - project   - default project to display, ex. CCLC or CMHM
     - username  
     - password 
