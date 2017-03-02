@@ -12,6 +12,7 @@ class JIRA {
         this.check = require('./modules/check.js');
         this.send = require('./modules/send.js');
         this.display = require('./modules/display.js');
+        this.create = require('./modules/create.js');
         //external dependencies
         this.shelljs = require('shelljs');
         this.program = require('commander');
@@ -37,6 +38,11 @@ class JIRA {
 
     sendData() {
         this.send(this);
+        return this;
+    }
+
+    createIssue() {
+        this.create(this);
         return this;
     }
 

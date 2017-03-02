@@ -27,6 +27,16 @@ let get = (projectName) => {
         .displayData();
 };
 
+/**
+ * Create a new ticket
+ */
+let add = () => {
+    jira.createIssue();
+};
+
+/**
+ * Initialize project
+ */
 let init = () => {
     jira.init();
 };
@@ -43,6 +53,9 @@ jira.program
 jira.program
     .command('init')
     .action(init)
+jira.program
+    .command('add')
+    .action(add)
 jira.program.on('--help', function() {
     console.log('\n    get [project name] [flag]');
     console.log('    get                            returns open tickets for default project;');

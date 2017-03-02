@@ -1,0 +1,16 @@
+{
+    "fields": {
+       "project":
+       { 
+          "key": "TEST"
+       },
+       "summary": "REST API testing",
+       "description": "Creating an issue",
+       "assignee": {
+           "name":"anton.kuzniatsou"
+       },
+       "status":{
+           "name":"Open"
+       }    
+   }
+}
