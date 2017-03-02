@@ -3,6 +3,9 @@
  * user inputs => projectname => login => password
  * @param {object} jira namespace object
  */
+
+'use strict';
+
 module.exports = (jira) => {
 
     console.log('\n >> Initializing\n');

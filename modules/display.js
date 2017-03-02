@@ -2,6 +2,9 @@
  * Module to display data in CLI
  * @param {object} jira namespace object
  */
+
+'use strict';
+
 module.exports = (jira) => {
     let output = new jira.table,
         tableData = [],

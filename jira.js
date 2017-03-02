@@ -3,6 +3,8 @@
  * external dependencies, local modules and methods
  */
 
+'use strict';
+
 class JIRA {
     constructor() {
         //local modules

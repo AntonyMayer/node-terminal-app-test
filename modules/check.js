@@ -3,6 +3,9 @@
  * @param {object} jira namespace object
  * @returns {object} jira 
  */
+
+'use strict';
+
 module.exports = (jira) => {
 
     let defaultData = JSON.parse(jira.readFile('./.jira', 'utf8'));
