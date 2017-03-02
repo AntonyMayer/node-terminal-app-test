@@ -6,17 +6,16 @@ Pull issues and display from jira using terminal.
 **Usage:**
 
     jira get
+
     Receiving data........
-    https://track.designory.com:8443/rest/api/2/search?jql=project=CMHM
+    https://servername/rest/api/2/search?jql=project=CCLC
 
-    Project: CMHM
+    Project: CCLC
 
-    Ticket   Title                                                           Status       Priority  URL                               Issue URL                                      
-    -------  --------------------------------------------------------------  -----------  --------  --------------------------------  -----------------------------------------------
-    CMHM-64  [Visual] - Access and Support Pages - Design                    In Progress  Normal    /                                 https://track.designory.com:8443/browse/CMHM-64
-    CMHM-60  [Functional] Register - Remove page refresh after error pop up  In Progress  Normal    /hcp/msi-h/register-for-updates/  https://track.designory.com:8443/browse/CMHM-60
-    CMHM-18  [Visual][iPhone 5s] - homepage - font / spacing                 In Progress  Normal    /hcp/msi-h/                       https://track.designory.com:8443/browse/CMHM-18
-
+    Ticket   Title        Status       Priority  URL    Issue URL                                      
+    -------  -----------  -----------  --------  -----  ------------
+    Id       Description  In Progress  Normal    /url   https://servername/browse/Id
+    
     
 
 Command + double click on Mac on Issue URL to open it in default browser.
