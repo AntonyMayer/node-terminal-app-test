@@ -11,7 +11,7 @@ Need global installation to work correctly.
 Might require sudo to create a symlink.
 
     npm cache clean
-    sudo npm install -g jira-pull-tickets
+    sudo npm install -g jira-pull-tickets@latest
 
 **Commands:**
 
