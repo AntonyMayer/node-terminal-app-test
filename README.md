@@ -13,9 +13,10 @@ Pull issues and display from jira using terminal.
     Project: CCLC
 
     Ticket   Title        Status       Priority  URL    Issue URL                                      
-    -------  -----------  -----------  --------  -----  ------------
-    Id       Description  In Progress  Normal    /url   https://servername/browse/Id
-    
+    -------  -----------  -----------  --------  -----  ------------------------------
+    Id-1     Description  In Progress  Normal    /url   https://servername/browse/Id-1
+    Id-2     Description  In Progress  Normal    /url   https://servername/browse/Id-2
+    Id-3     Description  In Progress  Normal    /url   https://servername/browse/Id-3
     
 
 Command + double click on Mac on Issue URL to open it in default browser.
