@@ -1,7 +1,9 @@
 # node-terminal-app-test
 **Description:**
 
-Pull issues from jira using terminal.
+Pull issues and display from jira using terminal.
+
+Command + double click on Issue URl to open it in default browser.
 
 **Installation:**
 
