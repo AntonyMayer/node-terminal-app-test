@@ -8,7 +8,7 @@
 
 module.exports = (jira) => {
 
-    console.log("\nReceiving data........");
+    console.log("\nSending request........");
 
     //target url with jql query targeting default or user specified project
     jira.data.url = jira.data.server + '/rest/api/2/search?jql=project=' + jira.data.project;
@@ -22,7 +22,11 @@ module.exports = (jira) => {
     jira.data.query = 'curl -b headers -X GET -H "Content-Type: application/json" ' + jira.data.url;
 
     //parse response from server
-    jira.data.response = JSON.parse(jira.curl(jira.data.query));
+    try {
+        jira.data.response = JSON.parse(jira.curl(jira.data.query));
+    } catch (e) {
+        jira.data.response = {"errorMessages":["Error in authentication... \nPlease use 'jira init' to update credentials"],"errors":{}};
+    }
 
     return jira;
 
