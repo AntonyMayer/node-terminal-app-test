@@ -3,6 +3,14 @@
 
 Pull issues from jira using terminal.
 
+**Installation:**
+
+Need global installation to work correctly. 
+Might require sudo to create a symlink.
+
+    npm cache clean
+    sudo npm install -g jira-pull-tickets
+
 **Commands:**
 
     jira get [project name] [flag]    
