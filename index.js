@@ -17,9 +17,9 @@ let get = (projectName) => {
     jira.data.project = projectName; //if projectName passed overwrite the default
 
     // check for init to be done (.jira and headers exists)
-    if (!jira.test('./.jira') || !jira.test('./headers')) {
-        return jira.init();
-    }
+    // if (!jira.test('./.jira') || !jira.test('./headers')) {
+    //     return jira.init();
+    // }
 
     //start methods chain
     jira.checkData()

@@ -12,6 +12,7 @@ class JIRA {
         this.check = require('./modules/check.js');
         this.send = require('./modules/send.js');
         this.display = require('./modules/display.js');
+        this.credential = require('credential');
         //external dependencies
         this.shelljs = require('shelljs');
         this.program = require('commander');
@@ -59,6 +60,28 @@ class JIRA {
         } else {
             return this.shelljs.exec(string, { silent: true }).stdout;
         }
+    }
+
+    createPassword(object, newPassword, callback) {
+        let pw = this.credential();
+
+        pw.hash(newPassword, function(err, hash) {
+            if (err) { throw err; }
+            console.log('Password hash created...');
+            object.hash = hash;
+            if (callback && typeof callback === 'function') {
+                callback();
+            }
+        });
+    }
+
+    verifyPassword(storedHash, userInput) {
+        pw.verify(storedHash, userInput, function(err, isValid) {
+            var msg;
+            if (err) { throw err; }
+            msg = isValid ? 'Passwords match!' : 'Wrong password.';
+            console.log(msg);
+        });
     }
 
     //flag methods
