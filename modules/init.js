@@ -31,7 +31,6 @@ module.exports = (jira) => {
         jira.createPassword(tempData, results.password, () => {
             jira.fs.writeFile('.jira', JSON.stringify(tempData), function(err) {
                 if (err) return console.log(err);
-                console.log(tempData);
             });
         });
     });
