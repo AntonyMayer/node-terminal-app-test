@@ -61,7 +61,13 @@ class JIRA {
             return this.shelljs.exec(string, { silent: true }).stdout;
         }
     }
-
+    /**
+     * Generates hash for safe password storage 
+     * @param {obj} object tempData for storing a password
+     * @param {string} newPassword user input
+     * @param {function} callback  
+     * @memberOf JIRA
+     */
     createPassword(object, newPassword, callback) {
         let pw = this.credential();
 
