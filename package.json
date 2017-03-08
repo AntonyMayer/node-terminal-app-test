@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/AntonyMayer/node-terminal-app-test#readme",
   "dependencies": {
-    "commander": "",
-    "easy-table": "",
-    "prompt": "",
-    "shelljs": ""
+    "commander": "^2.9.0",
+    "easy-table": "^1.0.0",
+    "prompt": "^1.0.0",
+    "shelljs": "^0.7.6"
   }
 }
