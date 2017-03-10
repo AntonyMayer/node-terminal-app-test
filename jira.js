@@ -12,7 +12,7 @@ class JIRA {
         this.check = require('./modules/check.js');
         this.send = require('./modules/send.js');
         this.display = require('./modules/display.js');
-        this.credential = require('credential');
+        this.pw = require('keytar');
         //external dependencies
         this.shelljs = require('shelljs');
         this.program = require('commander');
@@ -26,6 +26,7 @@ class JIRA {
     }
 
     //major methods
+
     checkData() {
         this.check(this);
         return this;
@@ -46,12 +47,19 @@ class JIRA {
     }
 
     //util methods
+
+    /**
+     * Test if file exists
+     * @param {string} filePath  
+     * @returns {bollean}
+     * @memberOf JIRA
+     */
     test(filePath) {
         return this.shelljs.test('-e', filePath);
     }
 
-    readFile(filePath, encoding) {
-        return this.fs.readFileSync(filePath, encoding);
+    readFile(filePath) {
+        return this.fs.readFileSync(filePath, 'utf8');
     }
 
     curl(string, callback) {
@@ -61,33 +69,26 @@ class JIRA {
             return this.shelljs.exec(string, { silent: true }).stdout;
         }
     }
+
     /**
-     * Generates hash for safe password storage 
-     * @param {obj} object tempData for storing a password
-     * @param {string} newPassword user input
-     * @param {function} callback  
+     * create a user in keychain service 'jiraCLIuser'
+     * @param {string} username 
+     * @param {string} password 
+     * @return {void}
      * @memberOf JIRA
      */
-    createPassword(object, newPassword, callback) {
-        let pw = this.credential();
-
-        pw.hash(newPassword, function(err, hash) {
-            if (err) { throw err; }
-            console.log('Password hash created...');
-            object.hash = hash;
-            if (callback && typeof callback === 'function') {
-                callback();
-            }
-        });
+    createPassword(username, password) {
+       this.pw.addPassword('jiraCLIuser', username, password);
     }
 
-    verifyPassword(storedHash, userInput) {
-        pw.verify(storedHash, userInput, function(err, isValid) {
-            var msg;
-            if (err) { throw err; }
-            msg = isValid ? 'Passwords match!' : 'Wrong password.';
-            console.log(msg);
-        });
+    /**
+     * get password for user from keychain if user exists
+     * @param {string} username 
+     * @return {string} password
+     * @memberOf JIRA
+     */
+    getPassword(username) {
+        return this.pw.getPassword('jiraCLIuser', username);
     }
 
     //flag methods

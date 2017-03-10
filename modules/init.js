@@ -28,10 +28,9 @@ module.exports = (jira) => {
             project: results.project,
             user: results.username
         };
-        jira.createPassword(tempData, results.password, () => {
-            jira.fs.writeFile('.jira', JSON.stringify(tempData), function(err) {
-                if (err) return console.log(err);
-            });
+        jira.createPassword(results.username, results.password);
+        jira.fs.writeFile('.jira', JSON.stringify(tempData), function(err) {
+            if (err) return console.log(err);
         });
     });
 };

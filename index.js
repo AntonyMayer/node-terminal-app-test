@@ -25,6 +25,7 @@ let get = (projectName) => {
     jira.checkData()
         .sendData()
         .displayData();
+
 };
 
 let init = () => {

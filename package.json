@@ -24,8 +24,8 @@
   "homepage": "https://github.com/AntonyMayer/node-terminal-app-test#readme",
   "dependencies": {
     "commander": "^2.9.0",
-    "credential": "^2.0.0",
     "easy-table": "^1.0.0",
+    "keytar": "^3.0.2",
     "prompt": "^1.0.0",
     "shelljs": "^0.7.6"
   }
