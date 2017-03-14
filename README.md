@@ -3,24 +3,6 @@
 
 Pull issues and display from jira using terminal.
 
-**Usage:**
-
-    $ jira get
-
-    Receiving data........
-    https://servername/rest/api/2/search?jql=project=CCLC
-
-    Project: CCLC
-
-    Ticket   Title   Status   Priority  Issue URL                                      
-    -------  ------  -------  --------  --------------------------
-    Id-1     Title   Test     Normal    https://server/browse/Id-1
-    Id-2     Title   Test     Normal    https://server/browse/Id-2
-    Id-3     Title   Test     Normal    https://server/browse/Id-3
-    
-
-Command + double click on Mac on Issue URL to open it in default browser.
-
 **Installation:**
 
 Need global installation to work correctly. 
