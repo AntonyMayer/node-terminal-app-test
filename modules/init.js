@@ -20,11 +20,10 @@ module.exports = (jira) => {
         if (err) { console.log(err); }
 
         if (results.password) jira.createPassword(process.env.USER, results.password);
-        
+
         jira.fs.writeFile('.jira', JSON.stringify({
             server: 'https://jira.designory.com:8443',
-            project: results.project,
-            user: process.env.USER
+            project: results.project
         }), function(err) {
             if (err) return console.log(err);
         });
