@@ -5,18 +5,18 @@ Pull issues and display from jira using terminal.
 
 **Usage:**
 
-    jira get
+    $ jira get
 
     Receiving data........
     https://servername/rest/api/2/search?jql=project=CCLC
 
     Project: CCLC
 
-    Ticket   Title        Status       Priority  URL    Issue URL                                      
-    -------  -----------  -----------  --------  -----  ------------------------------
-    Id-1     Description  In Progress  Normal    /url   https://servername/browse/Id-1
-    Id-2     Description  In Progress  Normal    /url   https://servername/browse/Id-2
-    Id-3     Description  In Progress  Normal    /url   https://servername/browse/Id-3
+    Ticket   Title        Status       Priority  Issue URL                                      
+    -------  -----------  -----------  --------  ------------------------------
+    Id-1     Description  In Progress  Normal    https://servername/browse/Id-1
+    Id-2     Description  In Progress  Normal    https://servername/browse/Id-2
+    Id-3     Description  In Progress  Normal    https://servername/browse/Id-3
     
 
 Command + double click on Mac on Issue URL to open it in default browser.
@@ -26,20 +26,20 @@ Command + double click on Mac on Issue URL to open it in default browser.
 Need global installation to work correctly. 
 Might require sudo to create a symlink.
 
-    npm cache clean
-    sudo npm install -g jira-pull-tickets@latest
+    $ npm cache clean
+    $ sudo npm install -g jira-pull-tickets@latest
 
 **Commands:**
 
-    jira get [project name] [flag]    
+    $ jira get [project name] [flag]    
 
 Display open tickets for default project:
 
-    jira get 
+    $ jira get 
 
 Open tickets for default project assigned to current user:
 
-    jira get -u                
+    $ jira get -u                
 
 Display all tickets for default project: 
     
