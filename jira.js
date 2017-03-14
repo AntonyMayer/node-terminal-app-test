@@ -8,7 +8,8 @@
 class JIRA {
     constructor() {
         //local modules
-        this.initialization = require('./modules/setup.js');
+        // this.initialization = require('./modules/setup.js');
+        this.initProject = require('./modules/init.js');
         this.check = require('./modules/check.js');
         this.send = require('./modules/send.js');
         this.display = require('./modules/display.js');
@@ -32,8 +33,13 @@ class JIRA {
         return this;
     }
 
-    setup() {
-        this.initialization(this);
+    init() {
+        this.initProject(this);
+        return this;
+    }
+
+    config() {
+        // this.initialization(this);
         return this;
     }
 
@@ -89,6 +95,10 @@ class JIRA {
      */
     getPassword(username) {
         return this.pw.getPassword('jiraCLIuser', username);
+    }
+
+    checkPassword() {
+        return (this.pw.findPassword('jiraCLIuser')) ? true : false;
     }
 
     //flag methods

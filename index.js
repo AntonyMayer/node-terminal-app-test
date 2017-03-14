@@ -14,25 +14,24 @@ let jira = require('./jira.js');
  */
 let get = (projectName) => {
 
-    jira.data.project = projectName; //if projectName passed overwrite the default
+        jira.data.project = projectName; //if projectName passed overwrite the default
 
-    // check for init to be done (.jira and headers exists)
-    if (!jira.test('./.jira')) {
-        return jira.setup();
-    }
+        // check for init to be done (.jira and headers exists)
+        if (!jira.test('./.jira')) {
+            return jira.init();
+        }
 
-    //start methods chain
-    jira.checkData()
-        .sendData()
-        .displayData();
-};
-
-let setup = () => {
-    jira.setup()
-        .checkData()
-        .sendData()
-        .displayData();
-};
+        //start methods chain
+        jira.checkData()
+            .sendData()
+            .displayData();
+    },
+    config = () => {
+        jira.config();
+    },
+    init = () => {
+        jira.init();
+    };
 
 /**
  * App options
@@ -44,8 +43,11 @@ jira.program
     .option('-a, --all', 'List all tickets', jira.displayAll())
     .action(get)
 jira.program
-    .command('setup')
-    .action(setup)
+    .command('config')
+    .action(config)
+jira.program
+    .command('init')
+    .action(init)
 jira.program.on('--help', function() {
     console.log('\n    get [project name] [flag]');
     console.log('    get                            returns open tickets for default project;');

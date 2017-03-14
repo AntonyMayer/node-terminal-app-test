@@ -1,5 +1,5 @@
 /**
- * Setup function
+ * Init function
  * user inputs => projectname => login => password
  * @param {object} jira namespace object
  */
@@ -9,26 +9,22 @@ let tempData = {};
 
 module.exports = (jira) => {
 
-    console.log('\n >> Initializing\n');
+    console.log('\nInitialization...\n');
 
     //prompt user's data
-    let userData = [
-        { name: 'server' },
-        { name: 'project' },
-        { name: 'username' },
-        { name: 'password', hidden: true }
-    ];
+    let userData = [ { name: 'project' } ];
+    if (!jira.checkPassword()) userData.push({ name: 'password', hidden: true });
 
     jira.prompt.start();
 
     jira.prompt.get(userData, function(err, results) {
         if (err) { console.log(err); }
         tempData = {
-            server: results.server ? results.server : 'https://jira.designory.com:8443',
+            server: 'https://jira.designory.com:8443',
             project: results.project,
-            user: results.username
+            user: process.env.USER
         };
-        jira.createPassword(results.username, results.password);
+        if (results.password) jira.createPassword(process.env.USER, results.password);
         jira.fs.writeFile('.jira', JSON.stringify(tempData), function(err) {
             if (err) return console.log(err);
         });
