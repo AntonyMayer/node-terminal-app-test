@@ -8,8 +8,8 @@
 class JIRA {
     constructor() {
         //local modules
-        // this.initialization = require('./modules/setup.js');
         this.initProject = require('./modules/init.js');
+        this.configuration = require('./modules/config.js');
         this.check = require('./modules/check.js');
         this.send = require('./modules/send.js');
         this.display = require('./modules/display.js');
@@ -39,8 +39,7 @@ class JIRA {
     }
 
     config() {
-        // this.initialization(this);
-        return this;
+        this.configuration(this);
     }
 
     sendData() {
