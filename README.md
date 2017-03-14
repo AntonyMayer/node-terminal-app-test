@@ -1,9 +1,24 @@
-# node-terminal-app-test
-**Description:**
+# CLI to display jira issues
+
+
+    $ jira get
+
+    Receiving data........
+    https://servername/rest/api/2/search?jql=project=CCLC
+    
+    Project: CCLC
+
+    Ticket   Title        Status       Priority  Issue URL                   
+    -------  -----------  -----------  --------  ------------------------------
+    Id-1     Description  In Progress  Normal    https://servername/browse/Id-1
+    Id-2     Description  In Progress  Normal    https://servername/browse/Id-2
+    Id-3     Description  In Progress  Normal    https://servername/browse/Id-3
+
+**1. Description:**
 
 Pull issues and display from jira using terminal.
 
-**Installation:**
+**2. Installation:**
 
 Need global installation to work correctly. 
 Might require sudo to create a symlink.
@@ -11,33 +26,48 @@ Might require sudo to create a symlink.
    	$ npm cache clean
     $ sudo npm install -g jira-pull-tickets@latest
 
-**Usage:**
+**3. Usage:**
+
+Inside project root directory run.
+
+	$ jira init
+    
+You will be asked to prompt project name (ex. CCLC or CMHM).
+It creates **.jira** file that contains basic info required to form requests to Jira's server.
+
+If it is the very first initialization of jira package it wil also ask to promt user's password to access Jira's server. 
+Password will be safely stored in Keychain under the service **jiraCLIuser**. 
+
+**3.1 Get command**
 
     $ jira get [project name] [flag]    
 
 
 | Command  |  Description |
 |---|---|
-| jira get |  Display open tickets for default project |
-| jira get -u | Open tickets for default project assigned to current user  |
+|  jira get |  Display open tickets for default project |
+|  jira get -u | Open tickets for default project assigned to current user  |
 |  jira get -a |  Display all tickets for default project |
 |  jira get CCLC  |  Display open tickets for specified project, ex. CCLC |
-|  jira init  |  Run initialization |
 
 
-Flags can be combined. Following will display all tickets for CCLC project assigned to current user: 
+Flags can be combined: 
    
-    $ jira get CCLC -ua                               
+    $ jira get CCLC -ua   //display all tickets for CCLC project assigned to current user    
 
-**Initialization:**
+**3.2 Config command**
 
-Creates .jira file to store data: server, default project and username.
+Default settings: 
+	
+    server: 'https://jira.designory.com:8443', 
+    user: process.env.USER
 
-Creates service in Keychain "jiraCLIuser" to safely store the password.
+Run following command to overwrite settings for current project:
 
-User inputs
+	$ jira config
+    
+You will be asked to prompt server, project, username, password. All data (except password) will be stored in **.jira** file.
 
-    - server    - [optional], default is 'jira.designory.com'
-    - project   - default project to display, ex. CCLC or CMHM
-    - username  
-    - password 
+**3.3 --help**
+
+Show available commands.
