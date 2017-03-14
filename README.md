@@ -1,71 +1,73 @@
-# node-terminal-app-test
-**Description:**
+# CLI to display jira issues
 
-Pull issues and display from jira using terminal.
 
-**Usage:**
-
-    jira get
+    $ jira get
 
     Receiving data........
     https://servername/rest/api/2/search?jql=project=CCLC
-
+    
     Project: CCLC
 
-    Ticket   Title        Status       Priority  URL    Issue URL                                      
-    -------  -----------  -----------  --------  -----  ------------------------------
-    Id-1     Description  In Progress  Normal    /url   https://servername/browse/Id-1
-    Id-2     Description  In Progress  Normal    /url   https://servername/browse/Id-2
-    Id-3     Description  In Progress  Normal    /url   https://servername/browse/Id-3
-    
+    Ticket   Title   Status   Priority  Issue URL                   
+    -------  ------  -------  --------  ------------------------------
+    Id-1     title   status   Normal    https://servername/browse/Id-1
+    Id-2     title   status   Normal    https://servername/browse/Id-2
+    Id-3     title   status   Normal    https://servername/browse/Id-3
 
-Command + double click on Mac on Issue URL to open it in default browser.
+**1. Description:**
 
-**Installation:**
+Pull issues and display from jira using terminal.
+
+**2. Installation:**
 
 Need global installation to work correctly. 
 Might require sudo to create a symlink.
 
-    npm cache clean
-    sudo npm install -g jira-pull-tickets@latest
+   	$ npm cache clean
+    $ sudo npm install -g jira-pull-tickets@latest
 
-**Commands:**
+**3. Usage:**
 
-    jira get [project name] [flag]    
+Inside project root directory run.
 
-Display open tickets for default project:
-
-    jira get 
-
-Open tickets for default project assigned to current user:
-
-    jira get -u                
-
-Display all tickets for default project: 
+	$ jira init
     
-    jira get -a                         
+You will be asked to prompt project name (ex. CCLC or CMHM).
+It creates **.jira** file that contains basic info required to form requests to Jira's server.
 
-Display open tickets for specified project, ex. CCLC:
+If it is the very first initialization of jira package it wil also ask to promt user's password to access Jira's server. 
+Password will be safely stored in Keychain under the service **jiraCLIuser**. 
 
-    jira get CCLC    
+**3.1 Get command**
 
-Flags can be combined: 
+    $ jira get [project name] [flag]    
+
+
+| Command  |  Description |
+|---|---|
+|  jira get |  Display open tickets for default project |
+|  jira get -u | Open tickets for default project assigned to current user  |
+|  jira get -a |  Display all tickets for default project |
+|  jira get CCLC  |  Display open tickets for specified project, ex. CCLC |
+
+
+Flags can be combined, ex. to display all tickets for CCLC project assigned to current user: 
    
-    jira get CCLC -ua   //display all tickets for CCLC project assigned to current user    
+    $ jira get CCLC -ua     
 
-Run reinitialization in case smth is not working:              
+**3.2 Config command**
+
+Default settings: 
+	
+    server: 'https://jira.designory.com:8443', 
+    user: process.env.USER
+
+Run following command to overwrite settings for current project:
+
+	$ jira config
     
-    jira init                           
+You will be asked to prompt server, project, username, password. All data (except password) will be stored in **.jira** file.
 
-**Initialization:**
+**3.3 --help**
 
-Creates .jira file to store data: server, default project and username.
-
-Creates headers for cookie-based authentication.
-
-User inputs
-
-    - server    - [optional], default is 'https://track.designory.com:8443'
-    - project   - default project to display, ex. CCLC or CMHM
-    - username  
-    - password 
+Show available commands.

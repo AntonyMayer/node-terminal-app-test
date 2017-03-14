@@ -8,9 +8,9 @@
 
 module.exports = (jira) => {
 
-    let defaultData = JSON.parse(jira.readFile('./.jira', 'utf8'));
+    let defaultData = JSON.parse(jira.readFile('./.jira'));
 
-    jira.data.user = defaultData.user;
+    jira.data.user = defaultData.user || process.env.USER;
     jira.data.server = defaultData.server;
 
     if (!jira.data.project) {

@@ -14,22 +14,25 @@ let jira = require('./jira.js');
  */
 let get = (projectName) => {
 
-    jira.data.project = projectName; //if projectName passed overwrite the default
+        //if projectName passed overwrite the default
+        jira.data.project = projectName; 
 
-    // check for init to be done (.jira and headers exists)
-    if (!jira.test('./.jira') || !jira.test('./headers')) {
-        return jira.init();
-    }
+        // check for init to be done (.jira and headers exists)
+        if (!jira.test('./.jira')) {
+            return jira.init();
+        }
 
-    //start methods chain
-    jira.checkData()
-        .sendData()
-        .displayData();
-};
-
-let init = () => {
-    jira.init();
-};
+        //start methods chain
+        jira.checkData()
+            .sendData()
+            .displayData();
+    },
+    config = () => {
+        jira.config();
+    },
+    init = () => {
+        jira.init();
+    };
 
 /**
  * App options
@@ -40,6 +43,9 @@ jira.program
     .option('-u, --user', 'List all tickets assigned to current user', jira.assignee())
     .option('-a, --all', 'List all tickets', jira.displayAll())
     .action(get)
+jira.program
+    .command('config')
+    .action(config)
 jira.program
     .command('init')
     .action(init)

@@ -8,10 +8,12 @@
 class JIRA {
     constructor() {
         //local modules
-        this.initialization = require('./modules/init.js');
+        this.initProject = require('./modules/init.js');
+        this.configuration = require('./modules/config.js');
         this.check = require('./modules/check.js');
         this.send = require('./modules/send.js');
         this.display = require('./modules/display.js');
+        this.pw = require('keytar');
         //external dependencies
         this.shelljs = require('shelljs');
         this.program = require('commander');
@@ -25,14 +27,19 @@ class JIRA {
     }
 
     //major methods
+
     checkData() {
         this.check(this);
         return this;
     }
 
     init() {
-        this.initialization(this);
+        this.initProject(this);
         return this;
+    }
+
+    config() {
+        this.configuration(this);
     }
 
     sendData() {
@@ -45,12 +52,19 @@ class JIRA {
     }
 
     //util methods
+
+    /**
+     * Test if file exists
+     * @param {string} filePath  
+     * @returns {bollean}
+     * @memberOf JIRA
+     */
     test(filePath) {
         return this.shelljs.test('-e', filePath);
     }
 
-    readFile(filePath, encoding) {
-        return this.fs.readFileSync(filePath, encoding);
+    readFile(filePath) {
+        return this.fs.readFileSync(filePath, 'utf8');
     }
 
     curl(string, callback) {
@@ -59,6 +73,31 @@ class JIRA {
         } else {
             return this.shelljs.exec(string, { silent: true }).stdout;
         }
+    }
+
+    /**
+     * create a user in keychain service 'jiraCLIuser'
+     * @param {string} username 
+     * @param {string} password 
+     * @return {void}
+     * @memberOf JIRA
+     */
+    createPassword(username, password) {
+       this.pw.addPassword('jiraCLIuser', username, password);
+    }
+
+    /**
+     * get password for user from keychain if user exists
+     * @param {string} username 
+     * @return {string} password
+     * @memberOf JIRA
+     */
+    getPassword(username) {
+        return this.pw.getPassword('jiraCLIuser', username);
+    }
+
+    checkPassword() {
+        return (this.pw.findPassword('jiraCLIuser')) ? true : false;
     }
 
     //flag methods

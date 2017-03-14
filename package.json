@@ -1,6 +1,6 @@
 {
   "name": "jira-pull-tickets",
-  "version": "1.0.20",
+  "version": "2.0.6",
   "bin": {
     "jira": "./index.js"
   },
@@ -16,7 +16,7 @@
   "keywords": [
     "jira"
   ],
-  "author": "",
+  "author": "Anton Kuzniatsou",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AntonyMayer/node-terminal-app-test/issues"
@@ -24,8 +24,8 @@
   "homepage": "https://github.com/AntonyMayer/node-terminal-app-test#readme",
   "dependencies": {
     "commander": "^2.9.0",
-    "credential": "^2.0.0",
     "easy-table": "^1.0.0",
+    "keytar": "^3.0.2",
     "prompt": "^1.0.0",
     "shelljs": "^0.7.6"
   }
