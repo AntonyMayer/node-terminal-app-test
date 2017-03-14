@@ -25,13 +25,9 @@ Might require sudo to create a symlink.
 |  jira init  |  Run initialization |
 
 
-Flags can be combined: 
+Flags can be combined. Following will display all tickets for CCLC project assigned to current user: 
    
-    $ jira get CCLC -ua   //display all tickets for CCLC project assigned to current user    
-
-Run reinitialization in case smth is not working:              
-    
-    $ jira init                           
+    $ jira get CCLC -ua                               
 
 **Initialization:**
 
