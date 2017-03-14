@@ -51,9 +51,9 @@ Password will be safely stored in Keychain under the service **jiraCLIuser**.
 |  jira get CCLC  |  Display open tickets for specified project, ex. CCLC |
 
 
-Flags can be combined: 
+Flags can be combined, ex. to display all tickets for CCLC project assigned to current user: 
    
-    $ jira get CCLC -ua   //display all tickets for CCLC project assigned to current user    
+    $ jira get CCLC -ua     
 
 **3.2 Config command**
 
