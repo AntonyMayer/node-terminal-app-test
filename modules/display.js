@@ -32,7 +32,9 @@ module.exports = (jira) => {
     //iterate data from response
     ticketsData.forEach((issue) => {
 
-        if (issue.fields.status.statusCategory.name == "Complete" && !jira.data.showAllTickets) return;
+        if ((issue.fields.status.statusCategory.name == "Complete" || 
+             issue.fields.status.statusCategory.name == "Done") && 
+             !jira.data.showAllTickets) return;
 
         tableData.push({
             id: issue.key,
