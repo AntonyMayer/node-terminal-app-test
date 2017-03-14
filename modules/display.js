@@ -47,7 +47,7 @@ module.exports = (jira) => {
     //create table
     tableData.forEach(function(ticket) {
         output.cell('Ticket', ticket.id);
-        output.cell('Title', ticket.title);
+        output.cell('Title', (ticket.title.length >= 80) ? ticket.title.slice(0, 80) + '...' : ticket.title);
         output.cell('Status', ticket.status);
         output.cell('Priority', ticket.priority);
         // output.cell('URL', ticket.url);
