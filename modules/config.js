@@ -14,7 +14,7 @@ module.exports = (jira) => {
     let userData = [
         { name: 'server' },
         { name: 'project' },
-        { name: 'username' },
+        { name: 'username' }
     ];
 
     jira.prompt.start();
