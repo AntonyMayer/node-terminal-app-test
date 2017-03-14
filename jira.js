@@ -8,7 +8,7 @@
 class JIRA {
     constructor() {
         //local modules
-        this.initialization = require('./modules/init.js');
+        this.initialization = require('./modules/setup.js');
         this.check = require('./modules/check.js');
         this.send = require('./modules/send.js');
         this.display = require('./modules/display.js');
@@ -32,7 +32,7 @@ class JIRA {
         return this;
     }
 
-    init() {
+    setup() {
         this.initialization(this);
         return this;
     }

@@ -1,5 +1,5 @@
 /**
- * Init function
+ * Setup function
  * user inputs => projectname => login => password
  * @param {object} jira namespace object
  */

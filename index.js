@@ -18,7 +18,7 @@ let get = (projectName) => {
 
     // check for init to be done (.jira and headers exists)
     if (!jira.test('./.jira')) {
-        return jira.init();
+        return jira.setup();
     }
 
     //start methods chain
@@ -27,8 +27,8 @@ let get = (projectName) => {
         .displayData();
 };
 
-let init = () => {
-    jira.init()
+let setup = () => {
+    jira.setup()
         .checkData()
         .sendData()
         .displayData();
@@ -44,8 +44,8 @@ jira.program
     .option('-a, --all', 'List all tickets', jira.displayAll())
     .action(get)
 jira.program
-    .command('init')
-    .action(init)
+    .command('setup')
+    .action(setup)
 jira.program.on('--help', function() {
     console.log('\n    get [project name] [flag]');
     console.log('    get                            returns open tickets for default project;');
