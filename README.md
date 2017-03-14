@@ -8,11 +8,11 @@
     
     Project: CCLC
 
-    Ticket   Title        Status       Priority  Issue URL                   
-    -------  -----------  -----------  --------  ------------------------------
-    Id-1     Description  In Progress  Normal    https://servername/browse/Id-1
-    Id-2     Description  In Progress  Normal    https://servername/browse/Id-2
-    Id-3     Description  In Progress  Normal    https://servername/browse/Id-3
+    Ticket   Title   Status   Priority  Issue URL                   
+    -------  ------  -------  --------  ------------------------------
+    Id-1     title   status   Normal    https://servername/browse/Id-1
+    Id-2     title   status   Normal    https://servername/browse/Id-2
+    Id-3     title   status   Normal    https://servername/browse/Id-3
 
 **1. Description:**
 
