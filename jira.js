@@ -19,7 +19,7 @@ class JIRA {
         this.prompt = require('prompt');
         this.table = require('easy-table');
         this.pw = require('keytar');
-        this.store = require('data-store')('app', {cwd: 'actual'});
+        this.store = require('data-store')('jiraCLI', {cwd: 'actual'});
         this.data = {
             currentUser: false,
             showAllTickets: false
