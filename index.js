@@ -23,7 +23,8 @@ let get = (projectName) => {
         }
 
         //start methods chain
-        jira.checkData()
+        jira
+            .checkData()
             .sendData()
             .displayData();
     },
