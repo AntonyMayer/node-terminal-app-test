@@ -1,5 +1,5 @@
 # CLI to display jira issues
-
+**Note: OS X Only**
 
     $ jira get
 
