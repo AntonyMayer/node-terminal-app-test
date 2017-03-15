@@ -26,8 +26,8 @@ module.exports = (jira) => {
         jira.store
             .set('server', results.server)
             .set('project', results.project)
-            .set('username', results.username)
+            .set('username', results.username || process.env.USER)
 
-        if (results.password) jira.createPassword(process.env.USER, results.password);
+        if (results.password) jira.createPassword(results.username || process.env.USER, results.password);
     });
 };
