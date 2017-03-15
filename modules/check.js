@@ -16,7 +16,7 @@ module.exports = (jira) => {
     if (!jira.data.project) {
         jira.data.project = jira.store.get('project');
     }
-
+    
     return jira;
 
 };

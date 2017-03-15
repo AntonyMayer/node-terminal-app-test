@@ -19,7 +19,7 @@ class JIRA {
         this.prompt = require('prompt');
         this.table = require('easy-table');
         this.pw = require('keytar');
-        this.store = require('data-store')('jiraCLI', {cwd: '/usr/local/lib/node_modules/jira-pull-tickets'});
+        this.store = require('data-store')('jiraCLI', {cwd: __dirname});
         this.data = {
             currentUser: false,
             showAllTickets: false
