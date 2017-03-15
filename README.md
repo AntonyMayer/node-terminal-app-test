@@ -58,8 +58,7 @@ Flags can be combined, ex. to display all tickets for CCLC project assigned to c
 **3.2 Config command**
 
 Default settings: 
-	
-    server: 'https://jira.designory.com:8443', 
+
     user: process.env.USER
 
 Run following command to overwrite settings for current project:
