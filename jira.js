@@ -14,6 +14,7 @@ class JIRA {
         this.send = require('./modules/send.js');
         this.display = require('./modules/display.js');
         this.pw = require('keytar');
+        this.store = require('data-store')('app', {cwd: 'actual'});
         //external dependencies
         this.shelljs = require('shelljs');
         this.program = require('commander');
