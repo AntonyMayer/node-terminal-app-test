@@ -11,8 +11,8 @@ module.exports = (jira) => {
     console.log("\nSending request........");
 
     //check server name to avoid double slash 
-    if (jira.data.server[jira.data.server.length - 1] == '/') {
-        jira.data.server.slice(0, jira.data.server.length - 1);
+    if (jira.data.server[jira.data.server.length - 1] === '/') {
+        jira.data.server = jira.data.server.slice(0, jira.data.server.length - 1);
     }
 
     //target url with jql query targeting default or user specified project
@@ -30,7 +30,7 @@ module.exports = (jira) => {
     try {
         jira.data.response = JSON.parse(jira.curl(jira.data.query));
     } catch (e) {
-        jira.data.response = { "errorMessages": ["Error in authentication... \nPlease use 'jira init' to update credentials"], "errors": {} };
+        jira.data.response = { "errorMessages": ["Error authentication... \nPlease use 'jira init' to update credentials"], "errors": {} };
     }
 
     return jira;
