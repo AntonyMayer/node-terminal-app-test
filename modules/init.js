@@ -14,9 +14,9 @@ module.exports = (jira) => {
     let userData = [
         { name: 'server' },
         { name: 'project' },
-        { name: 'username' }
+        { name: 'username' },
+        { name: 'password', hidden: true }
     ];
-    if (!jira.checkPassword()) userData.push({ name: 'password', hidden: true });
 
     jira.prompt.start();
 
