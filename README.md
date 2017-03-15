@@ -1,5 +1,6 @@
 # CLI to display jira issues
-**Note: OS X Only**
+
+**Note: Mac OS only**
 
     $ jira get
 
@@ -8,11 +9,11 @@
     
     Project: CCLC
 
-    Ticket   Title   Status   Priority  Issue URL                   
-    -------  ------  -------  --------  ------------------------------
-    Id-1     title   status   Normal    https://servername/browse/Id-1
-    Id-2     title   status   Normal    https://servername/browse/Id-2
-    Id-3     title   status   Normal    https://servername/browse/Id-3
+    Ticket   Title        Status       Priority  Issue URL                   
+    -------  -----------  -----------  --------  ------------------------------
+    Id-1     Description  In Progress  Normal    https://servername/browse/Id-1
+    Id-2     Description  In Progress  Normal    https://servername/browse/Id-2
+    Id-3     Description  In Progress  Normal    https://servername/browse/Id-3
 
 **1. Description:**
 
@@ -21,24 +22,32 @@ Pull issues and display from jira using terminal.
 **2. Installation:**
 
 Need global installation to work correctly. 
-Might require sudo to create a symlink.
 
-   	$ npm cache clean
-    $ sudo npm install -g jira-pull-tickets@latest
+    $ npm install -g jira-pull-tickets@latest
 
 **3. Usage:**
 
-Inside project root directory run.
+Before using run:
 
 	$ jira init
     
-You will be asked to prompt project name (ex. CCLC or CMHM).
-It creates **.jira** file that contains basic info required to form requests to Jira's server.
+You will be asked to prompt 
 
-If it is the very first initialization of jira package it wil also ask to promt user's password to access Jira's server. 
+- **server** - ex. https://jira.servername.com
+
+- **project name** - ex. CCLC, CMHM or any other project name - it will be used as default (current) project to display issues (tickets)
+- **[username]** - jira's username, if left blank process.env.USER will be used
+- **password** - user's password for jira's server.
+
 Password will be safely stored in Keychain under the service **jiraCLIuser**. 
 
-**3.1 Get command**
+After init jiraCLI creates **jiraCLI.json** file at */Users/username/Library/JiraCLI* that contains basic info required to form requests to Jira's server.
+
+**4. Commands**
+
+**4.1 Get**
+
+Basic command that displays all issues with status different from "Complete" or "Done" for default project (set during init).
 
     $ jira get [project name] [flag]    
 
@@ -51,21 +60,17 @@ Password will be safely stored in Keychain under the service **jiraCLIuser**.
 |  jira get CCLC  |  Display open tickets for specified project, ex. CCLC |
 
 
-Flags can be combined, ex. to display all tickets for CCLC project assigned to current user: 
+Flags can be combined: 
    
-    $ jira get CCLC -ua     
+    $ jira get CCLC -ua   //display all tickets for CCLC project assigned to current user    
 
-**3.2 Config command**
+**4.2 Project**
 
-Default settings: 
+Used to change default project. 
 
-    user: process.env.USER
+ 	$ jira project
 
-Run following command to overwrite settings for current project:
-
-	$ jira config
-    
-You will be asked to prompt server, project, username, password. All data (except password) will be stored in **.jira** file.
+Another option to change default project is to update it manually at */Users/username/Library/JiraCLI/jiraCLI.json*.
 
 **3.3 --help**
 
