@@ -60,9 +60,9 @@ Basic command that displays all issues with status different from "Complete" or 
 |  jira get CCLC  |  Display open tickets for specified project, ex. CCLC |
 
 
-Flags can be combined: 
+Flags can be combined, ex. display all tickets for CCLC project assigned to current user: 
    
-    $ jira get CCLC -ua   //display all tickets for CCLC project assigned to current user    
+    $ jira get CCLC -ua    
 
 **4.2 Project**
 
