@@ -8,22 +8,23 @@
 let jira = require('./jira.js');
 
 /**
- * Main function, send request to Jira and triggers 
+ * Main function taht triggers 
  * functions chain => check data => send data to Jira's server => display data
  * @param {string} [projectName] project name
  */
 let get = (projectName) => {
 
         //if projectName passed overwrite the default
-        jira.data.project = projectName; 
+        jira.data.project = projectName;
 
-        // check for init to be done (.jira and headers exists)
-        if (!jira.test('./.jira')) {
+        // check for init to be done
+        if (!jira.store.get('server') || !jira.store.get('username')) {
             return jira.init();
         }
 
         //start methods chain
-        jira.checkData()
+        jira
+            .checkData()
             .sendData()
             .displayData();
     },
@@ -44,7 +45,7 @@ jira.program
     .option('-a, --all', 'List all tickets', jira.displayAll())
     .action(get)
 jira.program
-    .command('config')
+    .command('project')
     .action(config)
 jira.program
     .command('init')
