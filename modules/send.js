@@ -7,30 +7,32 @@
 'use strict';
 
 module.exports = (jira) => {
+    let tempData = jira.data,
+        server = jira.data.server;
 
     console.log("\nSending request........");
 
     //check server name to avoid double slash 
-    if (jira.data.server[jira.data.server.length - 1] === '/') {
-        jira.data.server = jira.data.server.slice(0, jira.data.server.length - 1);
+    if (server[server.length - 1] === '/') {
+        server = server.slice(0, server.length - 1);
     }
 
     //target url with jql query targeting default or user specified project
-    jira.data.url = jira.data.server + '/rest/api/2/search?jql=project=' + jira.data.project;
+    tempData.url = server + '/rest/api/2/search?jql=project=' + tempData.project;
 
     //if '-u' flag was used => show only tickets assigned to current user
-    if (jira.data.currentUser) jira.data.url = jira.data.url + '%20AND%20assignee=' + jira.data.user;
+    if (tempData.currentUser) tempData.url = tempData.url + '%20AND%20assignee=' + tempData.user;
 
-    console.log(jira.data.url);
+    console.log(tempData.url);
 
     //Creating a curl request based on data object and flags
-    jira.data.query = 'curl -u ' + jira.data.user + ':' + jira.getPassword(jira.data.user) + ' -X GET -H "Content-Type: application/json" ' + jira.data.url;
+    tempData.query = 'curl -u ' + tempData.user + ':' + jira.getPassword(tempData.user) + ' -X GET -H "Content-Type: application/json" ' + tempData.url;
 
     //parse response from server
     try {
-        jira.data.response = JSON.parse(jira.curl(jira.data.query));
+        tempData.response = JSON.parse(jira.curl(tempData.query));
     } catch (e) {
-        jira.data.response = { "errorMessages": ["Error authentication... \nPlease use 'jira init' to update credentials"], "errors": {} };
+        tempData.response = { "errorMessages": ["Error authentication... \nPlease use 'jira init' to update credentials"], "errors": {} };
     }
 
     return jira;
