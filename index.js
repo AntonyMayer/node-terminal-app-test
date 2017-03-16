@@ -42,6 +42,9 @@ jira.program
     .command('project')
     .action(() => { return jira.config() })
 jira.program
+    .command('set')
+    .action(() => { return jira.set() })
+jira.program
     .command('init')
     .action(() => { return jira.init() })
 jira.program.on('--help', function() {

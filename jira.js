@@ -11,6 +11,7 @@ class JIRA {
         this.initProject = require('./modules/init.js');
         this.configuration = require('./modules/config.js');
         this.check = require('./modules/check.js');
+        this.setLocal = require('./modules/set.js');
         this.send = require('./modules/send.js');
         this.display = require('./modules/display.js');
         //external dependencies
@@ -19,7 +20,9 @@ class JIRA {
         this.prompt = require('prompt');
         this.table = require('easy-table');
         this.pw = require('keytar');
+        this.fs = require('fs');
         this.store = require('data-store')('jiraCLI', {cwd: '~/Library/JiraCLI'});
+        this.localStore = require('data-store')('jiraCLI', {cwd: './'});
         //default data
         this.data = {
             currentUser: false,
@@ -41,6 +44,10 @@ class JIRA {
 
     config() {
         this.configuration(this);
+    }
+
+    set() {
+        this.setLocal(this);
     }
 
     sendData() {
@@ -72,6 +79,14 @@ class JIRA {
 
     checkPassword() {
         return (this.pw.findPassword('jiraCLIuser')) ? true : false;
+    }
+
+    test(filePath) {
+        return this.shelljs.test('-e', filePath);
+    }
+
+    readFile(filePath) {
+        return this.fs.readFileSync(filePath, 'utf8');
     }
 
     //flag methods

@@ -11,8 +11,11 @@ module.exports = (jira) => {
     jira.data.user = jira.store.get('username') || process.env.USER;
     jira.data.server = jira.store.get('server');
 
-    if (jira.test('./.jira')) jira.data.project = JSON.parse(jira.readFile('./.jira'));
-    else if (!jira.data.project) jira.data.project = jira.store.get('project');
+    if (jira.test('./jiraCLI.json')) {
+        jira.data.project = JSON.parse(jira.readFile('./jiraCLI.json')).project;
+    } else if (!jira.data.project) {
+        jira.data.project = jira.store.get('project');
+    }
 
     return jira;    
 
