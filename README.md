@@ -70,7 +70,7 @@ Used to change default project.
 
  	$ jira project
 
-Another option to change default project is to update it manually at */Users/username/Library/JiraCLI/jiraCLI.json*.
+Another option to change default project is to update it manually at */Users/username/Library/JiraCLI/jiraCLI.json*
 
 **3.3 --help**
 
