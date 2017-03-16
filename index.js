@@ -14,26 +14,20 @@ let jira = require('./jira.js');
  */
 let get = (projectName) => {
 
-        //if projectName passed overwrite the default
-        jira.data.project = projectName;
+    //if projectName passed overwrite the default
+    jira.data.project = projectName;
 
-        // check for init to be done
-        if (!jira.store.get('server') || !jira.store.get('username')) {
-            return jira.init();
-        }
+    // check for init to be done
+    if (!jira.store.get('server') || !jira.store.get('username')) {
+        return jira.init();
+    }
 
-        //start methods chain
-        jira
-            .checkData()
-            .sendData()
-            .displayData();
-    },
-    config = () => {
-        jira.config();
-    },
-    init = () => {
-        jira.init();
-    };
+    //start methods chain
+    jira
+        .checkData()
+        .sendData()
+        .displayData();
+};
 
 /**
  * App options
@@ -46,10 +40,10 @@ jira.program
     .action(get)
 jira.program
     .command('project')
-    .action(config)
+    .action(() => { return jira.config() })
 jira.program
     .command('init')
-    .action(init)
+    .action(() => { return jira.init() })
 jira.program.on('--help', function() {
     console.log('\n    get [project name] [flag]');
     console.log('    get                            returns open tickets for default project;');

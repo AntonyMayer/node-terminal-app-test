@@ -27,7 +27,7 @@ Need global installation to work correctly.
 
 **3. Usage:**
 
-Before using run:
+After installation run init:
 
 	$ jira init
     
