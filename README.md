@@ -47,7 +47,7 @@ After init jiraCLI creates **jiraCLI.json** file at */Users/username/Library/Jir
 
 **4.1 Get**
 
-Basic command that displays all issues with status different from "Complete" or "Done" for default project (set during init).
+Basic command that displays all issues with status different from "Complete" or "Done" for project. First it will search current directory for jiraCLI.json to get project information, else it will use default project data stored at */Users/username/Library/JiraCLI/jiraCLI.json* (set during initialization)
 
     $ jira get [project name] [flag]    
 
@@ -64,7 +64,16 @@ Flags can be combined, ex. display all tickets for CCLC project assigned to curr
    
     $ jira get CCLC -ua    
 
-**4.2 Project**
+**4.2 Set**
+
+When in current project directory run
+
+    $ jira set
+
+You'll be asked to promt new project name. It will create *jiraCLI.json* file in that directory, storing the project name. Since now whenever runnning **$ jira get** in this directory it will use project name from *jiraCLI.json* instead of default one.
+
+
+**4.3 Project**
 
 Used to change default project. 
 
@@ -72,6 +81,6 @@ Used to change default project.
 
 Another option to change default project is to update it manually at */Users/username/Library/JiraCLI/jiraCLI.json*
 
-**3.3 --help**
+**4.4 --help**
 
 Show available commands.

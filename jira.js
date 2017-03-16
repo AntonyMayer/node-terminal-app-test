@@ -22,7 +22,7 @@ class JIRA {
         this.pw = require('keytar');
         this.fs = require('fs');
         this.store = require('data-store')('jiraCLI', {cwd: '~/Library/JiraCLI'});
-        this.localStore = require('data-store')('jiraCLI', {cwd: './'});
+        this.localStore = require('data-store')('jiraCLI', {cwd: process.cwd()});
         //default data
         this.data = {
             currentUser: false,
