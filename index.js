@@ -25,8 +25,8 @@ let get = (projectName) => {
     //start methods chain
     jira
         .checkData()
-        // .sendData()
-        // .displayData();
+        .sendData()
+        .displayData();
 };
 
 /**
