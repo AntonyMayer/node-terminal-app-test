@@ -25,8 +25,8 @@ let get = (projectName) => {
     //start methods chain
     jira
         .checkData()
-        .sendData()
-        .displayData();
+        // .sendData()
+        // .displayData();
 };
 
 /**
@@ -41,6 +41,9 @@ jira.program
 jira.program
     .command('project')
     .action(() => { return jira.config() })
+jira.program
+    .command('set')
+    .action(() => { return jira.set() })
 jira.program
     .command('init')
     .action(() => { return jira.init() })
