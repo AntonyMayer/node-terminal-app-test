@@ -30,8 +30,9 @@ module.exports = (jira) => {
     }
 
     //iterate data from response
-    ticketsData.forEach((issue) => {
+    for (let issue of ticketsData) processData(issue);
 
+    function processData(issue) {
         if ((issue.fields.status.statusCategory.name == "Complete" ||
                 issue.fields.status.statusCategory.name == "Done") &&
             !jira.data.showAllTickets) return;
@@ -42,7 +43,7 @@ module.exports = (jira) => {
             status: issue.fields.status.statusCategory.name,
             priority: issue.fields.priority.name
         });
-    });
+    }
 
     //create table
     tableData.forEach(function(ticket) {
