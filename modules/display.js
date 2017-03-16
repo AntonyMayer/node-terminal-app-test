@@ -25,16 +25,16 @@ module.exports = (jira) => {
         return console.log('\nNo tickets found based on search paramaters...\n');
     } else if (errors) {
         return errors.forEach((err) => {
-                console.log('\n' + err + '\n');
-            });
+            console.log('\n' + err + '\n');
+        });
     }
 
     //iterate data from response
     ticketsData.forEach((issue) => {
 
-        if ((issue.fields.status.statusCategory.name == "Complete" || 
-             issue.fields.status.statusCategory.name == "Done") && 
-             !jira.data.showAllTickets) return;
+        if ((issue.fields.status.statusCategory.name == "Complete" ||
+                issue.fields.status.statusCategory.name == "Done") &&
+            !jira.data.showAllTickets) return;
 
         tableData.push({
             id: issue.key,
