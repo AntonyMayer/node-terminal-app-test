@@ -40,9 +40,7 @@ module.exports = (jira) => {
             id: issue.key,
             title: issue.fields.summary,
             status: issue.fields.status.statusCategory.name,
-            priority: issue.fields.priority.name,
-            url: issue.fields.customfield_10004 != null ?
-                '/' + issue.fields.customfield_10004.split('/').slice(3).join('/') : null
+            priority: issue.fields.priority.name
         });
     });
 
@@ -52,7 +50,6 @@ module.exports = (jira) => {
         output.cell('Title', (ticket.title.length >= 80) ? ticket.title.slice(0, 80) + '...' : ticket.title);
         output.cell('Status', ticket.status);
         output.cell('Priority', ticket.priority);
-        // output.cell('URL', ticket.url);
         output.cell('Issue URL', jira.data.server + /browse/ + ticket.id);
         output.newRow();
     });
