@@ -12,7 +12,7 @@ module.exports = (jira) => {
     jira.data.server = jira.store.get('server');
 
     if (jira.test(process.cwd() + '/jiraCLI.json')) {
-        jira.data.project = JSON.parse(jira.readFile(process.cwd() + '/jiraCLI.json')).project;
+        jira.data.project = jira.localStore.get('project');
     } else if (!jira.data.project) {
         jira.data.project = jira.store.get('project');
     }

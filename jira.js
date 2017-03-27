@@ -56,9 +56,8 @@ class JIRA {
         return this;
     }
 
-    update() {
+    updateStatus() {
         this.update(this);
-        return this;
     }
 
     displayData() {
@@ -89,10 +88,6 @@ class JIRA {
 
     test(filePath) {
         return this.shelljs.test('-e', filePath);
-    }
-
-    readFile(filePath) {
-        return this.fs.readFileSync(filePath, 'utf8');
     }
 
     //flag methods
