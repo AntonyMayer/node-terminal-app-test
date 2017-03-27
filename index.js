@@ -47,6 +47,9 @@ jira.program
 jira.program
     .command('init')
     .action(() => { return jira.init() })
+jira.program
+    .command('update')
+    .action(() => { return jira.update() })
 jira.program.on('--help', function() {
     console.log('\n    get [project name] [flag]');
     console.log('    get                            returns open tickets for default project;');
