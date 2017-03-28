@@ -8,7 +8,6 @@ module.exports = (jira) => {
                      + jira.getPassword(tempData.user) 
                      + ' -X PUT --data @update.json -H "Content-Type: application/json" '
                      + server + '/rest/api/2/issue/' + issue.key;
-            console.log(query);
             jira.curl(query);
         }
     }
