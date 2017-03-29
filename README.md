@@ -2,7 +2,7 @@
 
 **Note: Mac OS only**
 
-![screen shot](https://drive.google.com/open?id=0B0s1scfptJ4NRlhPamN4cnN0ZDQ)
+
 
 **1. Description:**
 
