@@ -1,4 +1,4 @@
-# CLI to display jira issues
+# CLI app to display jira issues
 
 **Note: Mac OS only**
 
