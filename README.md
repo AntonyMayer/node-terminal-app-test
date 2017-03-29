@@ -2,7 +2,7 @@
 
 **Note: Mac OS only**
 
-
+![screen shot](https://raw.githubusercontent.com/AntonyMayer/node-terminal-app-test/master/screenshot.png "Screen shot")
 
 **1. Description:**
 
