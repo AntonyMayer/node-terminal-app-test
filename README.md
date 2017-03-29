@@ -2,18 +2,7 @@
 
 **Note: Mac OS only**
 
-    $ jira get
-
-    Receiving data........
-    https://servername/rest/api/2/search?jql=project=CCLC
-    
-    Project: CCLC
-
-    Ticket   Title   Status   Priority  Issue URL                   
-    -------  ------  -------  --------  ------------------------------
-    Id-1     Title   Status   Normal    https://servername/browse/Id-1
-    Id-2     Title   Status   Normal    https://servername/browse/Id-2
-    Id-3     Title   Status   Normal    https://servername/browse/Id-3
+![screen shot](https://drive.google.com/open?id=0B0s1scfptJ4NRlhPamN4cnN0ZDQ)
 
 **1. Description:**
 
