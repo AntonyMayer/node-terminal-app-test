@@ -1,5 +1,13 @@
 {
-   "fields": {
-       "assignee":{"name":"anton.kuzniatsou"}
-   }
+    "update": {
+        "comment": [{
+            "add": {
+                "body": "Status updated: Ready for Tridion"
+            }
+        }]
+    },
+    "fields": {},
+    "transition": {
+        "id": "221"
+    }
 }

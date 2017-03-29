@@ -1,20 +1,19 @@
 module.exports = (jira) => {
-    let tempData = jira.data,
+    let user = jira.data.user,
         server = jira.data.server,
+        pswd = jira.getPassword(jira.data.user),
         queriesCounter = 0;
 
-    console.log("Preparing update queries...");
+    console.log("\nWorking on update queries...\n");
 
     for (let issue of jira.data.response.issues) {
-        if (issue.key === "CHHL-221") {
-            let query = 'curl -D- -u ' + tempData.user + ':' +
-                jira.getPassword(tempData.user) +
-                ' -X PUT --data @update.json -H "Content-Type: application/json" ' +
-                server + '/rest/api/2/issue/' + issue.key;
+        if (issue.fields.status.name === "Dev Complete") {
+            let query = `curl -D- -u ${user}:${pswd} -X POST --data @update.json -H "Content-Type: application/json" ${server}/rest/api/2/issue/${issue.key}/transitions`;
             queriesCounter++;
-            console.log(process.cwd());
+            process.stdout.write(`Sending queries: ${queriesCounter}\r`);
             jira.curl(query);
         }
     }
-    console.log('Number of updated tickets: ' + queriesCounter);
+    if (queriesCounter < 1) console.log('No tickets was updated'); 
+    console.log(`\nDone updating\n`);
 };

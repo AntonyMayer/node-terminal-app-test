@@ -10,7 +10,7 @@ module.exports = (jira) => {
     let tempData = jira.data,
         server = jira.data.server;
 
-    console.log("\nSending request........");
+    console.log("\nReceiving data from server........");
 
     //check server name to avoid double slash 
     if (server[server.length - 1] === '/') {
