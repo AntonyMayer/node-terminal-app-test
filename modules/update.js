@@ -9,7 +9,7 @@ module.exports = (jira) => {
         if (issue.key === "CHHL-221") {
             let query = 'curl -D- -u ' + tempData.user + ':' +
                 jira.getPassword(tempData.user) +
-                ' -X PUT --data @modules/test.json -H "Content-Type: application/json" ' +
+                ' -X PUT --data @update.json -H "Content-Type: application/json" ' +
                 server + '/rest/api/2/issue/' + issue.key;
             queriesCounter++;
             console.log(process.cwd());
