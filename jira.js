@@ -8,12 +8,13 @@
 class JIRA {
     constructor() {
         //local modules
-        this.initProject = require('./modules/init.js');
-        this.configuration = require('./modules/config.js');
-        this.check = require('./modules/check.js');
-        this.setLocal = require('./modules/set.js');
-        this.send = require('./modules/send.js');
-        this.display = require('./modules/display.js');
+        this.initProject = require('./modules/init');
+        this.configuration = require('./modules/config');
+        this.check = require('./modules/check');
+        this.setLocal = require('./modules/set');
+        this.send = require('./modules/send');
+        this.update = require('./modules/update');
+        this.display = require('./modules/display');
         //external dependencies
         this.shelljs = require('shelljs');
         this.program = require('commander');
@@ -55,6 +56,10 @@ class JIRA {
         return this;
     }
 
+    updateStatus() {
+        this.update(this);
+    }
+
     displayData() {
         this.display(this);
     }
@@ -83,10 +88,6 @@ class JIRA {
 
     test(filePath) {
         return this.shelljs.test('-e', filePath);
-    }
-
-    readFile(filePath) {
-        return this.fs.readFileSync(filePath, 'utf8');
     }
 
     //flag methods
