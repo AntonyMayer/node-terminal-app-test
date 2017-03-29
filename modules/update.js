@@ -12,7 +12,6 @@ module.exports = (jira) => {
                 ' -X PUT --data @update.json -H "Content-Type: application/json" ' +
                 server + '/rest/api/2/issue/' + issue.key;
             queriesCounter++;
-            console.log(process.cwd());
             jira.curl(query);
         }
     }
