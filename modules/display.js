@@ -55,8 +55,6 @@ module.exports = (jira) => {
         output.newRow();
     });
 
-    //display project information
-    console.log('\nProject: ' + jira.data.project + '\n');
     if (jira.data.currentUser) console.log('Assignee: ' + jira.data.user + '\n');
 
     //display table
