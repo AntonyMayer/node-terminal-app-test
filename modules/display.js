@@ -6,33 +6,16 @@
 'use strict';
 
 module.exports = (jira) => {
+
+    //check for errors
+    if (jira.validateData()) return;
+
     let output = new jira.table,
         tableData = [],
-        ticketsData = jira.data.response.issues,
-        errors = jira.data.response.errorMessages;
-
-    //validate data => ask for authenticaion if data validation failed
-    if (!ticketsData && !errors) {
-        return (() => {
-            console.log('\nAuthentication failed...\n');
-            jira.init();
-        })();
-    }
-
-    //handle possible errors
-    //if number of tickets is 0
-    if (ticketsData && !ticketsData.length) {
-        return console.log('\nNo tickets found based on search paramaters...\n');
-    } else if (errors) {
-        return errors.forEach((err) => {
-            console.log('\n' + err + '\n');
-        });
-    }
+        ticketsData = jira.data.response.issues;
 
     //iterate data from response
-    for (let issue of ticketsData) processData(issue);
-
-    function processData(issue) {
+    for (let issue of ticketsData) {
         if ((issue.fields.status.statusCategory.name == "Complete" ||
                 issue.fields.status.statusCategory.name == "Done") &&
             !jira.data.showAllTickets) return;
@@ -46,16 +29,14 @@ module.exports = (jira) => {
     }
 
     //create table
-    tableData.forEach(function(ticket) {
-        output.cell('Ticket', ticket.id);
-        output.cell('Title', (ticket.title.length >= 80) ? ticket.title.slice(0, 80) + '...' : ticket.title);
-        output.cell('Status', ticket.status);
-        output.cell('Priority', ticket.priority);
-        output.cell('Issue URL', jira.data.server + /browse/ + ticket.id);
+    tableData.forEach((ticket) => {
+        output.cell('\x1b[36mTicket\x1b[0m', ticket.id);
+        output.cell('\x1b[36mTitle\x1b[0m', (ticket.title.length >= 80) ? ticket.title.slice(0, 80) + '...' : ticket.title);
+        output.cell('\x1b[36mStatus\x1b[0m', ticket.status);
+        output.cell('\x1b[36mPriority\x1b[0m', ticket.priority);
+        output.cell('\x1b[36mIssue URL\x1b[0m', `${jira.data.server}/browse/${ticket.id}`);
         output.newRow();
     });
-
-    if (jira.data.currentUser) console.log('Assignee: ' + jira.data.user + '\n');
 
     //display table
     console.log(output.toString());

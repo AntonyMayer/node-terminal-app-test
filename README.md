@@ -70,6 +70,10 @@ Used to change default project.
 
 Another option to change default project is to update it manually at */Users/username/Library/JiraCLI/jiraCLI.json*
 
-**4.4 --help**
+**4.4 test**
+
+Test notifications.
+
+**4.5 --help**
 
 Show available commands.
