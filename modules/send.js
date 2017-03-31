@@ -9,12 +9,12 @@
 module.exports = (jira) => {
     let tempData = jira.data,
         server = jira.data.server;
-    
+
     console.log(`\n\u2554${Array(17).join("\u2550")}\u2557\n` +
-                 `\u2551 Receiving data \u2551 \u2B90\n` +
-                 `\u2560${Array(17).join("\u2550")}\u255D\n` +
-                 `\u2551`);
-    
+        `\u2551 \x1b[36mReceiving data\x1b[0m \u2551 \u2B90\n` +
+        `\u2560${Array(17).join("\u2550")}\u255D\n` +
+        `\u2551`);
+
 
     //check server name to avoid double slash 
     if (server[server.length - 1] === '/') {
@@ -26,11 +26,11 @@ module.exports = (jira) => {
 
     //if '-u' flag was used => show only tickets assigned to current user
     if (tempData.currentUser) tempData.url = tempData.url + '%20AND%20assignee=' + tempData.user;
-    
+
     //display project information
-    console.log(`\u2560\u2550 SERVER: ${tempData.url}\n` +
-                `\u2551\n` +
-                `\u255A\u2550 PROJECT: ${tempData.project}\n`);
+    console.log(`\u2560\u2550 \x1b[36mSERVER:\x1b[0m ${tempData.url}\n` +
+        `\u2551\n` +
+        `\u255A\u2550 \x1b[36mPROJECT:\x1b[0m ${tempData.project}\n`);
 
     //Creating a curl request based on data object and flags
     tempData.query = 'curl -u ' + tempData.user + ':' + jira.getPassword(tempData.user) + ' -X GET -H "Content-Type: application/json" ' + tempData.url;
