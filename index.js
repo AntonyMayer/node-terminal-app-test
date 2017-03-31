@@ -71,7 +71,6 @@ jira.program
     .command('test')
     .action(() => {
         jira.stdoutReceivingData('test', 'test');
-        jira.stdoutUpdates();
         jira.stdoutWarning('test warning');
         jira.stdoutError('test error');
     });
