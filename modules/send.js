@@ -32,7 +32,7 @@ module.exports = (jira) => {
     try {
         tempData.response = JSON.parse(jira.curl(tempData.query));
     } catch (e) {
-        tempData.response = { "errorMessages": ["Authentication failed"], "errors": {} };
+        tempData.response = { "errorMessages": ["Authentication failed, reinitialize"], "errors": {} };
     }
 
     return jira;

@@ -6,35 +6,16 @@
 'use strict';
 
 module.exports = (jira) => {
+
+    //check for errors
+    if (jira.validateData()) return;
+
     let output = new jira.table,
         tableData = [],
-        ticketsData = jira.data.response.issues,
-        errors = jira.data.response.errorMessages;
-
-    //validate data => ask for authenticaion if data validation failed
-    if (!ticketsData && !errors) {
-        return (() => {
-            jira.stdoutError('Authentication failed');
-            jira.init();
-        })();
-    }
-
-    //handle possible errors
-    //if number of tickets is 0
-    if (ticketsData && !ticketsData.length) {
-        return (() => {
-            jira.stdoutWarning('No tickets found based on search paramaters');
-        })();
-    } else if (errors) {
-        return errors.forEach((err) => {
-            jira.stdoutError(err);
-        });
-    }
+        ticketsData = jira.data.response.issues;
 
     //iterate data from response
-    for (let issue of ticketsData) processData(issue);
-
-    function processData(issue) {
+    for (let issue of ticketsData) {
         if ((issue.fields.status.statusCategory.name == "Complete" ||
                 issue.fields.status.statusCategory.name == "Done") &&
             !jira.data.showAllTickets) return;

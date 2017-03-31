@@ -13,15 +13,16 @@ class JIRA {
         this.check = require('./modules/check');
         this.setLocal = require('./modules/set');
         this.send = require('./modules/send');
+        this.validateResponse = require('./modules/error');
         this.update = require('./modules/update');
         this.display = require('./modules/display');
+        this.fs = require('fs');
         //external dependencies
         this.shelljs = require('shelljs');
         this.program = require('commander');
         this.prompt = require('prompt');
         this.table = require('easy-table');
         this.pw = require('keytar');
-        this.fs = require('fs');
         this.store = require('data-store')('jiraCLI', { cwd: '~/Library/JiraCLI' });
         this.localStore = require('data-store')('jiraCLI', { cwd: process.cwd() });
         //default data
@@ -54,6 +55,10 @@ class JIRA {
     sendData() {
         this.send(this);
         return this;
+    }
+
+    validateData() {
+        return this.validateResponse(this);
     }
 
     updateStatus() {
@@ -91,6 +96,7 @@ class JIRA {
     }
 
     //flag methods
+
     assignee() {
         return () => {
             this.data.currentUser = true;
@@ -104,6 +110,7 @@ class JIRA {
     }
 
     //stdouts
+
     stdoutWarning(message, color, element) {
         let messageColor = color || '\x1b[33m',
             leftBottomElement = element || '\u255A';
@@ -119,11 +126,6 @@ class JIRA {
             `\u2560\u2550 \x1b[36mREQUEST:\x1b[0m ${url}\n` +
             `\u2551\n` +
             `\u255A\u2550 \x1b[36mPROJECT:\x1b[0m ${projectName}\n`);
-    }
-
-    stdoutUpdates() {
-        this.stdoutWarning('Preparing updates', '\x1b[32m', '\u2560');
-        console.log(`\u2551\n`);
     }
 
     stdoutError(message) {

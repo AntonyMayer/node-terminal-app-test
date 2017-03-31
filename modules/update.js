@@ -3,20 +3,24 @@
  * @param {object} jira namespace object
  */
 module.exports = (jira) => {
+
+    //check for errors
+    if (jira.validateData()) return;
+
     let user = jira.data.user,
         server = jira.data.server,
         pswd = jira.getPassword(jira.data.user),
         update = JSON.stringify('{ "update": {"comment": [{"add": {"body": "Status updated"}}]},"fields": {},"transition": {"id": "221"}}'),
         queriesCounter = 0;
 
-    jira.stdoutUpdates();
+    jira.stdoutWarning('Preparing Updates', '\x1b[32m');
 
     for (let issue of jira.data.response.issues) {
         if (issue.fields.status.name === "Dev Complete") {
             let query = `curl -D- -u ${user}:${pswd} -X POST --data ${update} -H ` +
                 `"Content-Type: application/json" ${server}/rest/api/2/issue/${issue.key}/transitions`;
             queriesCounter++;
-            process.stdout.write(`\u2560\u2550 Sending queries: ${queriesCounter}\r`);
+            process.stdout.write(`Sending queries: ${queriesCounter}\r`);
             jira.curl(query);
         }
     }
