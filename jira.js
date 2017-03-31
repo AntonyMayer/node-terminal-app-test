@@ -22,8 +22,8 @@ class JIRA {
         this.table = require('easy-table');
         this.pw = require('keytar');
         this.fs = require('fs');
-        this.store = require('data-store')('jiraCLI', {cwd: '~/Library/JiraCLI'});
-        this.localStore = require('data-store')('jiraCLI', {cwd: process.cwd()});
+        this.store = require('data-store')('jiraCLI', { cwd: '~/Library/JiraCLI' });
+        this.localStore = require('data-store')('jiraCLI', { cwd: process.cwd() });
         //default data
         this.data = {
             currentUser: false,
@@ -75,7 +75,7 @@ class JIRA {
     }
 
     createPassword(username, password) {
-       this.pw.addPassword('jiraCLIuser', username, password);
+        this.pw.addPassword('jiraCLIuser', username, password);
     }
 
     getPassword(username) {
@@ -101,6 +101,33 @@ class JIRA {
         return () => {
             this.data.showAllTickets = true;
         };
+    }
+
+    //stdouts
+    stdoutWarning(message, color, element) {
+        let messageColor = color || '\x1b[33m',
+            leftBottomElement = element || '\u255A';
+
+        console.log(`\u2554${Array(message.length + 3).join("\u2550")}\u2557\n` +
+            `\u2551 ${messageColor}${message}\x1b[0m\ \u2551\n` +
+            `${leftBottomElement}${Array(message.length + 3).join("\u2550")}\u255D`);
+    }
+
+    stdoutReceivingData(url, projectName) {
+        this.stdoutWarning('Receiving Data', '\x1b[36m', '\u2560');
+        console.log(`\u2551\n` +
+            `\u2560\u2550 \x1b[36mREQUEST:\x1b[0m ${url}\n` +
+            `\u2551\n` +
+            `\u255A\u2550 \x1b[36mPROJECT:\x1b[0m ${projectName}\n`);
+    }
+
+    stdoutUpdates() {
+        this.stdoutWarning('Preparing updates', '\x1b[32m', '\u2560');
+        console.log(`\u2551\n`);
+    }
+
+    stdoutError(message) {
+        this.stdoutWarning(message, '\x1b[31m');
     }
 }
 

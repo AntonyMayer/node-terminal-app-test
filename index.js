@@ -67,4 +67,12 @@ jira.program.on('--help', function() {
     console.log('    get ABC -ua                    flags can be combined;');
     console.log('    init                           run initialization;\n');
 });
+jira.program
+    .command('test')
+    .action(() => {
+        jira.stdoutReceivingData('test', 'test');
+        jira.stdoutUpdates();
+        jira.stdoutWarning('test warning');
+        jira.stdoutError('test error');
+    });
 jira.program.parse(process.argv);

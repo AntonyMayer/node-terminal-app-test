@@ -1,6 +1,6 @@
 /**
  * Init function
- * user inputs => projectname => password
+ * user inputs => server => default projectname => username => password
  * @param {object} jira namespace object
  */
 
