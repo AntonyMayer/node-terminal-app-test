@@ -1,3 +1,7 @@
+/**
+ * Module to update issues' status
+ * @param {object} jira namespace object
+ */
 module.exports = (jira) => {
     let user = jira.data.user,
         server = jira.data.server,
