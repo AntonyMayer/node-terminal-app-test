@@ -10,9 +10,7 @@ module.exports = (jira) => {
     let user = jira.data.user,
         server = jira.data.server,
         pswd = jira.getPassword(jira.data.user),
-        updateAssets = JSON.stringify('{ "update": {"comment": [{"add": {"body": "Status updated"}}]},"fields": {},"transition": {"id": "221"}}'),
-        updateHTML = JSON.stringify('{ "update": {"comment": [{"add": {"body": "Status updated"}}]},"fields": {},"transition": {"id": "271"}}'),
-        update,
+        update = JSON.stringify('{ "update": {"comment": [{"add": {"body": "Status updated"}}]},"fields": {},"transition": {"id": "271"}}'),
         queriesCounter = 0;
 
     jira.stdoutWarning('Preparing Updates', '\x1b[32m');
@@ -22,18 +20,14 @@ module.exports = (jira) => {
             //check update type
             for (let type of issue.fields.customfield_12471) {
                 if (type.value === "HTML") {
-                    update = updateHTML;
-                    break;
-                } else {
-                    update = updateAssets;
+                    //send update query
+                    let query = `curl -D- -u ${user}:${pswd} -X POST --data ${update} -H ` +
+                        `"Content-Type: application/json" ${server}/rest/api/2/issue/${issue.key}/transitions`;
+                    queriesCounter++;
+                    process.stdout.write(`Sending queries: ${queriesCounter}\r`);
+                    jira.curl(query);
                 }
             }
-            //send update query
-            let query = `curl -D- -u ${user}:${pswd} -X POST --data ${update} -H ` +
-                `"Content-Type: application/json" ${server}/rest/api/2/issue/${issue.key}/transitions`;
-            queriesCounter++;
-            process.stdout.write(`Sending queries: ${queriesCounter}\r`);
-            jira.curl(query);
         }
     }
     if (queriesCounter < 1) {
