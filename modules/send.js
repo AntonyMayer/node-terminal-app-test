@@ -17,7 +17,7 @@ module.exports = (jira) => {
     }
 
     //target url with jql query targeting default or user specified project
-    tempData.url = `${server}/rest/api/2/search?jql=project=${tempData.project}`;
+    tempData.url = `${server}/rest/api/2/search?jql=project=${tempData.project}+order+by+key`;
 
     //if '-u' flag was used => show only tickets assigned to current user
     if (tempData.currentUser) tempData.url = `${tempData.url}%20AND%20assignee=${tempData.user}`;
