@@ -13,7 +13,7 @@ module.exports = (jira) => {
     let output = new jira.table,
         tableData = [],
         ticketsData = jira.data.response.issues;
-        
+
     /**
      * CHEATLIST Transition's IDs:
      * 
@@ -32,17 +32,15 @@ module.exports = (jira) => {
     //iterate data from response
 
     for (let issue of ticketsData) {
-        console.log(issue.fields.status.id);
         if ((issue.fields.status.id !== 1 || issue.fields.status.id !== 2) &&
             !jira.data.showAllTickets) continue;
 
         tableData.push({
             id: issue.key,
             title: issue.fields.summary,
-            status: issue.fields.status.statusCategory.name,
+            status: issue.fields.status.name,
             priority: issue.fields.priority.name
         });
-        console.log(tableData.length)
     }
 
     //create table
