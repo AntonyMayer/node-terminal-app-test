@@ -7,9 +7,9 @@
 'use strict';
 
 module.exports = (jira) => {
-    let tempData = jira.data,
+    let data = jira.data,
         server = jira.data.server,
-        pswd = jira.getPassword(tempData.user);
+        pswd = jira.getPassword(data.user);
 
     //check server name to avoid double slash 
     if (server[server.length - 1] === '/') {
@@ -17,22 +17,23 @@ module.exports = (jira) => {
     }
 
     //target url with jql query targeting default or user specified project
-    tempData.url = `${server}/rest/api/2/search?jql=project=${tempData.project}+order+by+key`;
+    data.url = `${server}/rest/api/2/search`;
 
     //if '-u' flag was used => show only tickets assigned to current user
-    if (tempData.currentUser) tempData.url = `${tempData.url}%20AND%20assignee=${tempData.user}`;
+    if (data.currentUser) data.url = `${data.url}%20AND%20assignee=${data.user}`;
 
     //display project information
-    jira.stdoutReceivingData(tempData.url, tempData.project);
+    jira.stdoutReceivingData(data.url, data.project);
 
     //Creating a curl request based on data object and flags
-    tempData.query = `curl -u ${tempData.user}:${pswd} -X GET -H "Content-Type: application/json" ${tempData.url}`;
+    data.query = `curl -u ${data.user}:${pswd} -X POST -H "Content-Type: application/json" --data '{"jql":"project = ${data.project}","maxResults":1000}' "${data.url}"`;
 
     //parse response from server
     try {
-        tempData.response = JSON.parse(jira.curl(tempData.query));
+        // data.response = JSON.parse(jira.curl(data.query));
+        data.response = JSON.parse(jira.curl(data.query));
     } catch (e) {
-        tempData.response = { "errorMessages": ["Authentication failed, reinitialize"], "errors": {} };
+        data.response = { "errorMessages": ["Authentication failed, reinitialize"], "errors": {} };
     }
 
     return jira;

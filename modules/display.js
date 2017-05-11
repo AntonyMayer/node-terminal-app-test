@@ -14,10 +14,29 @@ module.exports = (jira) => {
         tableData = [],
         ticketsData = jira.data.response.issues;
 
+        var test = 0;
+
+    
+    /**
+     * CHEATLIST Transition's IDs:
+     * 
+     * 1        "Open"
+     * 4        "Reopened"
+     * 6        "Closed"
+     * 10035    "Blocked"
+     * 10076    "Dev Complete"
+     * 10976    "Developer Test"
+     * 10678    "Parking Lot"
+     * 10977    "Assets Tridion Publishing"
+     * 11276    "HTML Tridion Publishing"
+     * 11076    "Ready for Live"
+     */
+
     //iterate data from response
+
     for (let issue of ticketsData) {
-        if ((issue.fields.status.statusCategory.name == "Complete" ||
-                issue.fields.status.statusCategory.name == "Done") &&
+        console.log(issue.fields.status.id);
+        if ((issue.fields.status.id !== 1 || issue.fields.status.id !== 2) &&
             !jira.data.showAllTickets) continue;
 
         tableData.push({
@@ -26,6 +45,7 @@ module.exports = (jira) => {
             status: issue.fields.status.statusCategory.name,
             priority: issue.fields.priority.name
         });
+        console.log(tableData.length)
     }
 
     //create table
