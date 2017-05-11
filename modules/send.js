@@ -9,7 +9,8 @@
 module.exports = (jira) => {
     let data = jira.data,
         server = jira.data.server,
-        pswd = jira.getPassword(data.user);
+        pswd = jira.getPassword(data.user),
+        tempData = '';
 
     //check server name to avoid double slash 
     if (server[server.length - 1] === '/') {
@@ -22,16 +23,23 @@ module.exports = (jira) => {
     //display project information
     jira.stdoutReceivingData(data.url, data.project);
 
-    //Creating a curl request based on data object and flags
-    data.query = `curl -u ${data.user}:${pswd} -X POST -H "Content-Type: application/json" --data '{"jql":"project = ${data.project}","maxResults":1000}' "${data.url}"`;
+    for (let currentProject of data.project) {
+        //Creating a curl request based on data object and flags
+        data.query = `curl -u ${data.user}:${pswd} -X POST -H "Content-Type: application/json" --data '{"jql":"project = ${currentProject}","maxResults":1000}' "${data.url}"`;
 
-    //parse response from server
-    try {
-        // data.response = JSON.parse(jira.curl(data.query));
-        data.response = JSON.parse(jira.curl(data.query));
-    } catch (e) {
-        data.response = { "errorMessages": ["Authentication failed, please retry or run 'jira init'"], "errors": {} };
+        //parse response from server
+        try {
+            tempData = JSON.parse(jira.curl(data.query));
+
+            for (let issue of tempData.issues) {
+                data.response.issues.push(issue);
+            }
+        } catch (e) {
+            data.response = { "errorMessages": ["Authentication failed, please retry or run 'jira init'"], "errors": {} };
+        }
     }
+
+    console.log(data.response.issues.length);
 
     return jira;
 };
