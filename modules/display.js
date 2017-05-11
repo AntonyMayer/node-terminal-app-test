@@ -13,10 +13,7 @@ module.exports = (jira) => {
     let output = new jira.table,
         tableData = [],
         ticketsData = jira.data.response.issues;
-
-        var test = 0;
-
-    
+        
     /**
      * CHEATLIST Transition's IDs:
      * 
