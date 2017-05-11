@@ -19,9 +19,6 @@ module.exports = (jira) => {
     //target url with jql query targeting default or user specified project
     data.url = `${server}/rest/api/2/search`;
 
-    //if '-u' flag was used => show only tickets assigned to current user
-    if (data.currentUser) data.url = `${data.url}%20AND%20assignee=${data.user}`;
-
     //display project information
     jira.stdoutReceivingData(data.url, data.project);
 
@@ -33,7 +30,7 @@ module.exports = (jira) => {
         // data.response = JSON.parse(jira.curl(data.query));
         data.response = JSON.parse(jira.curl(data.query));
     } catch (e) {
-        data.response = { "errorMessages": ["Authentication failed, reinitialize"], "errors": {} };
+        data.response = { "errorMessages": ["Authentication failed, please retry or run 'jira init'"], "errors": {} };
     }
 
     return jira;

@@ -35,6 +35,9 @@ module.exports = (jira) => {
         if ((issue.fields.status.id !== 1 || issue.fields.status.id !== 2) &&
             !jira.data.showAllTickets) continue;
 
+        //if '-u' flag was used => show only tickets assigned to current user
+        if (jira.data.currentUser && issue.fields.assignee.name !== jira.data.user) continue;
+
         tableData.push({
             id: issue.key,
             title: issue.fields.summary,
