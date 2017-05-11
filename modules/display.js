@@ -18,7 +18,7 @@ module.exports = (jira) => {
     for (let issue of ticketsData) {
         if ((issue.fields.status.statusCategory.name == "Complete" ||
                 issue.fields.status.statusCategory.name == "Done") &&
-            !jira.data.showAllTickets) return;
+            !jira.data.showAllTickets) continue;
 
         tableData.push({
             id: issue.key,
