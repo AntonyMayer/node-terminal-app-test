@@ -37,6 +37,15 @@ let update = () => {
         .updateStatus()
 };
 
+let track = () => {
+
+    //start methods chain
+    jira
+        .checkData()
+        .sendData()
+        .trackData();
+};
+
 /**
  * App options
  */
@@ -58,6 +67,9 @@ jira.program
 jira.program
     .command('update')
     .action(update)
+jira.program
+    .command('track')
+    .action(track)
 jira.program.on('--help', function() {
     console.log('\n    get [project name] [flag]');
     console.log('    get                            returns open tickets for default project;');

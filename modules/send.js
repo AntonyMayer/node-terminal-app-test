@@ -39,7 +39,5 @@ module.exports = (jira) => {
         }
     }
 
-    console.log(data.response.issues.length);
-
     return jira;
 };
