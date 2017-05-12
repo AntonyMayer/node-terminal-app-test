@@ -25,7 +25,6 @@ module.exports = (jira) => {
             tridionHTML: 0,
             tridionAssets: 0,
             closed: 0,
-            total: 0,
             assignees: []
         }
     }
@@ -48,24 +47,17 @@ module.exports = (jira) => {
     //iterate data from response
 
     for (let issue of ticketsData) {
-        // if ((issue.fields.status.id !== 1 || issue.fields.status.id !== 2) &&
-        //     !jira.data.showAllTickets) continue;
 
         let project = data[issue.key.split('-')[0]],
             currentAssignee = issue.fields.assignee.key.split('.')[0].charAt(0).toUpperCase() + issue.fields.assignee.key.split('.')[0].slice(1);
-
-            // console.log(issue.key.split('-')[0]);
         
         //check if assignees list already contains current developer
         if (project.assignees.indexOf(currentAssignee) < 0) {
             project.assignees.push(currentAssignee);
         }
 
-        //increment total value
-        project.total++;
-
         //update appropriate counter
-        switch (issue.fields.status.id) {
+        switch (Number(issue.fields.status.id)) {
             case 1:
             case 4:
                 project.opened++;
@@ -101,12 +93,10 @@ module.exports = (jira) => {
         output.cell('\x1b[36mTridion HTML\x1b[0m', ticket.tridionHTML);
         output.cell('\x1b[36mTridion Assets\x1b[0m', ticket.tridionAssets);
         output.cell('\x1b[36mClosed\x1b[0m', ticket.closed);
-        output.cell('\x1b[36mTotal\x1b[0m', ticket.total);
         output.cell('\x1b[36mAssignees\x1b[0m', ticket.assignees);
         output.newRow();
     });
 
     //display table
     console.log(output.toString());
-
 };
