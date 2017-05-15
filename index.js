@@ -39,7 +39,6 @@ let update = () => {
 
 let track = () => {
     //start methods chain
-    console.log('1st');
     jira
         .checkData()
         .sendData()
@@ -47,7 +46,6 @@ let track = () => {
 
     //recursive call
     setInterval(_=> {
-        console.log('new iteration');
         jira
             .sendData()
             .trackData();
