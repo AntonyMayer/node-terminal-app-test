@@ -20,6 +20,7 @@ module.exports = (jira) => {
      * 1        "Open"
      * 4        "Reopened"
      * 6        "Closed"
+     * 10008    "Ready for Test"
      * 10035    "Blocked"
      * 10076    "Dev Complete"
      * 10976    "Developer Test"
@@ -32,8 +33,10 @@ module.exports = (jira) => {
     //iterate data from response
 
     for (let issue of ticketsData) {
-        if ((issue.fields.status.id !== 1 || issue.fields.status.id !== 2) &&
-            !jira.data.showAllTickets) continue;
+        let id = Number(issue.fields.status.id);
+
+        //check if the ticket is closed
+        if (id === 6 && !jira.data.showAllTickets) continue;
 
         //if '-u' flag was used => show only tickets assigned to current user
         if (jira.data.currentUser && issue.fields.assignee.name !== jira.data.user) continue;
