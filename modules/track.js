@@ -9,6 +9,7 @@ module.exports = (jira) => {
 
     //check for errors
     if (jira.validateData()) return;
+    jira.shelljs.exec('clear');
 
     let output = new jira.table,
         tableData = [],

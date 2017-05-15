@@ -10,8 +10,6 @@ module.exports = (jira) => {
 
     jira.data.user = jira.store.get('username') || process.env.USER;
     jira.data.server = jira.store.get('server');
-    jira.data.response = {};
-    jira.data.response.issues = [];
 
     //check first localy stored JSON for project name(s) 
     //else use default project name(s) set during initialization

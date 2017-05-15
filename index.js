@@ -34,16 +34,24 @@ let update = () => {
     jira
         .checkData()
         .sendData()
-        .updateStatus()
+        .updateStatus();
 };
 
 let track = () => {
-
     //start methods chain
+    console.log('1st');
     jira
         .checkData()
         .sendData()
         .trackData();
+
+    //recursive call
+    setInterval(_=> {
+        console.log('new iteration');
+        jira
+            .sendData()
+            .trackData();
+    }, 30000);
 };
 
 /**

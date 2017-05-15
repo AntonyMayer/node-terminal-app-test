@@ -12,6 +12,10 @@ module.exports = (jira) => {
         pswd = jira.getPassword(data.user),
         tempData = '';
 
+    //reset/create necessary objects
+    jira.data.response = {};
+    jira.data.response.issues = [];
+
     //check server name to avoid double slash 
     if (server[server.length - 1] === '/') {
         server = server.slice(0, server.length - 1);
