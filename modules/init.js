@@ -8,7 +8,7 @@
 
 module.exports = (jira) => {
 
-    console.log('\nInitialization...\n');
+    jira.stdoutWarning('Initialization');
 
     //prompt user's data
     let userData = [

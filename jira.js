@@ -16,6 +16,7 @@ class JIRA {
         this.validateResponse = require('./modules/error');
         this.update = require('./modules/update');
         this.display = require('./modules/display');
+        this.track = require('./modules/track');
         this.fs = require('fs');
         //external dependencies
         this.shelljs = require('shelljs');
@@ -67,6 +68,10 @@ class JIRA {
 
     displayData() {
         this.display(this);
+    }
+
+    trackData() {
+        this.track(this);
     }
 
     //util methods
