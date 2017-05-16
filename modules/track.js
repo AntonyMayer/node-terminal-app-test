@@ -19,6 +19,7 @@ module.exports = (jira) => {
     //create counters for each project
     for (let item of jira.data.project) {
         data[item] = {
+            name: undefined,
             project: item,
             opened: 0,
             devComplete: 0,
@@ -52,9 +53,9 @@ module.exports = (jira) => {
         let project = data[issue.key.split('-')[0]],
             currentAssignee = issue.fields.assignee.key.split('.')[0].charAt(0).toUpperCase() + issue.fields.assignee.key.split('.')[0].slice(1);
         
-        //check if assignees list already contains current developer
-        if (project.assignees.indexOf(currentAssignee) < 0) {
-            project.assignees.push(currentAssignee);
+        //update a fullname of the project
+        if (!project.name) {
+            project.name = issue.fields.project.name.replace(`CDM-XXXXX`, ``).split('-').join(' ');
         }
 
         //update appropriate counter
@@ -62,6 +63,10 @@ module.exports = (jira) => {
             case 1:
             case 4:
                 project.opened++;
+                //check if assignees list already contains current developer
+                if (project.assignees.indexOf(currentAssignee) < 0) {
+                    project.assignees.push(currentAssignee);
+                }
                 break;
             case 10076:
                 project.devComplete++;
@@ -88,7 +93,7 @@ module.exports = (jira) => {
 
     //create table
     tableData.forEach((ticket) => {
-        output.cell('\x1b[36mProject\x1b[0m', ticket.project);
+        output.cell('\x1b[36mProject\x1b[0m', ticket.name);
         output.cell('\x1b[36m(Re)Open\x1b[0m', ticket.opened);
         output.cell('\x1b[36mDev Complete\x1b[0m', ticket.devComplete);
         output.cell('\x1b[36mTridion HTML\x1b[0m', ticket.tridionHTML);
