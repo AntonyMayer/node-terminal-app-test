@@ -28,9 +28,9 @@ module.exports = (jira) => {
             inProgress: 0,
             devComplete: 0,
             devTest: 0,
-            tridionHTML: 0,
-            tridionAssets: 0,
+            tridion: 0,
             readyForTest: 0,
+            blocked: 0,
             closed: 0,
             assignees: []
         }
@@ -66,9 +66,9 @@ module.exports = (jira) => {
         outputProjects.cell('\x1b[36m(Re)Open\x1b[0m', project.opened);
         outputProjects.cell('\x1b[36mIn Progress\x1b[0m', project.inProgress);
         outputProjects.cell('\x1b[36mDev Complete\x1b[0m', project.devComplete);
-        outputProjects.cell('\x1b[36mTridion HTML\x1b[0m', project.tridionHTML);
-        outputProjects.cell('\x1b[36mTridion Assets\x1b[0m', project.tridionAssets);
+        outputProjects.cell('\x1b[36mTridion Publishing\x1b[0m', project.tridion);
         outputProjects.cell('\x1b[36mQA Test\x1b[0m', project.readyForTest);
+        outputProjects.cell('\x1b[36mBlocked\x1b[0m', project.blocked);
         outputProjects.cell('\x1b[36mClosed\x1b[0m', project.closed);
         outputProjects.cell('\x1b[36mAssignees\x1b[0m', project.assignees);
         outputProjects.newRow();
@@ -86,6 +86,7 @@ module.exports = (jira) => {
     }
 
     //display tables
+    console.log(`\n\x1b[31mLast update: ${new Date()} \x1b[0m\n`);
     jira.stdoutWarning("Tickets By Project");
     console.log(`\n${outputProjects.toString()}`);
     jira.stdoutWarning("Tickets By Developers");
@@ -195,10 +196,11 @@ function updateProjectCounters(issue, status, project, currentAssignee) {
             project.devTest++;
             break;
         case 11276:
-            project.tridionHTML++;
-            break;
         case 10977:
-            project.tridionAssets++;
+            project.tridion++;
+            break;
+        case 10035:
+            project.blocked++;
             break;
         case 6:
             project.closed++;
