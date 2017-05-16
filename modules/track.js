@@ -30,6 +30,7 @@ module.exports = (jira) => {
             devTest: 0,
             tridionHTML: 0,
             tridionAssets: 0,
+            readyForTest: 0,
             closed: 0,
             assignees: []
         }
@@ -66,6 +67,7 @@ module.exports = (jira) => {
         outputProjects.cell('\x1b[36mDev Complete\x1b[0m', project.devComplete);
         outputProjects.cell('\x1b[36mTridion HTML\x1b[0m', project.tridionHTML);
         outputProjects.cell('\x1b[36mTridion Assets\x1b[0m', project.tridionAssets);
+        outputProjects.cell('\x1b[36mQA Test\x1b[0m', project.readyForTest);
         outputProjects.cell('\x1b[36mClosed\x1b[0m', project.closed);
         outputProjects.cell('\x1b[36mAssignees\x1b[0m', project.assignees);
         outputProjects.newRow();
@@ -150,6 +152,7 @@ function updateProjectCounters(issue, status, project, currentAssignee) {
      * 1        "Open"
      * 4        "Reopened"
      * 6        "Closed"
+     * 10008    "Ready for Test"
      * 10035    "Blocked"
      * 10037    "In Progress"
      * 10076    "Dev Complete"
@@ -167,6 +170,9 @@ function updateProjectCounters(issue, status, project, currentAssignee) {
             if (project.assignees.indexOf(currentAssignee) < 0) {
                 project.assignees.push(currentAssignee);
             }
+            break;
+        case 10008:
+            project.readyForTest++;
             break;
         case 10037:
             project.inProgress++;
