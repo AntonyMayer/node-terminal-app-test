@@ -11,7 +11,8 @@ module.exports = (jira) => {
     if (jira.validateData()) return;
     jira.shelljs.exec('clear');
 
-    let output = new jira.table,
+    let outputProjects = new jira.table,
+        outputAssignees = new jira.table,
         tableData = [],
         ticketsData = jira.data.response.issues,
         data = {};
@@ -55,7 +56,8 @@ module.exports = (jira) => {
         
         //update a fullname of the project
         if (!project.name) {
-            project.name = issue.fields.project.name.replace(`CDM-XXXXX`, ``).split('-').join(' ');
+            project.name = issue.fields.project.name.replace(/CDM-XXXXX| /g, '_').split('-').join('_').replace(/_{1,}/g,' ');
+            if (project.name[0] == " ") project.name = project.name.slice(1);
         }
 
         //update appropriate counter
@@ -91,18 +93,18 @@ module.exports = (jira) => {
         tableData.push(data[item]);
     }
 
-    //create table
+    //create table for projects
     tableData.forEach((ticket) => {
-        output.cell('\x1b[36mProject\x1b[0m', ticket.name);
-        output.cell('\x1b[36m(Re)Open\x1b[0m', ticket.opened);
-        output.cell('\x1b[36mDev Complete\x1b[0m', ticket.devComplete);
-        output.cell('\x1b[36mTridion HTML\x1b[0m', ticket.tridionHTML);
-        output.cell('\x1b[36mTridion Assets\x1b[0m', ticket.tridionAssets);
-        output.cell('\x1b[36mClosed\x1b[0m', ticket.closed);
-        output.cell('\x1b[36mAssignees\x1b[0m', ticket.assignees);
-        output.newRow();
+        outputProjects.cell('\x1b[36mProject\x1b[0m', ticket.name);
+        outputProjects.cell('\x1b[36m(Re)Open\x1b[0m', ticket.opened);
+        outputProjects.cell('\x1b[36mDev Complete\x1b[0m', ticket.devComplete);
+        outputProjects.cell('\x1b[36mTridion HTML\x1b[0m', ticket.tridionHTML);
+        outputProjects.cell('\x1b[36mTridion Assets\x1b[0m', ticket.tridionAssets);
+        outputProjects.cell('\x1b[36mClosed\x1b[0m', ticket.closed);
+        outputProjects.cell('\x1b[36mAssignees\x1b[0m', ticket.assignees);
+        outputProjects.newRow();
     });
 
     //display table
-    console.log(output.toString());
+    console.log(outputProjects.toString());
 };
