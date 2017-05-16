@@ -53,18 +53,20 @@ module.exports = (jira) => {
         let project = data[issue.key.split('-')[0]],
             currentAssignee = issue.fields.assignee.key.split('.')[0].charAt(0).toUpperCase() + issue.fields.assignee.key.split('.')[0].slice(1);
         
-        //check if assignees list already contains current developer
-        if (project.assignees.indexOf(currentAssignee) < 0) {
-            project.assignees.push(currentAssignee);
-        }
         //update a fullname of the project
-        if (!project.name) project.name = issue.fields.project.name;
+        if (!project.name) {
+            project.name = issue.fields.project.name.replace(`CDM-XXXXX`, ``).split('-').join(' ');
+        }
 
         //update appropriate counter
         switch (Number(issue.fields.status.id)) {
             case 1:
             case 4:
                 project.opened++;
+                //check if assignees list already contains current developer
+                if (project.assignees.indexOf(currentAssignee) < 0) {
+                    project.assignees.push(currentAssignee);
+                }
                 break;
             case 10076:
                 project.devComplete++;
