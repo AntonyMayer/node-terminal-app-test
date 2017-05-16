@@ -13,9 +13,11 @@ module.exports = (jira) => {
 
     let outputProjects = new jira.table,
         outputAssignees = new jira.table,
-        tableData = [],
+        tableDataProjects = [],
+        tableDataAssignees = [],
         ticketsData = jira.data.response.issues,
-        data = {};
+        data = {},
+        assigneeData = {}; // example => assigneeData['anton'] = {CNHN: 1, CDMJT: 5}
 
     //create counters for each project
     for (let item of jira.data.project) {
@@ -36,34 +38,54 @@ module.exports = (jira) => {
 
     for (let issue of ticketsData) {
         let project = data[issue.fields.project.key],
-            currentAssignee = clearAssigneeName(issue.fields.assignee.key);
+            currentAssignee = clearAssigneeName(issue.fields.assignee.key),
+            status = Number(issue.fields.status.id);
+       
         //update a fullname of the project
-        if (!project.name) {
-            project.name = clearProjectName(issue.fields.project.name);
+        if (!project.name) project.name = clearProjectName(issue.fields.project.name);
+
+        //update appropriate counters
+        updateProjectCounters(issue, status, project, currentAssignee);
+        if (status == 1 || status == 4) { //check status before
+            updateAssigneeCounters(project.name, currentAssignee, assigneeData);
         }
-        //update appropriate counter
-        updateProjectCounters(issue, project, currentAssignee);
+        
     }
 
-    //push updated project counters to tableData
+    //push updated project counters to tableDataProjects
     for (let item of jira.data.project) {
-        tableData.push(data[item]);
+        tableDataProjects.push(data[item]);
     }
 
     //create table for projects
-    tableData.forEach((ticket) => {
-        outputProjects.cell('\x1b[36mProject\x1b[0m', ticket.name);
-        outputProjects.cell('\x1b[36m(Re)Open\x1b[0m', ticket.opened);
-        outputProjects.cell('\x1b[36mDev Complete\x1b[0m', ticket.devComplete);
-        outputProjects.cell('\x1b[36mTridion HTML\x1b[0m', ticket.tridionHTML);
-        outputProjects.cell('\x1b[36mTridion Assets\x1b[0m', ticket.tridionAssets);
-        outputProjects.cell('\x1b[36mClosed\x1b[0m', ticket.closed);
-        outputProjects.cell('\x1b[36mAssignees\x1b[0m', ticket.assignees);
+    tableDataProjects.forEach((project) => {
+        outputProjects.cell('\x1b[36mProject\x1b[0m', project.name);
+        outputProjects.cell('\x1b[36m(Re)Open\x1b[0m', project.opened);
+        outputProjects.cell('\x1b[36mDev Complete\x1b[0m', project.devComplete);
+        outputProjects.cell('\x1b[36mTridion HTML\x1b[0m', project.tridionHTML);
+        outputProjects.cell('\x1b[36mTridion Assets\x1b[0m', project.tridionAssets);
+        outputProjects.cell('\x1b[36mClosed\x1b[0m', project.closed);
+        outputProjects.cell('\x1b[36mAssignees\x1b[0m', project.assignees);
         outputProjects.newRow();
     });
 
-    //display table
-    console.log(outputProjects.toString());
+    //create table for assignees
+    for (let assignee in assigneeData) {
+        let assigneeObj = assigneeData[assignee];
+
+        outputAssignees.cell('\x1b[36mAssignee\x1b[0m', assignee);
+        for (let project in assigneeObj) {
+            outputAssignees.cell(`\x1b[36m${project}\x1b[0m`, assigneeObj[project]);
+        }
+        outputAssignees.newRow();
+    }
+
+    //display tables
+    jira.stdoutWarning("Tickets By Project");
+    console.log(`\n${outputProjects.toString()}`);
+    jira.stdoutWarning("Tickets By Developers");
+    console.log(`\n${outputAssignees.toString()}`);
+    // console.log(assigneeData);
 };
 
 
@@ -88,20 +110,38 @@ function clearAssigneeName(name) {
  * @returns {string} cleared project name
  */
 function clearProjectName(name) {
-    name.replace(/CDM-XXXXX| /g, '_').split('-').join('_').replace(/_{1,}/g, ' ');
-    if (name[0] == " ") name = name.slice(1);
+    name = name.replace(/CDM-X{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_');
+    if (name[0] == "_") name = name.slice(1);
 
     return name;
 }
 
 /**
- * Function to update counters for specific project
+ * Update counters for assignees
  * 
- * @param {any} issue current issue
- * @param {any} project current project
- * @param {any} currentAssignee current assignee
+ * @param {string} project project name 
+ * @param {string} currentAssignee current assignee 
+ * @param {any} assigneeData object to store the counters for assignees
  */
-function updateProjectCounters(issue, project, currentAssignee) {
+function updateAssigneeCounters(project, currentAssignee, assigneeData) {
+    if (!assigneeData[currentAssignee]) {
+        assigneeData[currentAssignee] = {};
+    } 
+    if (isNaN(assigneeData[currentAssignee][project])) {
+        assigneeData[currentAssignee][project] = 0;        
+    }
+    assigneeData[currentAssignee][project]++;
+}
+
+/**
+ * Updates counters for specific project
+ * 
+ * @param {string} issue current issue
+ * @param {string} status current issue status
+ * @param {object} project current project
+ * @param {string} currentAssignee current assignee
+ */
+function updateProjectCounters(issue, status, project, currentAssignee) {
     /**
      * CHEATLIST Transition's IDs:
      * 
@@ -116,7 +156,7 @@ function updateProjectCounters(issue, project, currentAssignee) {
      * 11276    "HTML Tridion Publishing"
      * 11076    "Ready for Live"
      */
-    switch (Number(issue.fields.status.id)) {
+    switch (status) {
         case 1:
         case 4:
             project.opened++;
