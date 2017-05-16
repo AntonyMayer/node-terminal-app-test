@@ -41,13 +41,14 @@ module.exports = (jira) => {
     for (let issue of ticketsData) {
         let project = data[issue.fields.project.key],
             currentAssignee = clearAssigneeName(issue.fields.assignee.key),
+            currentAssigneeInitials = createAssigneeInitials(issue.fields.assignee.key),
             status = Number(issue.fields.status.id);
        
         //update a fullname of the project
         if (!project.name) project.name = clearProjectName(issue.fields.project.name);
 
         //update appropriate counters
-        updateProjectCounters(issue, status, project, currentAssignee);
+        updateProjectCounters(issue, status, project, currentAssigneeInitials);
         if (status == 1 || status == 4 || status == 10037) { //check status before
             updateAssigneeCounters(project.name, currentAssignee, assigneeData);
         }
@@ -98,13 +99,23 @@ module.exports = (jira) => {
  ************************/
 
 /**
- * Clears assignee name
- * 
+ * Assignee name methods
  * @param {string} name assignee name
  * @returns {string} cleared assignee name
  */
 function clearAssigneeName(name) {
     return name.split('.')[0].charAt(0).toUpperCase() + name.split('.')[0].slice(1);
+}
+
+function createAssigneeInitials(name) {
+    let firsName = name.split('.')[0].charAt(0).toUpperCase(),
+        lastName = '';
+
+    if (name.split('.')[1]) {
+        lastName = name.split('.')[1].charAt(0).toUpperCase();
+    }
+
+    return firsName + lastName;
 }
 
 /**
