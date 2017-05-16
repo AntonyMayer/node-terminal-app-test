@@ -32,60 +32,17 @@ module.exports = (jira) => {
         }
     }
 
-    /**
-     * CHEATLIST Transition's IDs:
-     * 
-     * 1        "Open"
-     * 4        "Reopened"
-     * 6        "Closed"
-     * 10035    "Blocked"
-     * 10076    "Dev Complete"
-     * 10976    "Developer Test"
-     * 10678    "Parking Lot"
-     * 10977    "Assets Tridion Publishing"
-     * 11276    "HTML Tridion Publishing"
-     * 11076    "Ready for Live"
-     */
-
     //iterate data from response
 
     for (let issue of ticketsData) {
-
-        let project = data[issue.key.split('-')[0]],
-            currentAssignee = issue.fields.assignee.key.split('.')[0].charAt(0).toUpperCase() + issue.fields.assignee.key.split('.')[0].slice(1);
-        
+        let project = data[issue.fields.project.key],
+            currentAssignee = clearAssigneeName(issue.fields.assignee.key);
         //update a fullname of the project
         if (!project.name) {
-            project.name = issue.fields.project.name.replace(/CDM-XXXXX| /g, '_').split('-').join('_').replace(/_{1,}/g,' ');
-            if (project.name[0] == " ") project.name = project.name.slice(1);
+            project.name = clearProjectName(issue.fields.project.name);
         }
-
         //update appropriate counter
-        switch (Number(issue.fields.status.id)) {
-            case 1:
-            case 4:
-                project.opened++;
-                //check if assignees list already contains current developer
-                if (project.assignees.indexOf(currentAssignee) < 0) {
-                    project.assignees.push(currentAssignee);
-                }
-                break;
-            case 10076:
-                project.devComplete++;
-                break;
-            case 10976:
-                project.devTest++;
-                break;
-            case 11276:
-                project.tridionHTML++;
-                break;
-            case 10977:
-                project.tridionAssets++;
-                break;
-            case 6:
-                project.closed++;
-                break;
-        }
+        updateProjectCounters(issue, project, currentAssignee);
     }
 
     //push updated project counters to tableData
@@ -108,3 +65,80 @@ module.exports = (jira) => {
     //display table
     console.log(outputProjects.toString());
 };
+
+
+/************************
+ * MODULE SCOPE HELPERS *
+ ************************/
+
+/**
+ * Clears assignee name
+ * 
+ * @param {string} name assignee name
+ * @returns {string} cleared assignee name
+ */
+function clearAssigneeName(name) {
+    return name.split('.')[0].charAt(0).toUpperCase() + name.split('.')[0].slice(1);
+}
+
+/**
+ * Clears project name
+ * 
+ * @param {any} name project name
+ * @returns {string} cleared project name
+ */
+function clearProjectName(name) {
+    name.replace(/CDM-XXXXX| /g, '_').split('-').join('_').replace(/_{1,}/g, ' ');
+    if (name[0] == " ") name = name.slice(1);
+
+    return name;
+}
+
+/**
+ * Function to update counters for specific project
+ * 
+ * @param {any} issue current issue
+ * @param {any} project current project
+ * @param {any} currentAssignee current assignee
+ */
+function updateProjectCounters(issue, project, currentAssignee) {
+    /**
+     * CHEATLIST Transition's IDs:
+     * 
+     * 1        "Open"
+     * 4        "Reopened"
+     * 6        "Closed"
+     * 10035    "Blocked"
+     * 10076    "Dev Complete"
+     * 10976    "Developer Test"
+     * 10678    "Parking Lot"
+     * 10977    "Assets Tridion Publishing"
+     * 11276    "HTML Tridion Publishing"
+     * 11076    "Ready for Live"
+     */
+    switch (Number(issue.fields.status.id)) {
+        case 1:
+        case 4:
+            project.opened++;
+            //check if assignees list already contains current developer
+            if (project.assignees.indexOf(currentAssignee) < 0) {
+                project.assignees.push(currentAssignee);
+            }
+            break;
+        case 10076:
+            project.devComplete++;
+            break;
+        case 10976:
+            project.devTest++;
+            break;
+        case 11276:
+            project.tridionHTML++;
+            break;
+        case 10977:
+            project.tridionAssets++;
+            break;
+        case 6:
+            project.closed++;
+            break;
+    }
+}
