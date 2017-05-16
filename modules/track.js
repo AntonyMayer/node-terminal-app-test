@@ -17,7 +17,8 @@ module.exports = (jira) => {
         tableDataAssignees = [],
         ticketsData = jira.data.response.issues,
         data = {},
-        assigneeData = {}; // example => assigneeData['anton'] = {CNHN: 1, CDMJT: 5}
+        assigneeData = {}, // example => assigneeData['anton'] = {CNHN: 1, CDMJT: 5}
+        assigneeCounter = 0; //used for decorating rows with color only
 
     //create counters for each project
     for (let item of jira.data.project) {
@@ -61,32 +62,47 @@ module.exports = (jira) => {
     }
 
     //create table for projects
-    tableDataProjects.forEach((project) => {
-        outputProjects.cell('\x1b[36mProject\x1b[0m', project.name);
-        outputProjects.cell('\x1b[36m(Re)Open\x1b[0m', project.opened);
-        outputProjects.cell('\x1b[36mIn Progress\x1b[0m', project.inProgress);
-        outputProjects.cell('\x1b[36mDev Complete\x1b[0m', project.devComplete);
-        outputProjects.cell('\x1b[36mTridion Pbl\x1b[0m', project.tridion);
-        outputProjects.cell('\x1b[36mQA Test\x1b[0m', project.readyForTest);
-        outputProjects.cell('\x1b[36mBlocked\x1b[0m', project.blocked);
-        outputProjects.cell('\x1b[36mClosed\x1b[0m', project.closed);
-        outputProjects.cell('\x1b[36mAssignees\x1b[0m', project.assignees);
+    tableDataProjects.forEach((project, index) => {
+        let color;
+        (index % 2) ? color = '\x1b[36m' : color = '\x1b[0m'; 
+
+        outputProjects.cell(`\x1b[33mProject\x1b[0m`, `${color + project.name}`);
+        outputProjects.cell(`\x1b[33m(Re)Open\x1b[0m`, `${project.opened}`);
+        outputProjects.cell(`\x1b[33mIn Progress\x1b[0m`, `${project.inProgress}`);
+        outputProjects.cell(`\x1b[33mDev Complete\x1b[0m`, `${project.devComplete}`);
+        outputProjects.cell(`\x1b[33mTridion Pbl\x1b[0m`, `${project.tridion}`);
+        outputProjects.cell(`\x1b[33mQA Test\x1b[0m`, `${project.readyForTest}`);
+
+        if (project.blocked > 0) {
+            outputProjects.cell(`\x1b[33mBlocked\x1b[0m`, `\x1b[31m${project.blocked + color}`);
+        } else {
+            outputProjects.cell(`\x1b[33mBlocked\x1b[0m`, `${project.blocked}`);            
+        }
+
+        outputProjects.cell(`\x1b[33mClosed\x1b[0m`, `${project.closed}`);
+        outputProjects.cell(`\x1b[33mAssignees\x1b[0m`, `${project.assignees}\x1b[0m`);
         outputProjects.newRow();
     });
 
     //create table for assignees
     for (let assignee in assigneeData) {
-        let assigneeObj = assigneeData[assignee];
+        let assigneeObj = assigneeData[assignee],
+        color;
+            
+        (assigneeCounter % 2) ? color = '\x1b[36m' : color = '\x1b[0m'; 
 
-        outputAssignees.cell('\x1b[36mAssignee\x1b[0m', assignee);
+        outputAssignees.cell('\x1b[33mAssignee\x1b[0m', `${color + assignee}\x1b[0m`);
+
         for (let project in assigneeObj) {
-            outputAssignees.cell(`\x1b[36m${project}\x1b[0m`, assigneeObj[project]);
+            outputAssignees.cell(`\x1b[33m${project}\x1b[0m`, `${color + assigneeObj[project]}\x1b[0m`);
         }
+
         outputAssignees.newRow();
+        assigneeCounter++;        
     }
 
     //display tables
-    console.log(`\n\x1b[36mLast update: ${currentTime()} \x1b[0m\n`);
+    console.log(`\n\x1b[33mLast update: ${currentTime()} \x1b[0m\n`);
     jira.stdoutWarning("Tickets By Project");
     console.log(`\n${outputProjects.toString()}`);
     jira.stdoutWarning("Tickets By Developers");
