@@ -43,7 +43,7 @@ module.exports = (jira) => {
             currentAssignee = clearAssigneeName(issue.fields.assignee.key),
             currentAssigneeInitials = createAssigneeInitials(issue.fields.assignee.key),
             status = Number(issue.fields.status.id);
-       
+
         //update a fullname of the project
         if (!project.name) project.name = clearProjectName(issue.fields.project.name);
 
@@ -52,7 +52,7 @@ module.exports = (jira) => {
         if (status == 1 || status == 4 || status == 10037) { //check status before
             updateAssigneeCounters(project.name, currentAssignee, assigneeData);
         }
-        
+
     }
 
     //push updated project counters to tableDataProjects
@@ -66,7 +66,7 @@ module.exports = (jira) => {
         outputProjects.cell('\x1b[36m(Re)Open\x1b[0m', project.opened);
         outputProjects.cell('\x1b[36mIn Progress\x1b[0m', project.inProgress);
         outputProjects.cell('\x1b[36mDev Complete\x1b[0m', project.devComplete);
-        outputProjects.cell('\x1b[36mTridion Publishing\x1b[0m', project.tridion);
+        outputProjects.cell('\x1b[36mTridion Pbl\x1b[0m', project.tridion);
         outputProjects.cell('\x1b[36mQA Test\x1b[0m', project.readyForTest);
         outputProjects.cell('\x1b[36mBlocked\x1b[0m', project.blocked);
         outputProjects.cell('\x1b[36mClosed\x1b[0m', project.closed);
@@ -86,12 +86,11 @@ module.exports = (jira) => {
     }
 
     //display tables
-    console.log(`\n\x1b[31mLast update: ${new Date()} \x1b[0m\n`);
+    console.log(`\n\x1b[36mLast update: ${currentTime()} \x1b[0m\n`);
     jira.stdoutWarning("Tickets By Project");
     console.log(`\n${outputProjects.toString()}`);
     jira.stdoutWarning("Tickets By Developers");
     console.log(`\n${outputAssignees.toString()}`);
-    // console.log(assigneeData);
 };
 
 
@@ -109,14 +108,30 @@ function clearAssigneeName(name) {
 }
 
 function createAssigneeInitials(name) {
-    let firsName = name.split('.')[0].charAt(0).toUpperCase(),
-        lastName = '';
+    return name.split('.')[0].charAt(0).toUpperCase() + name[1] + name[2];
+}
 
-    if (name.split('.')[1]) {
-        lastName = name.split('.')[1].charAt(0).toUpperCase();
+/**
+ * Prettify time
+ * 
+ * @returns {string} formated time
+ */
+function currentTime() {
+    let time = new Date(),
+        hours = time.getHours(),
+        minutes = time.getMinutes(),
+        dayPart = 'AM';
+
+    if (hours > 12) {
+        dayPart = 'PM';
+        hours = `0${hours - 12}`;
     }
 
-    return firsName + lastName;
+    if (minutes < 10) {
+        minutes = `0${minutes}`;
+    }
+
+    return `${hours}:${minutes} ${dayPart}`;
 }
 
 /**
@@ -126,7 +141,7 @@ function createAssigneeInitials(name) {
  * @returns {string} cleared project name
  */
 function clearProjectName(name) {
-    name = name.replace(/CDM-X{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_').slice(0,15) + '...';
+    name = name.replace(/CDM-X{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_').slice(0, 15) + '...';
     if (name[0] == "_") name = name.slice(1);
 
     return name;
@@ -142,9 +157,9 @@ function clearProjectName(name) {
 function updateAssigneeCounters(project, currentAssignee, assigneeData) {
     if (!assigneeData[currentAssignee]) {
         assigneeData[currentAssignee] = {};
-    } 
+    }
     if (isNaN(assigneeData[currentAssignee][project])) {
-        assigneeData[currentAssignee][project] = 0;        
+        assigneeData[currentAssignee][project] = 0;
     }
     assigneeData[currentAssignee][project]++;
 }
@@ -178,16 +193,14 @@ function updateProjectCounters(issue, status, project, currentAssignee) {
         case 1:
         case 4:
             project.opened++;
-            //check if assignees list already contains current developer
-            if (project.assignees.indexOf(currentAssignee) < 0) {
-                project.assignees.push(currentAssignee);
-            }
+            updateAssineeInitialsList(project, currentAssignee);
             break;
         case 10008:
             project.readyForTest++;
             break;
         case 10037:
             project.inProgress++;
+            updateAssineeInitialsList(project, currentAssignee);
             break;
         case 10076:
             project.devComplete++;
@@ -205,5 +218,17 @@ function updateProjectCounters(issue, status, project, currentAssignee) {
         case 6:
             project.closed++;
             break;
+    }
+}
+
+/**
+ * Update list of assignees' initials for table w/ projects
+ * 
+ * @param {any} project 
+ * @param {any} currentAssignee 
+ */
+function updateAssineeInitialsList(project, currentAssignee) {
+    if (project.assignees.indexOf(currentAssignee) < 0) {
+        project.assignees.push(currentAssignee);
     }
 }
