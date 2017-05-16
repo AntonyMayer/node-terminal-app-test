@@ -25,10 +25,12 @@ module.exports = (jira) => {
             name: undefined,
             project: item,
             opened: 0,
+            inProgress: 0,
             devComplete: 0,
             devTest: 0,
             tridionHTML: 0,
             tridionAssets: 0,
+            readyForTest: 0,
             closed: 0,
             assignees: []
         }
@@ -46,7 +48,7 @@ module.exports = (jira) => {
 
         //update appropriate counters
         updateProjectCounters(issue, status, project, currentAssignee);
-        if (status == 1 || status == 4) { //check status before
+        if (status == 1 || status == 4 || status == 10037) { //check status before
             updateAssigneeCounters(project.name, currentAssignee, assigneeData);
         }
         
@@ -61,9 +63,11 @@ module.exports = (jira) => {
     tableDataProjects.forEach((project) => {
         outputProjects.cell('\x1b[36mProject\x1b[0m', project.name);
         outputProjects.cell('\x1b[36m(Re)Open\x1b[0m', project.opened);
+        outputProjects.cell('\x1b[36mIn Progress\x1b[0m', project.inProgress);
         outputProjects.cell('\x1b[36mDev Complete\x1b[0m', project.devComplete);
         outputProjects.cell('\x1b[36mTridion HTML\x1b[0m', project.tridionHTML);
         outputProjects.cell('\x1b[36mTridion Assets\x1b[0m', project.tridionAssets);
+        outputProjects.cell('\x1b[36mQA Test\x1b[0m', project.readyForTest);
         outputProjects.cell('\x1b[36mClosed\x1b[0m', project.closed);
         outputProjects.cell('\x1b[36mAssignees\x1b[0m', project.assignees);
         outputProjects.newRow();
@@ -110,7 +114,7 @@ function clearAssigneeName(name) {
  * @returns {string} cleared project name
  */
 function clearProjectName(name) {
-    name = name.replace(/CDM-X{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_');
+    name = name.replace(/CDM-X{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_').slice(0,15) + '...';
     if (name[0] == "_") name = name.slice(1);
 
     return name;
@@ -148,7 +152,9 @@ function updateProjectCounters(issue, status, project, currentAssignee) {
      * 1        "Open"
      * 4        "Reopened"
      * 6        "Closed"
+     * 10008    "Ready for Test"
      * 10035    "Blocked"
+     * 10037    "In Progress"
      * 10076    "Dev Complete"
      * 10976    "Developer Test"
      * 10678    "Parking Lot"
@@ -164,6 +170,12 @@ function updateProjectCounters(issue, status, project, currentAssignee) {
             if (project.assignees.indexOf(currentAssignee) < 0) {
                 project.assignees.push(currentAssignee);
             }
+            break;
+        case 10008:
+            project.readyForTest++;
+            break;
+        case 10037:
+            project.inProgress++;
             break;
         case 10076:
             project.devComplete++;
