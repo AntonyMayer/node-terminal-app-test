@@ -157,7 +157,7 @@ function currentTime() {
  * @returns {string} cleared project name
  */
 function clearProjectName(name) {
-    name = name.replace(/CDM-X{1,}|CDM|HCP|[0-9]{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_').slice(0, 15) + '...';
+    name = name.replace(/CDM-X{1,}|CDM|HCP|MSI|Merck|NSCLC|HNSCC|[0-9]{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_').slice(0, 15) + '...';
     if (name[0] == "_") name = name.slice(1);
 
     return name;
