@@ -16,7 +16,7 @@ module.exports = (jira) => {
     jira.stdoutWarning('Preparing Updates', '\x1b[32m');
 
     for (let issue of jira.data.response.issues) {
-        if (issue.fields.status.name === "Dev Complete" && issue.fields.customfield_12471 !== null) {
+        if (Number(issue.fields.status.id) === 10076 && issue.fields.customfield_12471 !== null) {
             for (let type of issue.fields.customfield_12471) {
                 if (type.value === "HTML") {
                     //send update query
