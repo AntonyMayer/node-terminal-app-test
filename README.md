@@ -12,7 +12,7 @@ Pull issues and display from jira using terminal.
 
 Need global installation to work correctly. 
 
-    $ npm install -g jira-pull-tickets@latest
+    $ npm install -g jira-pull-tickets
 
 **3. Usage:**
 
