@@ -77,7 +77,7 @@ class JIRA {
     //util methods
 
     curl(string, callback) {
-        if (callback) {
+        if (typeof callback === "function") {
             return this.shelljs.exec(string, { silent: true }, callback).stdout;
         } else {
             return this.shelljs.exec(string, { silent: true }).stdout;
