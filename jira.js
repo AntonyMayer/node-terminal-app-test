@@ -76,8 +76,8 @@ class JIRA {
         this.track(this);
     }
 
-    post() {
-        this.postData(this);
+    post(data) {
+        this.postData(this, data);
     }
 
     //util methods

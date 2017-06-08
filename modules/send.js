@@ -1,6 +1,6 @@
 /**
  * Module to create and send request to Jira
- * @param {object} jira naespace object
+ * @param {object} jira namespace object
  * @returns {object} jira 
  */
 
