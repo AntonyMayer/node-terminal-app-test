@@ -7,8 +7,9 @@
 
 'use strict';
 
-module.exports = (jira, data) => {
-    let query = `curl -H "Content-Type: application/json" -X POST -d '{"lorem":"ipsum"}' http://localhost:3300/requests`;
-    console.log(query);
+module.exports = (jira) => {
+    let data = JSON.stringify(jira.data.tableDataProjects),
+        query = `curl -H "Content-Type: application/json" -X POST -d '${data}' http://localhost:3300/requests`;
+        
     jira.curl(query, ()=>{ console.log('posted'); });
 };

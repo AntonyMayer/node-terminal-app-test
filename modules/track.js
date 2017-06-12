@@ -13,12 +13,13 @@ module.exports = (jira) => {
 
     let outputProjects = new jira.table,
         outputAssignees = new jira.table,
-        tableDataProjects = [],
-        tableDataAssignees = [],
         ticketsData = jira.data.response.issues,
         data = {},
         assigneeData = {}, // example => assigneeData['anton'] = {CNHN: 1, CDMJT: 5}
         assigneeCounter = 0; //used for decorating rows with color only
+
+        jira.data.tableDataProjects = [];
+
 
     //create counters for each project
     for (let item of jira.data.project) {
@@ -56,13 +57,13 @@ module.exports = (jira) => {
 
     }
 
-    //push updated project counters to tableDataProjects
+    //push updated project counters to jira.data.tableDataProjects
     for (let item of jira.data.project) {
-        tableDataProjects.push(data[item]);
+        jira.data.tableDataProjects.push(data[item]);
     }
 
     //create table for projects
-    tableDataProjects.forEach((project, index) => {
+    jira.data.tableDataProjects.forEach((project, index) => {
         let color;
         (index % 2) ? color = '\x1b[36m' : color = '\x1b[0m'; 
 

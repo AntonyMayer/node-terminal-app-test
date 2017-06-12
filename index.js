@@ -30,6 +30,11 @@ let get = (projectName) => {
 };
 
 let post = () => {
+    jira
+        .checkData()
+        .sendData()
+        .trackData();
+        
     jira.post();
 };
 
