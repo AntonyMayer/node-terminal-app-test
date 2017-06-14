@@ -15,10 +15,10 @@ module.exports = (jira) => {
         outputAssignees = new jira.table,
         ticketsData = jira.data.response.issues,
         data = {},
-        assigneeData = {}, // example => assigneeData['anton'] = {CNHN: 1, CDMJT: 5}
         assigneeCounter = 0; //used for decorating rows with color only
 
-        jira.data.tableDataProjects = [];
+        jira.data.tableDataProjects = []; //separate assignment to be used in "post" module
+        jira.data.assigneeData = {}; // example => jira.data.assigneeData['anton'] = {CNHN: 1, CDMJT: 5}
 
 
     //create counters for each project
@@ -52,7 +52,7 @@ module.exports = (jira) => {
         //update appropriate counters
         updateProjectCounters(issue, status, project, currentAssigneeInitials);
         if (status == 1 || status == 4 || status == 10037) { //check status before
-            updateAssigneeCounters(project.name, currentAssignee, assigneeData);
+            updateAssigneeCounters(project.name, currentAssignee, jira.data.assigneeData);
         }
 
     }
@@ -86,8 +86,8 @@ module.exports = (jira) => {
     });
 
     //create table for assignees
-    for (let assignee in assigneeData) {
-        let assigneeObj = assigneeData[assignee],
+    for (let assignee in jira.data.assigneeData) {
+        let assigneeObj = jira.data.assigneeData[assignee],
         color;
             
         (assigneeCounter % 2) ? color = '\x1b[36m' : color = '\x1b[0m'; 
@@ -158,7 +158,7 @@ function currentTime() {
  * @returns {string} cleared project name
  */
 function clearProjectName(name) {
-    name = name.replace(/CDM-X{1,}|CDM|HCP|MSI|Merck|NSCLC|HNSCC|[0-9]{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_').slice(0, 15) + '...';
+    name = name.replace(/CDM-X{1,}|CDM|HCP|MSI|Merck|NSCLC|HNSCC|[0-9]{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_').slice(0, 15) + '\u2026';
     if (name[0] == "_") name = name.slice(1);
 
     return name;
@@ -169,7 +169,7 @@ function clearProjectName(name) {
  * 
  * @param {string} project project name 
  * @param {string} currentAssignee current assignee 
- * @param {any} assigneeData object to store the counters for assignees
+ * @param {any} jira.data.assigneeData object to store the counters for assignees
  */
 function updateAssigneeCounters(project, currentAssignee, assigneeData) {
     if (!assigneeData[currentAssignee]) {
