@@ -93,7 +93,7 @@ Used to track default project(s).
 Outputs 2 tables in terminal: issues by project/status and issues by developers/project. 
 Recursively send request every 30 seconds untill cancelled.
 
-**4.6 track**
+**4.6 post**
 
 Used to sent object with data on current project(s) (created via track module) to *http://localhost:7700/requests* via post request.
 
