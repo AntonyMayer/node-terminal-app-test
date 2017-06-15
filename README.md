@@ -67,14 +67,13 @@ You'll be asked to promt new project name. It will create *jiraCLI.json* file in
 Used to change default project. 
 
  	$ jira project
-    project: CNHM
 
 Another option to change default project(s) is to update it manually at */Users/username/Library/JiraCLI/jiraCLI.json*.
 
 To add multiple projects input its keys with space as separator
 
     $ jira project
-    project: CNHM CDTR CMNM
+    $ project: CNHM CDTR CMNM
 
 **4.4 test**
 
