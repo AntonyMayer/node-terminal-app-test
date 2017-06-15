@@ -67,8 +67,14 @@ You'll be asked to promt new project name. It will create *jiraCLI.json* file in
 Used to change default project. 
 
  	$ jira project
+    project: CNHM
 
-Another option to change default project is to update it manually at */Users/username/Library/JiraCLI/jiraCLI.json*
+Another option to change default project(s) is to update it manually at */Users/username/Library/JiraCLI/jiraCLI.json*.
+
+To add multiple projects input its keys with space as separator
+
+    $ jira project
+    project: CNHM CDTR CMNM
 
 **4.4 test**
 
@@ -77,3 +83,20 @@ Test notifications.
 **4.5 --help**
 
 Show available commands.
+
+**4.6 track**
+
+Used to track default project(s).
+
+ 	$ jira track
+
+Outputs 2 tables in terminal: issues by project/status and issues by developers/project. 
+Recursively send request every 30 seconds untill cancelled.
+
+**4.6 track**
+
+Used to sent object with data on current project(s) (created via track module) to *http://localhost:7700/requests* via post request.
+
+ 	$ jira post
+
+Recursively send request every 5 seconds untill cancelled.
