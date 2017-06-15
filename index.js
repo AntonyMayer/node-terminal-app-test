@@ -29,6 +29,22 @@ let get = (projectName) => {
         .displayData();
 };
 
+let post = () => {
+        jira
+            .checkData()
+            .sendData()
+            .trackData();
+            
+        jira.post();
+
+    setInterval(_ => {
+        jira
+            .sendData()
+            .trackData();
+        jira.post();
+    }, 5000);
+};
+
 let update = () => {
     //start methods chain
     jira
@@ -45,7 +61,7 @@ let track = () => {
         .trackData();
 
     //recursive call
-    setInterval(_=> {
+    setInterval(_ => {
         jira
             .sendData()
             .trackData();
@@ -76,6 +92,9 @@ jira.program
 jira.program
     .command('track')
     .action(track)
+jira.program
+    .command('post')
+    .action(post)
 jira.program.on('--help', function() {
     console.log('\n    get [project name] [flag]');
     console.log('    get                            returns open tickets for default project;');

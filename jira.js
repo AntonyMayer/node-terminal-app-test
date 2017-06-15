@@ -17,6 +17,8 @@ class JIRA {
         this.update = require('./modules/update');
         this.display = require('./modules/display');
         this.track = require('./modules/track');
+        this.postData = require('./modules/post');
+        //core modules
         this.fs = require('fs');
         //external dependencies
         this.shelljs = require('shelljs');
@@ -72,6 +74,10 @@ class JIRA {
 
     trackData() {
         this.track(this);
+    }
+
+    post(data) {
+        this.postData(this, data);
     }
 
     //util methods
