@@ -32,17 +32,17 @@ let get = (projectName) => {
 let post = () => {
         jira
             .checkData()
-            .sendData()
-            .trackData();
-            
-        jira.post();
+            .sendData(true)
+            // .trackData();
+            // 
+    //     jira.post();
 
-    setInterval(_ => {
-        jira
-            .sendData()
-            .trackData();
-        jira.post();
-    }, 5000);
+    // setInterval(_ => {
+    //     jira
+    //         .sendData(true)
+    //         .trackData();
+    //     jira.post();
+    // }, 5000);
 };
 
 let update = () => {
@@ -57,7 +57,7 @@ let track = () => {
     //start methods chain
     jira
         .checkData()
-        .sendData()
+        .sendData(true)
         .trackData();
 
     //recursive call

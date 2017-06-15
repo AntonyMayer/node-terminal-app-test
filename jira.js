@@ -55,8 +55,8 @@ class JIRA {
         this.setLocal(this);
     }
 
-    sendData() {
-        this.send(this);
+    sendData(flag = false) {
+        this.send(this, flag);
         return this;
     }
 
