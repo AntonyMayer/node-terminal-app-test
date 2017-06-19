@@ -79,6 +79,8 @@ module.exports = (jira, flag) => {
         } while (tempData.issues.length > 999)
     }
     console.log(data.response.issues.length > 999);
+
+    
     // for (let project of data.response.issues) {
     //     console.log(project.fields.project.key);
     // }
