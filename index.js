@@ -33,8 +33,8 @@ let post = () => {
         jira
             .checkData()
             .sendData(true)
-            // .trackData();
-            // 
+            .trackData();
+            
     //     jira.post();
 
     // setInterval(_ => {

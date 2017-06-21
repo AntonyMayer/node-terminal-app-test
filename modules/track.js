@@ -41,7 +41,25 @@ module.exports = (jira) => {
     //iterate data from response
 
     for (let issue of ticketsData) {
-        let project = data[issue.fields.project.key],
+
+        if (!issue.fields) issue.fields = {};
+        if (!issue.fields.project) issue.fields.project = {key: "undefined_project_key...", name: "undefined_project_name..."};
+        if (!issue.fields.assignee) issue.fields.assignee = {key: "undefined.assignee"};
+        if (!issue.fields.status) issue.fields.status = {id: "undefined_id..."};
+
+        let project = data[issue.fields.project.key] || {
+            name: "undefined",
+            project: "undefined",
+            opened: 0,
+            inProgress: 0,
+            devComplete: 0,
+            devTest: 0,
+            tridion: 0,
+            readyForTest: 0,
+            blocked: 0,
+            closed: 0,
+            assignees: []
+        },
             currentAssignee = clearAssigneeName(issue.fields.assignee.key),
             currentAssigneeInitials = createAssigneeInitials(issue.fields.assignee.key),
             status = Number(issue.fields.status.id);
