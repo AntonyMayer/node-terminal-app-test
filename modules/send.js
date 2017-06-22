@@ -12,11 +12,15 @@ module.exports = (jira, flag) => {
         server = jira.data.server,
         pswd = jira.getPassword(data.user),
         tempData = '',
-        jql = { "jql": "ORDER BY key ASC", "fields": ["id", "updated", "project", "assignee", "status"], "maxResults": -1 };
+        date = new Date(),
+        getAllTickets = { "jql": "ORDER BY key ASC", "fields": ["id", "updated", "project", "assignee", "status"], "maxResults": -1 },
+        getLatestTickets = { "jql": "updated >= -60m ORDER BY key ASC", "fields": ["id", "updated", "project", "assignee", "status"], "maxResults": -1 },
+        jql = jira.data.timeStamp ? getLatestTickets : getAllTickets;
 
     //reset/create necessary objects
     jira.data.response = {};
     jira.data.response.issues = [];
+    jira.data.timeStamp = date.toLocaleString('en-US');
 
     //check server name to avoid double slash 
     if (server[server.length - 1] === '/') {
@@ -58,8 +62,9 @@ module.exports = (jira, flag) => {
             let query = JSON.stringify(jql);
 
             data.query = `curl -u ${data.user}:${pswd} -X POST -H "Content-Type: application/json" --data '${query}' "${data.url}"`;
-
-            // console.log(data.query);
+            
+            console.log(jira.data.timeStamp);
+            console.log(data.query);
             //parse response from server
             try {
                 tempData = JSON.parse(jira.curl(data.query));
