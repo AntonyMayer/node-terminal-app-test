@@ -13,7 +13,7 @@ module.exports = (jira, flag) => {
         pswd = jira.getPassword(data.user),
         tempData = '',
         date = new Date(),
-        getAllTickets = { "jql": "ORDER BY key ASC", "fields": ["id", "updated", "project", "assignee", "status"], "maxResults": -1 },
+        getAllTickets = { "jql": "ORDER BY key ASC", "fields": ["id", "updated", "project", "assignee", "status"], "maxResults": 100 },
         getLatestTickets = { "jql": "updated >= -60m ORDER BY key ASC", "fields": ["id", "updated", "project", "assignee", "status"], "maxResults": -1 },
         jql = jira.data.timeStamp ? getLatestTickets : getAllTickets;
 
@@ -82,12 +82,12 @@ module.exports = (jira, flag) => {
 
             jql.startAt += 1000;
 
-        } while (tempData.issues.length > 999 && jql.startAt < 11002 )
+        } while (tempData.issues.length > 999 && jql.startAt < 3002 )
     }
     console.log(data.response.issues.length > 999);
 
     // data.response = {lorem: 11};
-    require('fs').writeFile('omg.json', JSON.stringify(data.response), (err) => {
+    require('fs').writeFile('omg.json', JSON.stringify(data.response.issues), (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
     });

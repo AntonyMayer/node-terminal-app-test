@@ -9,7 +9,7 @@ module.exports = (jira) => {
     let data = JSON.stringify({
             _id: 'tmpJIRAdata',
             projects: jira.data.tableDataProjects,
-            devs: jira.data.assigneeData
+            assignees: jira.data.assigneeData
         }) || JSON.stringify({ message: "Server >> No data to display" }),
         query = `curl -H "Content-Type: application/json" -X POST -d '${data}' http://localhost:7700/requests`;
 

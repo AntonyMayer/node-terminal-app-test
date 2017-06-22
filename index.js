@@ -35,14 +35,14 @@ let post = () => {
             .sendData(true)
             .trackData();
             
-        jira.post();
+        // jira.post();
 
-    setInterval(_ => {
-        jira
-            .sendData(true)
-            .trackData();
-        jira.post();
-    }, 5000);
+    // setInterval(_ => {
+    //     jira
+    //         .sendData(true)
+    //         .trackData();
+    //     jira.post();
+    // }, 5000);
 };
 
 let update = () => {

@@ -10,6 +10,10 @@ module.exports = (jira) => {
 
     jira.data.user = jira.store.get('username') || process.env.USER;
     jira.data.server = jira.store.get('server');
+    jira.data.mongoDB = {
+        url: "mongodb://localhost:27017/jiraStat",
+        port: 7700
+    };
 
     //check first localy stored JSON for project name(s) 
     //else use default project name(s) set during initialization
@@ -26,6 +30,6 @@ module.exports = (jira) => {
         jira.data.project = [jira.data.project];
     }
 
-    return jira;    
+    return jira;
 
 };

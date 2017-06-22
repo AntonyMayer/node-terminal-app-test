@@ -11,9 +11,7 @@ module.exports = (jira) => {
     if (jira.validateData()) return;
     jira.shelljs.exec('clear');
 
-    let outputProjects = new jira.table,
-        outputAssignees = new jira.table,
-        ticketsData = jira.data.response.issues,
+    let ticketsData = jira.data.response.issues,
         data = {},
         assigneeCounter = 0; //used for decorating rows with color only
 
@@ -84,7 +82,11 @@ module.exports = (jira) => {
  * @returns {string} cleared assignee name
  */
 function clearAssigneeName(name) {
-    return name.split('.')[0].charAt(0).toUpperCase() + name.split('.')[0].slice(1);
+    let partials = name.split('.'),
+        uniqueFirstName = partials[0].charAt(0).toUpperCase() + partials[0].slice(1),
+        uniqueLastName = partials[1] && partials[1].charAt(0).toUpperCase() + partials[1].slice(1);
+
+    return uniqueFirstName + '_' + uniqueLastName;
 }
 
 function createAssigneeInitials(name) {
@@ -97,21 +99,8 @@ function createAssigneeInitials(name) {
  * @returns {string} formated time
  */
 function currentTime() {
-    let time = new Date(),
-        hours = time.getHours(),
-        minutes = time.getMinutes(),
-        dayPart = 'AM';
-
-    if (hours > 12) {
-        dayPart = 'PM';
-        hours = `0${hours - 12}`;
-    }
-
-    if (minutes < 10) {
-        minutes = `0${minutes}`;
-    }
-
-    return `${hours}:${minutes} ${dayPart}`;
+    let time = new Date();
+    return time.toLocaleTimeString;
 }
 
 /**
@@ -121,9 +110,7 @@ function currentTime() {
  * @returns {string} cleared project name
  */
 function clearProjectName(name) {
-    name = name.replace(/CDM-X{1,}|\.{1,}|CDM|HCP|MSI|Merck|NSCLC|HNSCC|[0-9]{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_').slice(0, 15) + '\u2026';
-    if (name[0] == "_") name = name.slice(1);
-
+    name = name.replace(/\.{1,}|\s{1,}|\-{1,}/g, '_');
     return name;
 }
 
