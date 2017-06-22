@@ -38,7 +38,7 @@ module.exports = (jira, flag) => {
             //Creating a curl request based on data object and flags
             data.query = `curl -u ${data.user}:${pswd} -X POST -H "Content-Type: application/json" --data '{"jql":"project = ${currentProject}","maxResults":1000}' "${data.url}"`;
 
-            console.log(data.query);
+            // console.log(data.query);
             //parse response from server
             try {
                 tempData = JSON.parse(jira.curl(data.query));
@@ -59,7 +59,7 @@ module.exports = (jira, flag) => {
 
             data.query = `curl -u ${data.user}:${pswd} -X POST -H "Content-Type: application/json" --data '${query}' "${data.url}"`;
 
-            console.log(data.query);
+            // console.log(data.query);
             //parse response from server
             try {
                 tempData = JSON.parse(jira.curl(data.query));
@@ -77,15 +77,15 @@ module.exports = (jira, flag) => {
 
             jql.startAt += 1000;
 
-        } while (tempData.issues.length > 999)
+        } while (tempData.issues.length > 999 && jql.startAt < 11002 )
     }
     console.log(data.response.issues.length > 999);
 
     // data.response = {lorem: 11};
-    // require('fs').writeFile('omg.json', JSON.stringify(data.response), (err) => {
-    //     if (err) throw err;
-    //     console.log('The file has been saved!');
-    // });
+    require('fs').writeFile('omg.json', JSON.stringify(data.response), (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+    });
 
     // for (let project of data.response.issues) {
     //     console.log(project.fields.project.key);

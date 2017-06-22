@@ -5,6 +5,7 @@
  */
 
 module.exports = (jira) => {
+    console.log(jira.data.tableDataProjects.length);
     let data = JSON.stringify({
             _id: 'tmpJIRAdata',
             projects: jira.data.tableDataProjects,

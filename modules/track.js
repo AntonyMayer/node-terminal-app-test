@@ -22,10 +22,11 @@ module.exports = (jira) => {
 
 
     //create counters for each project
-    for (let item of jira.data.project) {
-        data[item] = {
+    for (let issue of ticketsData) {
+        // console.log(`project: ${issue.fields.project.key}`);
+        data[issue.fields.project.key] = {
             name: undefined,
-            project: item,
+            project: issue.fields.project.key,
             opened: 0,
             inProgress: 0,
             devComplete: 0,
@@ -47,19 +48,7 @@ module.exports = (jira) => {
         if (!issue.fields.assignee) issue.fields.assignee = {key: "undefined.assignee"};
         if (!issue.fields.status) issue.fields.status = {id: "undefined_id..."};
 
-        let project = data[issue.fields.project.key] || {
-            name: "undefined",
-            project: "undefined",
-            opened: 0,
-            inProgress: 0,
-            devComplete: 0,
-            devTest: 0,
-            tridion: 0,
-            readyForTest: 0,
-            blocked: 0,
-            closed: 0,
-            assignees: []
-        },
+        let project = data[issue.fields.project.key],
             currentAssignee = clearAssigneeName(issue.fields.assignee.key),
             currentAssigneeInitials = createAssigneeInitials(issue.fields.assignee.key),
             status = Number(issue.fields.status.id);
@@ -76,56 +65,12 @@ module.exports = (jira) => {
     }
 
     //push updated project counters to jira.data.tableDataProjects
-    for (let item of jira.data.project) {
+    for (let item in data) {
         jira.data.tableDataProjects.push(data[item]);
-    }
-
-    //create table for projects
-    jira.data.tableDataProjects.forEach((project, index) => {
-        let color;
-        (index % 2) ? color = '\x1b[36m' : color = '\x1b[0m'; 
-
-        outputProjects.cell(`\x1b[33mProject\x1b[0m`, `${color + project.name}`);
-        outputProjects.cell(`\x1b[33m(Re)Open\x1b[0m`, `${project.opened}`);
-        outputProjects.cell(`\x1b[33mIn Progress\x1b[0m`, `${project.inProgress}`);
-        outputProjects.cell(`\x1b[33mDev Complete\x1b[0m`, `${project.devComplete}`);
-        outputProjects.cell(`\x1b[33mTridion Pbl\x1b[0m`, `${project.tridion}`);
-        outputProjects.cell(`\x1b[33mQA Test\x1b[0m`, `${project.readyForTest}`);
-
-        if (project.blocked > 0) {
-            outputProjects.cell(`\x1b[33mBlocked\x1b[0m`, `\x1b[31m${project.blocked + color}`);
-        } else {
-            outputProjects.cell(`\x1b[33mBlocked\x1b[0m`, `${project.blocked}`);            
-        }
-
-        outputProjects.cell(`\x1b[33mClosed\x1b[0m`, `${project.closed}`);
-        outputProjects.cell(`\x1b[33mAssignees\x1b[0m`, `${project.assignees}\x1b[0m`);
-        outputProjects.newRow();
-    });
-
-    //create table for assignees
-    for (let assignee in jira.data.assigneeData) {
-        let assigneeObj = jira.data.assigneeData[assignee],
-        color;
-            
-        (assigneeCounter % 2) ? color = '\x1b[36m' : color = '\x1b[0m'; 
-
-        outputAssignees.cell('\x1b[33mAssignee\x1b[0m', `${color + assignee}\x1b[0m`);
-
-        for (let project in assigneeObj) {
-            outputAssignees.cell(`\x1b[33m${project}\x1b[0m`, `${color + assigneeObj[project]}\x1b[0m`);
-        }
-
-        outputAssignees.newRow();
-        assigneeCounter++;        
     }
 
     //display tables
     console.log(`\n\x1b[33mLast update: ${currentTime()} \x1b[0m\n`);
-    jira.stdoutWarning("Tickets By Project");
-    console.log(`\n${outputProjects.toString()}`);
-    jira.stdoutWarning("Tickets By Developers");
-    console.log(`\n${outputAssignees.toString()}`);
 };
 
 
@@ -176,7 +121,7 @@ function currentTime() {
  * @returns {string} cleared project name
  */
 function clearProjectName(name) {
-    name = name.replace(/CDM-X{1,}|CDM|HCP|MSI|Merck|NSCLC|HNSCC|[0-9]{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_').slice(0, 15) + '\u2026';
+    name = name.replace(/CDM-X{1,}|\.{1,}|CDM|HCP|MSI|Merck|NSCLC|HNSCC|[0-9]{1,}| /g, '_').split('-').join('_').replace(/_{1,}/g, '_').slice(0, 15) + '\u2026';
     if (name[0] == "_") name = name.slice(1);
 
     return name;
