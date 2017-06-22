@@ -13,7 +13,7 @@ module.exports = (jira, flag) => {
         pswd = jira.getPassword(data.user),
         tempData = '',
         date = new Date(),
-        getAllTickets = { "jql": "ORDER BY key ASC", "fields": ["id", "updated", "project", "assignee", "status"], "maxResults": 100 },
+        getAllTickets = { "jql": "ORDER BY key ASC", "fields": ["id", "updated", "project", "assignee", "status"], "maxResults": -1 },
         getLatestTickets = { "jql": "updated >= -60m ORDER BY key ASC", "fields": ["id", "updated", "project", "assignee", "status"], "maxResults": -1 },
         jql = jira.data.timeStamp ? getLatestTickets : getAllTickets;
 
@@ -57,7 +57,7 @@ module.exports = (jira, flag) => {
     } else {
         //send query to get data for all projects in jira   
         //add 'startAt' from counter value to query request
-        jql.startAt = 1;
+        jql.startAt = 0;
         do {
             let query = JSON.stringify(jql);
 
@@ -82,15 +82,9 @@ module.exports = (jira, flag) => {
 
             jql.startAt += 1000;
 
-        } while (tempData.issues.length > 999 && jql.startAt < 3002 )
+        } while (tempData.issues.length > 999 )
     }
     console.log(data.response.issues.length > 999);
-
-    // data.response = {lorem: 11};
-    require('fs').writeFile('omg.json', JSON.stringify(data.response.issues), (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
-    });
 
     // for (let project of data.response.issues) {
     //     console.log(project.fields.project.key);

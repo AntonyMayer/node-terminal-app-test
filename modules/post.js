@@ -5,13 +5,32 @@
  */
 
 module.exports = (jira) => {
-    console.log(jira.data.tableDataProjects.length);
-    let data = JSON.stringify({
-            _id: 'tmpJIRAdata',
-            projects: jira.data.tableDataProjects,
-            assignees: jira.data.assigneeData
-        }) || JSON.stringify({ message: "Server >> No data to display" }),
-        query = `curl -H "Content-Type: application/json" -X POST -d '${data}' http://localhost:7700/requests`;
+    console.log(jira.data.response.issues.length);
 
-    jira.curl(query, () => { console.log('posted'); });
+    jira.MongoClient.connect(jira.data.mongoDB.url, function(err, db) {
+        jira.assert.equal(null, err);
+        updateDocuments(db, jira.data.response.issues, function() {
+            console.log('Data Updated');
+            db.close();
+        });
+    });
+
+    console.log('No errors out there so far...');
 };
+
+/*******************\
+< * MongoDB Utils * >
+\*******************/
+
+function updateDocuments(db, data, callback) {
+    // console.log(data);
+    var tickets = db.collection('tickets');
+
+    //update 'ticket' collection
+    for (let issue of data) {
+        issue._id = issue.key;
+        tickets.updateOne({ _id: issue.key }, issue, { upsert: true });
+    }
+    console.log('Upsert done...');
+    callback();
+}

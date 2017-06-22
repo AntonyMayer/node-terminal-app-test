@@ -28,6 +28,8 @@ class JIRA {
         this.pw = require('keytar');
         this.store = require('data-store')('jiraCLI', { cwd: '~/Library/JiraCLI' });
         this.localStore = require('data-store')('jiraCLI', { cwd: process.cwd() });
+        this.MongoClient = require('mongodb').MongoClient;
+        this.assert = require('assert');
         //default data
         this.data = {
             currentUser: false,
@@ -74,6 +76,7 @@ class JIRA {
 
     trackData() {
         this.track(this);
+        return this;
     }
 
     post(data) {

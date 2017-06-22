@@ -33,9 +33,8 @@ let post = () => {
         jira
             .checkData()
             .sendData(true)
-            .trackData();
-            
-        // jira.post();
+            .trackData()
+            .post();
 
     // setInterval(_ => {
     //     jira
