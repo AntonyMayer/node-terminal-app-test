@@ -32,8 +32,8 @@ let get = (projectName) => {
 let post = () => {
         jira
             .checkData()
-            .sendData(true)
-            .trackData()
+            .sendData()
+            // .trackData()
             .post();
 
     // setInterval(_ => {

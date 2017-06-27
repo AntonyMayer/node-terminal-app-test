@@ -22,7 +22,7 @@ module.exports = (jira) => {
  ************************/
 
 /**
- * CHEATLIST 's IDs:
+ * CHEATLIST tickets's IDs:
  * 
  * 1        "Open"
  * 4        "Reopened"
