@@ -19,6 +19,12 @@ module.exports = (jira) => {
             startAt: 0
         };
 
+    //if the timeStamp exists (i.e. initial data pull is done) then only pull tickets 
+    //updated within last 60 minutes
+    if (data.timeStamp) {
+        jql.jql = "updated >= -60m ORDER BY key ASC";
+    }
+
     //reset/create necessary objects
     data.response = {};
     data.response.issues = [];
@@ -57,7 +63,7 @@ module.exports = (jira) => {
         }
         jql.startAt += 1000;
 
-    } while (tempData.issues.length > 999)
+    } while (tempData.issues.length > 999);
 
     return jira;
 };
