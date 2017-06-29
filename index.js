@@ -29,21 +29,21 @@ let get = (projectName) => {
         .displayData();
 };
 
-let post = () => {
+let post = _ => {
         jira
             .checkData()
             .sendData()
             .post();
 
-    // setInterval(_ => {
-    //     jira
-    //         .sendData(true)
-    //         .trackData();
-    //     jira.post();
-    // }, 5000);
+    setInterval(_ => {
+        jira
+            .sendData(true)
+            .trackData();
+        jira.post();
+    }, 30000);
 };
 
-let update = () => {
+let update = _ => {
     //start methods chain
     jira
         .checkData()
@@ -51,7 +51,7 @@ let update = () => {
         .updateStatus();
 };
 
-let track = () => {
+let track = _ => {
     //start methods chain
     jira
         .checkData()
@@ -77,13 +77,13 @@ jira.program
     .action(get)
 jira.program
     .command('project')
-    .action(() => { return jira.config() })
+    .action(_ => { return jira.config() })
 jira.program
     .command('set')
-    .action(() => { return jira.set() })
+    .action(_ => { return jira.set() })
 jira.program
     .command('init')
-    .action(() => { return jira.init() })
+    .action(_ => { return jira.init() })
 jira.program
     .command('update')
     .action(update)
@@ -104,7 +104,7 @@ jira.program.on('--help', function() {
 });
 jira.program
     .command('test')
-    .action(() => {
+    .action(_ => {
         jira.stdoutReceivingData('test', 'test');
         jira.stdoutWarning('test warning');
         jira.stdoutError('test error');
