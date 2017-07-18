@@ -36,11 +36,12 @@ let post = _ => {
             .post();
 
     setInterval(_ => {
+        console.log('Update for last 60 mins...');
         jira
             .sendData(true)
             .trackData();
         jira.post();
-    }, 30000);
+    }, 5000);
 };
 
 let update = _ => {
