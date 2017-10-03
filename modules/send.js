@@ -42,8 +42,10 @@ module.exports = (jira) => {
         //need a query to be there as counter 'startAt' for jql
         let query = JSON.stringify(jql);
 
-        //reset temporary data object
-        tempData = null;
+        //reset temporary data object and make sure it has issues property with length 
+        tempData = {
+            issues: []
+        };
         
         //try to parse response from server
         try {
@@ -59,7 +61,8 @@ module.exports = (jira) => {
             console.log(`Total tickets: ${data.response.issues.length}\n`);
 
         } catch (e) {
-            data.response = { "errorMessages": ["Authentication failed, please retry or run 'jira init'"], "errors": {} };
+            console.log(e);
+            // data.response = { "errorMessages": ["Authentication failed, please retry or run 'jira init'"], "errors": {} };
         }
         jql.startAt += 1000;
 

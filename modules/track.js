@@ -11,8 +11,6 @@ module.exports = (jira) => {
     if (jira.validateData()) return;
     jira.shelljs.exec('clear');
 
-    let ticketsData = jira.data.response.issues;
-
     return jira;
 };
 

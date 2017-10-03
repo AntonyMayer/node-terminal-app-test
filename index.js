@@ -40,7 +40,7 @@ let post = _ => {
             .sendData(true)
             .trackData();
         jira.post();
-    }, 30000);
+    }, 5000);
 };
 
 let update = _ => {
