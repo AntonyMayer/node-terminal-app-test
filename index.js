@@ -36,6 +36,7 @@ let post = _ => {
             .post();
 
     setInterval(_ => {
+        console.log('Update for last 60 mins...');
         jira
             .sendData(true)
             .trackData();
