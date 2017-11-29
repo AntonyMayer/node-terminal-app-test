@@ -99,3 +99,9 @@ Used to sent object with data on current project(s) (created via track module) t
  	$ jira post
 
 Recursively send request every 5 seconds untill cancelled.
+
+**4.7 update**
+
+Updates all **dev complete** tickets to proper **tridion publishing** type.
+
+ 	$ jira update
